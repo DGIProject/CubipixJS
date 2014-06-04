@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Dylan
- * Date: 03/06/14
- * Time: 18:59
- */ 
+function getListMaps()
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT * FROM maps ORDER BY id');
+    $req->execute();
+
+    return $req->fetchAll();
+}

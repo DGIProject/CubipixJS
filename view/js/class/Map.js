@@ -14,9 +14,11 @@ function Map(name)
     console.log(tabMapData.name);
 
     this.name = name;
+    this.playerSpawn = tabMapData.playerSpawn;
     this.land = tabMapData.land;
+    this.itemsLand = tabMapData.itemsLand;
+    this.totalCoins = tabMapData.totalCoins;
     this.listPlayers = [];
-    this.imageBloc = new Image();
 }
 
 Map.prototype.getName = function () {
@@ -40,39 +42,41 @@ Map.prototype.addPlayer = function(player) {
 }
 
 Map.prototype.drawMap = function(context) {
-    //console.log('drawMap');
-
-    for(var i = 0, l = this.land.length ; i < l ; i++)
+    for(var i = 0, l = this.land.length; i < l; i++)
     {
         var line = this.land[i];
         var y = i * 32;
-        for(var j = 0, k = line.length ; j < k ; j++) {
+
+        for(var j = 0, k = line.length; j < k; j++)
+        {
             this.drawBloc(line[j], context, j * 32, y);
         }
     }
 
-    //console.log(this.listPlayers.length);
+    for(var a = 0, b = this.itemsLand.length; a < b; a++)
+    {
+        var lineItem = this.itemsLand[a];
+        var c = a * 32;
+
+        for(var d = 0, e = lineItem.length; d < e; d++)
+        {
+            if(lineItem[d] != 0)
+            {
+                this.drawItem(lineItem[d], context, d * 32, c);
+            }
+        }
+    }
 
     for(var x = 0; x < this.listPlayers.length; x++)
     {
-        console.log('drawPlayerF');
-
         this.listPlayers[x].drawPlayer(context);
     }
 };
 
 Map.prototype.drawBloc = function(numberBloc, context, x, y) {
-    //console.log('drawBloc');
-    //console.log(x, y);
+    context.drawImage(document.getElementById(numberBloc + 't'), x, y, 32, 32);
+};
 
-    if(numberBloc == 2)
-    {
-        this.imageBloc.src = 'img/texture/brick.png';
-    }
-    else
-    {
-        this.imageBloc.src = 'img/texture/dirt.png';
-    }
-
-    context.drawImage(this.imageBloc, x, y, 32, 32);
+Map.prototype.drawItem = function(numberItem, context, x, y) {
+    context.drawImage(document.getElementById(numberItem + 'i'), x, y, 32, 32);
 };

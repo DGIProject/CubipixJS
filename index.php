@@ -1,11 +1,22 @@
 <?php
 include_once 'model/sql_connect.php';
 
-if($_SESSION['user'] != NULL)
+if($_GET['type'] == 'game')
 {
-    include_once 'controler/game.php';
+    if($_SESSION['user'] != NULL)
+    {
+        include_once 'controler/game.php';
+    }
+    else
+    {
+        include_once 'controler/login.php';
+    }
+}
+elseif($_GET['type'] == 'register')
+{
+    include_once 'controler/register.php';
 }
 else
 {
-    include_once 'controler/login.php';
+    include_once 'controler/index.php';
 }

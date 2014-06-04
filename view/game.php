@@ -47,42 +47,58 @@
     </div>
 </div>
 
-<!-- Begin page content -->
-<div class="container">
-    <div class="page-header">
-        <h1>Game</h1>
-    </div>
-    <div id="game" class="well">
+<div id="content">
+    <div id="game">
+        <div id="toolbar" style="width: 800px;">
+            <span id="player">Player : <?php echo $_SESSION['user']; ?></span>,
+            <span id="map">Map : <span id="currentMap"></span></span>,
+            <span id="coin">
+                Coin : <span id="currentCoins">0</span> / <span id="totalCoins">0</span>
+            </span>,
+            <span id="health">
+                Health : <progress id="currentHealth" value="0" max="10"></progress>
+            </span>
+        </div>
         <canvas id="canvas"></canvas>
     </div>
     <div id="startGameModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Démarrer une partie</h4>
+                    <h4 class="modal-title">Start game</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Personnalisez un maximum pour une expérience de jeu extraordinaire.</p>
-                    <form method="post" onsubmit="startGame();return false" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                            </div>
-                        </div>
-                    </form>
+                    <p>Choose the map that you want.</p>
+                    <div class="list-group">
+                        <?php
+                        foreach($listMaps as $map)
+                        {
+                            echo '<a href="#" onclick="startGame(\'' . $map['name'] . '\');" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+                        }?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <img id="texture" src="view/img/texture/test.png">
-    <img id="brick" src="view/img/texture/brick.png">
-    <img id="dirt" src="view/img/texture/dirt.png">
+    <div id="textures" style="display: none;">
+        <img id="1t" src="view/img/texture/1.png">
+        <img id="2t" src="view/img/texture/2.png">
+        <img id="3t" src="view/img/texture/3.png">
+        <img id="4t" src="view/img/texture/4.png">
+        <img id="5t" src="view/img/texture/5.png">
+        <img id="6t" src="view/img/texture/6.png">
+        <img id="7t" src="view/img/texture/7.png">
+        <img id="8t" src="view/img/texture/8.png">
+        <img id="9t" src="view/img/texture/9.png">
+        <img id="10t" src="view/img/texture/10.png">
+
+        <img id="1i" src="view/img/item/1.png">
+    </div>
 </div>
 
 <div id="footer">
     <div class="container">
-        <p class="text-muted">CubipixJS par <a href="http://dgiproject.alwaysdata.com" target="_blank">DGI Project</a></p>
+        <p class="text-muted">CubipixJS par <a href="http://dgiproject.alwaysdata.net" target="_blank">DGI Project</a></p>
     </div>
 </div>
 
@@ -95,7 +111,6 @@
 <script src="view/js/class/Map.js"></script>
 <script src="view/js/class/Player.js"></script>
 <script src="view/js/game.js"></script>
-
 
 </body>
 </html>

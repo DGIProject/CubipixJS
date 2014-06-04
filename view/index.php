@@ -40,8 +40,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li class="active"><a href="index.php?type=game">Game</a></li>
-                <li><a href="index.php#about">About</a></li>
-                <li><a href="index.php#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -50,27 +50,8 @@
 <!-- Begin page content -->
 <div class="container">
     <div class="page-header">
-        <h1>Login page</h1>
+        <h1>Discover a new fanstastic game ...</h1>
     </div>
-    <form method="post" onsubmit="loginGame(this.username.value, this.password.value);return false" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Username</label>
-            <div class="col-sm-4">
-                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-4">
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-4">
-                <button type="submit" id="buttonLoginGame" class="btn btn-default">Sign in</button>
-            </div>
-        </div>
-    </form>
 </div>
 
 <div id="footer">
@@ -84,9 +65,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="view/js/jquery.noty.js"></script>
 <script src="view/js/bootstrap.min.js"></script>
-<script src="view/js/login.js"></script>
 
 </body>
 </html>

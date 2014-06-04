@@ -1,5 +1,11 @@
 <?php
 include_once 'model/login.php';
-include_once 'view/login.php';
 
-$_SESSION['user'] = 'Test';
+if($_GET['a'] == 'login')
+{
+    echo loginGame($_POST['username'], $_POST['password']);
+
+    exit();
+}
+
+include_once 'view/login.php';
