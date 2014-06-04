@@ -86,6 +86,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/view/js/game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="39" selection-start="1111" selection-end="1111" vertical-scroll-proportion="0.3068592" vertical-offset="544" max-vertical-offset="1921">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="game.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/game.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -97,19 +106,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/view/js/game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="11" selection-start="795" selection-end="795" vertical-scroll-proportion="0.8465704" vertical-offset="92" max-vertical-offset="1445">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Player.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/js/class/Player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="124" column="16" selection-start="3831" selection-end="3831" vertical-scroll-proportion="0.0" vertical-offset="1819" max-vertical-offset="3791">
+            <state line="12" column="29" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3825">
               <folding />
             </state>
           </provider>
@@ -156,12 +156,12 @@
         <option value="$PROJECT_DIR$/model/game.php" />
         <option value="$PROJECT_DIR$/controler/game.php" />
         <option value="$PROJECT_DIR$/view/js/class/Mob.js" />
-        <option value="$PROJECT_DIR$/view/css/style.css" />
         <option value="$PROJECT_DIR$/view/js/class/Map.js" />
-        <option value="$PROJECT_DIR$/view/game.php" />
         <option value="$PROJECT_DIR$/maps/map01.cm" />
         <option value="$PROJECT_DIR$/view/js/class/Player.js" />
         <option value="$PROJECT_DIR$/view/js/game.js" />
+        <option value="$PROJECT_DIR$/view/css/style.css" />
+        <option value="$PROJECT_DIR$/view/game.php" />
       </list>
     </option>
   </component>
@@ -268,6 +268,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="class" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CubipixJS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CubipixJS" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -415,6 +433,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\CubipixJS\view\img" />
       <recent name="D:\Projects\CubipixJS\view\js" />
       <recent name="D:\Projects\CubipixJS\view" />
       <recent name="D:\Projects\CubipixJS\img\player" />
@@ -465,7 +484,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33073497" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -477,7 +496,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2630458" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33073497" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -829,20 +848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="0" selection-start="709" selection-end="709" vertical-scroll-proportion="0.5397112" vertical-offset="381" max-vertical-offset="935">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/game.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="47" selection-start="4032" selection-end="4032" vertical-scroll-proportion="0.83495146" vertical-offset="1185" max-vertical-offset="2074">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/js/class/Map.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="43" selection-start="678" selection-end="678" vertical-scroll-proportion="0.38628158" vertical-offset="109" max-vertical-offset="1479">
@@ -862,14 +867,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/js/class/Player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="16" selection-start="3831" selection-end="3831" vertical-scroll-proportion="0.0" vertical-offset="1819" max-vertical-offset="3791">
+        <state line="12" column="29" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="18" selection-start="735" selection-end="735" vertical-scroll-proportion="0.57039714" vertical-offset="381" max-vertical-offset="935">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/game.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="197" selection-start="2516" selection-end="2516" vertical-scroll-proportion="0.7029126" vertical-offset="743" max-vertical-offset="2516">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="11" selection-start="795" selection-end="795" vertical-scroll-proportion="0.8465704" vertical-offset="92" max-vertical-offset="1445">
+        <state line="42" column="39" selection-start="1111" selection-end="1111" vertical-scroll-proportion="0.3068592" vertical-offset="544" max-vertical-offset="1921">
           <folding />
         </state>
       </provider>

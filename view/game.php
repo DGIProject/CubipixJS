@@ -49,15 +49,23 @@
 
 <div id="content">
     <div id="game">
-        <div id="toolbar" style="width: 800px;">
-            <span id="player">Player : <?php echo $_SESSION['user']; ?></span>,
-            <span id="map">Map : <span id="currentMap"></span></span>,
-            <span id="coin">
-                Coin : <span id="currentCoins">0</span> / <span id="totalCoins">0</span>
-            </span>,
-            <span id="health">
-                Health : <progress id="currentHealth" value="0" max="10"></progress>
-            </span>
+        <div class="container">
+            <h1 id="map">Map : <span id="currentMap"></span></h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Coin</th>
+                    <th>Health</th>
+                    <th>Time elapsed</th>
+                    <th>Ranking</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td id="playerId">0</td><td id="player"><?php echo $_SESSION['user']; ?></td><td id="coin"><span id="currentCoins">0</span> / <span id="totalCoins">0</span></td><td id="health"><progress id="currentHealth" value="0" max="10"></progress></td><td id="timeElapsed"><span id="currentTimeElapsed">0</span>s</td><td id="ranking">1654</td> </tr>
+                </tbody>
+            </table>
         </div>
         <canvas id="canvas"></canvas>
     </div>
@@ -68,14 +76,28 @@
                     <h4 class="modal-title">Start game</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Choose the map that you want.</p>
+                    <h4>1. Select the mode</h4>
+                    <ul id=tabStartGame" class="nav nav-tabs">
+                        <li class="active"><a href="#online" data-toggle="tab">Online</a></li>
+                        <li><a href="#local" data-toggle="tab">Local</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="online">
+                            <p>Your skill on maps will be saved on the web.</p>
+                        </div>
+                        <div class="tab-pane fade" id="local">
+                            <p>You can play with an other player, no backup of skills will be made.</p>
+                        </div>
+                    </div>
+                    <h4>2. Choose the map</h4>
                     <div class="list-group">
                         <?php
                         foreach($listMaps as $map)
                         {
-                            echo '<a href="#" onclick="startGame(\'' . $map['name'] . '\');" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+                            echo '<a href="#" onclick="loadMap(\'' . $map['name'] . '\');" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
                         }?>
                     </div>
+                    <div id="loadMap">Click on a map to continue</div>
                 </div>
             </div>
         </div>
@@ -91,6 +113,10 @@
         <img id="8t" src="view/img/texture/8.png">
         <img id="9t" src="view/img/texture/9.png">
         <img id="10t" src="view/img/texture/10.png">
+        <img id="11t" src="view/img/texture/11.png">
+        <img id="12t" src="view/img/texture/12.png">
+        <img id="13t" src="view/img/texture/13.png">
+        <img id="14t" src="view/img/texture/14.png">
 
         <img id="1i" src="view/img/item/1.png">
         <img id="2i" src="view/img/item/2.png">

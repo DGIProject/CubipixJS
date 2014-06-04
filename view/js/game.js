@@ -1,4 +1,8 @@
 var canvas, context2d;
+var map;
+var player1, player2;
+var playerId = 0;
+var countdown;
 
 window.onload = function()
 {
@@ -10,11 +14,11 @@ window.onload = function()
     $('#startGameModal').modal('show');
 }
 
-function startGame(name)
+function loadMap(name)
 {
-    $('#startGameModal').modal('hide');
+    document.getElementById('loadMap').innerHTML = '<img src="view/img/ajax-loader.gif">';
 
-    var map = new Map(name);
+    map = new Map(name);
 
     document.getElementById('currentMap').innerHTML = name;
     document.getElementById('totalCoins').innerHTML = map.totalCoins;
@@ -22,13 +26,37 @@ function startGame(name)
     canvas.width = map.getWidth() * 32;
     canvas.height = map.getHeight() * 32;
 
-    console.log(map.playerSpawn.x);
+    player1 = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, DIRECTION.DOWN);
 
-    var player = new Player('player.png', map.playerSpawn.x, map.playerSpawn.y, DIRECTION.DOWN);
-    //player.getAroundBlock(map);
+    map.addPlayer(player1);
+    map.drawMap(context2d);
 
-    map.addPlayer(player);
+    document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button>';
+}
 
+function startGameB()
+{
+    var i = 3;
+
+    countdown = setInterval(function() { showCountDown(i);i--; }, 1000);
+
+    $('#startGameModal').modal('hide');
+}
+
+function showCountDown(i)
+{
+    console.log(i);
+
+    if(i <= 0)
+    {
+        clearInterval(countdown);
+
+        startGame();
+    }
+}
+
+function startGame()
+{
     setInterval(function() {
         map.drawMap(context2d);
     }, 40);
@@ -39,16 +67,16 @@ function startGame(name)
 
         switch(key) {
             case 38 : case 122 : case 119 : case 90 : case 87 :
-            player.movePlayer(DIRECTION.UP, map);
+            player1.movePlayer(DIRECTION.UP, map);
             break;
             case 40 : case 115 : case 83 :
-            player.movePlayer(DIRECTION.DOWN, map);
+            player1.movePlayer(DIRECTION.DOWN, map);
             break;
             case 37 : case 113 : case 97 : case 81 : case 65 :
-            player.movePlayer(DIRECTION.LEFT, map);
+            player1.movePlayer(DIRECTION.LEFT, map);
             break;
             case 39 : case 100 : case 68 :
-            player.movePlayer(DIRECTION.RIGHT, map);
+            player1.movePlayer(DIRECTION.RIGHT, map);
             break;
             default :
                 return true;

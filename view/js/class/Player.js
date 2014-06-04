@@ -8,7 +8,9 @@ var DIRECTION = {
 var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 15;
 
-function Player(url, x, y, direction) {
+function Player(id, username, url, x, y, direction) {
+    this.id = id;
+    this.username = username;
     this.x = x;
     this.y = y;
     this.direction = direction;
