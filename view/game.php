@@ -93,6 +93,7 @@
         <img id="10t" src="view/img/texture/10.png">
 
         <img id="1i" src="view/img/item/1.png">
+        <img id="2i" src="view/img/item/2.png">
     </div>
 </div>
 

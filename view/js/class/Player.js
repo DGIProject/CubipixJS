@@ -199,6 +199,10 @@ Player.prototype.updateItem = function(map) {
 
         this.updateCoins(1);
     }
+    else if(map.itemsLand[yBlock][xBlock] == 2)
+    {
+        this.updateHealth(1);
+    }
 };
 
 Player.prototype.updateHealth = function(lost) {

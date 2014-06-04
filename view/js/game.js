@@ -16,6 +16,7 @@ function startGame(name)
 
     var map = new Map(name);
 
+    document.getElementById('currentMap').innerHTML = name;
     document.getElementById('totalCoins').innerHTML = map.totalCoins;
 
     canvas.width = map.getWidth() * 32;
