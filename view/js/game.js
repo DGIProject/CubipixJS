@@ -1,8 +1,16 @@
 var canvas, context2d;
 var map;
+var gameMode = 0;
 var player1, player2;
 var playerId = 0;
 var countdown;
+
+var controlsPlayer1 = {
+    'UP' : 90,
+    'DOWN' : 83,
+    'LEFT' : 81,
+    'RIGHT' : 68
+};
 
 window.onload = function()
 {
@@ -21,12 +29,13 @@ function loadMap(name)
     map = new Map(name);
 
     document.getElementById('currentMap').innerHTML = name;
-    document.getElementById('totalCoins').innerHTML = map.totalCoins;
 
     canvas.width = map.getWidth() * 32;
     canvas.height = map.getHeight() * 32;
 
     player1 = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, DIRECTION.DOWN);
+
+    document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
 
     map.addPlayer(player1);
     map.drawMap(context2d);
@@ -47,9 +56,13 @@ function showCountDown(i)
 {
     console.log(i);
 
+    document.getElementById('countdown').innerHTML = i;
+
     if(i <= 0)
     {
         clearInterval(countdown);
+
+        document.getElementById('countdown').innerHTML = 'Let\'s go';
 
         startGame();
     }
@@ -61,21 +74,32 @@ function startGame()
         map.drawMap(context2d);
     }, 40);
 
+    var timerPlayer1 = setInterval(function() {
+        player1.actualizeTimeElapsed();
+
+        if(player1.isGameFinished(map))
+        {
+            clearInterval(timerPlayer1);
+        }
+    }, 1000);
+
     window.onkeydown = function(event) {
         var e = event || window.event;
         var key = e.which || e.keyCode;
 
+        console.log(key);
+
         switch(key) {
-            case 38 : case 122 : case 119 : case 90 : case 87 :
+            case controlsPlayer1.UP :
             player1.movePlayer(DIRECTION.UP, map);
             break;
-            case 40 : case 115 : case 83 :
+            case controlsPlayer1.DOWN :
             player1.movePlayer(DIRECTION.DOWN, map);
             break;
-            case 37 : case 113 : case 97 : case 81 : case 65 :
+            case controlsPlayer1.LEFT :
             player1.movePlayer(DIRECTION.LEFT, map);
             break;
-            case 39 : case 100 : case 68 :
+            case controlsPlayer1.RIGHT :
             player1.movePlayer(DIRECTION.RIGHT, map);
             break;
             default :
@@ -84,6 +108,11 @@ function startGame()
 
         return false;
     }
+}
+
+function changeGameMode(id)
+{
+    gameMode = id;
 }
 
 function getXMLHttpRequest() {

@@ -50,7 +50,7 @@
 <div id="content">
     <div id="game">
         <div class="container">
-            <h1 id="map">Map : <span id="currentMap"></span></h1>
+            <h1 id="map">Map : <span id="currentMap"></span>, <span id="countdown">3</span></h1>
             <table class="table">
                 <thead>
                 <tr>
@@ -63,13 +63,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr><td id="playerId">0</td><td id="player"><?php echo $_SESSION['user']; ?></td><td id="coin"><span id="currentCoins">0</span> / <span id="totalCoins">0</span></td><td id="health"><progress id="currentHealth" value="0" max="10"></progress></td><td id="timeElapsed"><span id="currentTimeElapsed">0</span>s</td><td id="ranking">1654</td> </tr>
+                <tr><td id="playerId0">0</td><td id="playerName0"><?php echo $_SESSION['user']; ?></td><td><span id="currentCoins0">0</span> / <span id="totalCoins0">0</span></td><td><progress id="currentHealth0" value="0" max="10"></progress></td><td><span id="currentTimeElapsed0">0</span>s</td><td id="playerRanking0">1654</td></tr>
                 </tbody>
             </table>
         </div>
         <canvas id="canvas"></canvas>
     </div>
-    <div id="startGameModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="startGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,12 +78,33 @@
                 <div class="modal-body">
                     <h4>1. Select the mode</h4>
                     <ul id=tabStartGame" class="nav nav-tabs">
-                        <li class="active"><a href="#online" data-toggle="tab">Online</a></li>
-                        <li><a href="#local" data-toggle="tab">Local</a></li>
+                        <li class="active"><a href="#online" onclick="changeGameMode(0);" data-toggle="tab">Online</a></li>
+                        <li><a href="#local" onclick="changeGameMode(1);" data-toggle="tab">Local</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="online">
                             <p>Your skill on maps will be saved on the web.</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Player 1 : <?php echo $_SESSION['user']; ?></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            Control keys :
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                                <div class="col-sm-2 col-sm-10">
+                                                    <select id="player1Up" class="form-control">
+                                                        <option>Z</option>
+                                                        <option>Key up</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="local">
                             <p>You can play with an other player, no backup of skills will be made.</p>

@@ -35,6 +35,8 @@ function Player(id, username, url, x, y, direction) {
 
     this.coins = 0;
     this.updateCoins(0);
+
+    this.timeElapsed = 0;
 }
 
 Player.prototype.drawPlayer = function(context) {
@@ -67,6 +69,7 @@ Player.prototype.drawPlayer = function(context) {
         // On incrémente d'une frame
         this.etatAnimation++;
     }
+
     /*
      * Si aucune des deux conditions n'est vraie, c'est qu'on est immobile, 
      * donc il nous suffit de garder les valeurs 0 pour les variables 
@@ -81,6 +84,12 @@ Player.prototype.drawPlayer = function(context) {
         (this.x * 32) - (this.playerImage.width / 2) + 16 + decalageX, (this.y * 32) - this.playerImage.height + 24 + decalageY,
         this.playerImage.width, this.playerImage.height // Taille du rectangle destination (c'est la taille du personnage)
     );
+};
+
+Player.prototype.actualizeTimeElapsed = function() {
+    this.timeElapsed = this.timeElapsed + 1;
+
+    document.getElementById('currentTimeElapsed' + this.id).innerHTML = this.timeElapsed;
 };
 
 Player.prototype.getNextPos = function(direction) {
@@ -151,14 +160,7 @@ Player.prototype.isGoodBlock = function(map, direction) {
 
     console.log(nextBloc);
 
-    if(nextBloc != 2)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return nextBloc != 2;
 };
 
 Player.prototype.getBlock = function(map, block) {
@@ -210,11 +212,15 @@ Player.prototype.updateItem = function(map) {
 Player.prototype.updateHealth = function(lost) {
     this.health = this.health - lost;
 
-    document.getElementById('currentHealth').value = this.health;
+    document.getElementById('currentHealth' + this.id).value = this.health;
 };
 
 Player.prototype.updateCoins = function(count) {
     this.coins = this.coins + count;
 
-    document.getElementById('currentCoins').innerHTML = this.coins;
+    document.getElementById('currentCoins' + this.id).innerHTML = this.coins;
+};
+
+Player.prototype.isGameFinished = function(map) {
+    return this.coins == map.totalCoins;
 }
