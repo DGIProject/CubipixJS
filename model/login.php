@@ -5,7 +5,7 @@ function loginGame($username, $password)
     {
         global $bdd;
 
-        $req = $bdd->prepare('SELECT COUNT(*) AS goodLogin FROM users WHERE username = ? AND password = ?');
+        $req = $bdd->prepare('SELECT COUNT(*) AS goodLogin, id FROM users WHERE username = ? AND password = ?');
         $req->execute(array($username, sha1($password)));
 
         $return = $req->fetch();
@@ -13,6 +13,7 @@ function loginGame($username, $password)
         if($return['goodLogin'] > 0)
         {
             $_SESSION['user'] = $username;
+            $_SESSION['userId'] = $return['id'];
 
             return 'true';
         }

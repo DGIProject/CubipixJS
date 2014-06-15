@@ -11,10 +11,10 @@ function Mob(id, type, x, y, direction) {
     this.image = new Image();
     this.image.onload = function() {
         if(!this.complete)
-            throw "Erreur de chargement du sprite nommé \"" + 'player.png' + "\".";
+            throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
     };
 
-    this.image.src = "view/img/player/" + 'player.png';
+    this.image.src = "view/img/mob/" + 'mob01.png';
 
     this.mobImage = {
         "width" : this.image.width / 4,
@@ -111,6 +111,8 @@ Mob.prototype.moveMob = function(map) {
 
     this.x = nextCase.x;
     this.y = nextCase.y;
+
+    map.detectCollisionMob(this.x, this.y);
 
     return true;
 };

@@ -211,6 +211,8 @@ Player.prototype.updateHealth = function(lost) {
     this.health = this.health - lost;
 
     document.getElementById('currentHealth' + this.id).value = this.health;
+
+    health.play();
 };
 
 Player.prototype.updateCoins = function(count) {
@@ -220,5 +222,5 @@ Player.prototype.updateCoins = function(count) {
 };
 
 Player.prototype.isGameFinished = function(map) {
-    return this.coins == map.totalCoins;
+    return (this.coins == map.totalCoins || this.health <= 0);
 }

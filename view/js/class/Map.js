@@ -48,6 +48,18 @@ Map.prototype.addPlayer = function(player) {
     this.listPlayers.push(player);
 }
 
+Map.prototype.detectCollisionMob = function(x, y) {
+    for(var i = 0; i < this.listPlayers.length; i++)
+    {
+        if(x == this.listPlayers[i].x && y == this.listPlayers[i].y)
+        {
+            console.log('collision');
+
+            this.listPlayers[i].updateHealth(1);
+        }
+    }
+}
+
 Map.prototype.drawMap = function(context) {
     for(var i = 0, l = this.land.length; i < l; i++)
     {

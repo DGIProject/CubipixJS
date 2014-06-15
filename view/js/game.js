@@ -11,20 +11,31 @@ var controlsPlayer1 = {
     'RIGHT' : 68
 };
 
-window.onload = function()
-{
-    console.log('loaded');
+soundManager.url = 'view/music/';
+soundManager.debugMode = true;
 
-    canvas = document.getElementById('canvas');
-    context2d = canvas.getContext('2d');
+var music01, health;
 
-    $('#startGameModal').modal('show');
+soundManager.onload = function() {
+    music01 = soundManager.createSound(
+        {
+            id : "music01",
+            url : "view/music/music01.mp3",
+            volume : 10,
+            onfinish : function() {
+                this.play();
+            }
+        });
+
+    health = soundManager.createSound(
+        {
+            id : "health",
+            url : "view/music/sounds/health.mp3"
+        });
 }
 
 function loadMap(name)
 {
-    document.getElementById('loadMap').innerHTML = '<img src="view/img/ajax-loader.gif"> Chargement de la map en cours ...';
-
     map = new Map(name);
 
     document.getElementById('currentMap').innerHTML = name;
@@ -51,6 +62,8 @@ function startGameB()
     var i = 3;
 
     countdown = setInterval(function() { showCountDown(i);i--; }, 1000);
+
+    music01.play();
 
     $('#startGameModal').modal('hide');
 }
@@ -94,17 +107,20 @@ function startGame()
 
         switch(key) {
             case controlsPlayer1.UP :
-            player1.movePlayer(DIRECTION.UP, map);
-            break;
+                player1.movePlayer(DIRECTION.UP, map);
+                break;
             case controlsPlayer1.DOWN :
-            player1.movePlayer(DIRECTION.DOWN, map);
-            break;
+                player1.movePlayer(DIRECTION.DOWN, map);
+                break;
             case controlsPlayer1.LEFT :
-            player1.movePlayer(DIRECTION.LEFT, map);
-            break;
+                player1.movePlayer(DIRECTION.LEFT, map);
+                break;
             case controlsPlayer1.RIGHT :
-            player1.movePlayer(DIRECTION.RIGHT, map);
-            break;
+                player1.movePlayer(DIRECTION.RIGHT, map);
+                break;
+            case 27 :
+                $('#menuGameModal').modal('toggle');
+                break;
             default :
                 return true;
         }

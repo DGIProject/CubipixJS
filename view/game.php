@@ -76,49 +76,79 @@
                     <h4 class="modal-title">Start game</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>1. Select the mode</h4>
-                    <ul id=tabStartGame" class="nav nav-tabs">
-                        <li class="active"><a href="#online" onclick="changeGameMode(0);" data-toggle="tab">Online</a></li>
-                        <li><a href="#local" onclick="changeGameMode(1);" data-toggle="tab">Local</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade active in" id="online">
-                            <p>Your skill on maps will be saved on the web.</p>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Player 1 : <?php echo $_SESSION['user']; ?></h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            Control keys :
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                                <div class="col-sm-2 col-sm-10">
-                                                    <select id="player1Up" class="form-control">
-                                                        <option>Z</option>
-                                                        <option>Key up</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Map : <?php echo $map['name']; ?></h3>
+                        </div>
+                        <div class="panel-body"><?php echo $map['description']; ?> </br>Meilleur score : <?php echo ($score['timeG'] != NULL) ? $score['timeG'] . 's' : 'Aucun'; ?>.</div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Player 1 : <?php echo $_SESSION['user']; ?></h3>
+                        </div>
+                        <div class="panel-body">
+                            Control keys :
+                            <div class="input-group col-md-4">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-up"></span></span>
+                                <select id="player1Up" class="form-control">
+                                    <option>Z</option>
+                                    <option>Key up</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-md-4">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-left"></span></span>
+                                <select id="player1Left" class="form-control">
+                                    <option>Q</option>
+                                    <option>Key left</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-md-4">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-right"></span></span>
+                                <select id="player1Right" class="form-control">
+                                    <option>D</option>
+                                    <option>Key right</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-md-4">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-down"></span></span>
+                                <select id="player1Down" class="form-control">
+                                    <option>S</option>
+                                    <option>Key down</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="local">
-                            <p>You can play with an other player, no backup of skills will be made.</p>
-                        </div>
                     </div>
-                    <h4>2. Choose the map</h4>
-                    <div class="list-group">
-                        <?php
-                        foreach($listMaps as $map)
-                        {
-                            echo '<a href="#" onclick="loadMap(\'' . $map['name'] . '\');" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
-                        }?>
+                    <div id="loadMap">
+                        <img src="view/img/ajax-loader.gif"> Chargement de la map en cours ...
                     </div>
-                    <div id="loadMap">Click on a map to continue</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menuGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Menu</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Music</h4>
+                    <button type="button" onclick="music01.pause();" class="btn btn-default btn-block">Pause</button>
+                    </br>
+                    <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Back</button>
+                    <button type="button" onclick="location.href = 'index.php?type=game';" class="btn btn-default btn-block">Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="finishGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Finish game</h4>
+                </div>
+                <div class="modal-body center">
+                    <h4>You win</h4>
                 </div>
             </div>
         </div>
@@ -156,10 +186,25 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="view/js/bootstrap.min.js"></script>
+<script src="view/js/soundmanager2.js"></script>
 <script src="view/js/class/Map.js"></script>
 <script src="view/js/class/Player.js"></script>
 <script src="view/js/class/Mob.js"></script>
 <script src="view/js/game.js"></script>
+
+<script type="text/javascript">
+    window.onload = function()
+    {
+        console.log('loaded');
+
+        canvas = document.getElementById('canvas');
+        context2d = canvas.getContext('2d');
+
+        $('#startGameModal').modal('show');
+
+        loadMap("<?php echo $map['name']; ?>");
+    };
+</script>
 
 </body>
 </html>
