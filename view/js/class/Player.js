@@ -158,8 +158,6 @@ Player.prototype.isGoodBlock = function(map, direction) {
             return false;
     }
 
-    console.log(nextBloc);
-
     return nextBloc != 2;
 };
 

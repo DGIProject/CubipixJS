@@ -158,6 +158,7 @@
 <script src="view/js/bootstrap.min.js"></script>
 <script src="view/js/class/Map.js"></script>
 <script src="view/js/class/Player.js"></script>
+<script src="view/js/class/Mob.js"></script>
 <script src="view/js/game.js"></script>
 
 </body>

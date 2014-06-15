@@ -1,6 +1,5 @@
 var canvas, context2d;
 var map;
-var gameMode = 0;
 var player1, player2;
 var playerId = 0;
 var countdown;
@@ -24,7 +23,7 @@ window.onload = function()
 
 function loadMap(name)
 {
-    document.getElementById('loadMap').innerHTML = '<img src="view/img/ajax-loader.gif">';
+    document.getElementById('loadMap').innerHTML = '<img src="view/img/ajax-loader.gif"> Chargement de la map en cours ...';
 
     map = new Map(name);
 
@@ -37,10 +36,14 @@ function loadMap(name)
 
     document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
 
-    map.addPlayer(player1);
-    map.drawMap(context2d);
+    setTimeout(function() {
+        map.addPlayer(player1);
+        map.drawMap(context2d);
+    }, 500);
 
-    document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button>';
+    setTimeout(function() {
+        document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button>';
+    }, 1000);
 }
 
 function startGameB()
@@ -79,6 +82,8 @@ function startGame()
 
         if(player1.isGameFinished(map))
         {
+            console.log('gameFinished');
+
             clearInterval(timerPlayer1);
         }
     }, 1000);
@@ -86,8 +91,6 @@ function startGame()
     window.onkeydown = function(event) {
         var e = event || window.event;
         var key = e.which || e.keyCode;
-
-        console.log(key);
 
         switch(key) {
             case controlsPlayer1.UP :
@@ -108,11 +111,6 @@ function startGame()
 
         return false;
     }
-}
-
-function changeGameMode(id)
-{
-    gameMode = id;
 }
 
 function getXMLHttpRequest() {

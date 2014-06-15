@@ -18,7 +18,14 @@ function Map(name)
     this.land = tabMapData.land;
     this.itemsLand = tabMapData.itemsLand;
     this.totalCoins = tabMapData.totalCoins;
+    this.mobs = tabMapData.mobs;
     this.listPlayers = [];
+    this.listMobs = [];
+
+    for(var i = 0; i < this.mobs.length; i++)
+    {
+        this.listMobs.push(new Mob(i, this.mobs[i][0], this.mobs[i][1], this.mobs[i][2], this.mobs[i][3]));
+    }
 }
 
 Map.prototype.getName = function () {
@@ -65,6 +72,12 @@ Map.prototype.drawMap = function(context) {
                 this.drawItem(lineItem[d], context, d * 32, c);
             }
         }
+    }
+
+    for(var z = 0; z < this.listMobs.length; z++)
+    {
+        this.listMobs[z].drawMob(context);
+        this.listMobs[z].moveMob(this);
     }
 
     for(var x = 0; x < this.listPlayers.length; x++)
