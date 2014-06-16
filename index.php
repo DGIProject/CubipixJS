@@ -12,6 +12,10 @@ if($_GET['type'] == 'game')
         include_once 'controler/login.php';
     }
 }
+elseif($_GET['type'] == 'mapEditor')
+{
+    include_once 'controler/mapEditor.php';
+}
 elseif($_GET['type'] == 'register')
 {
     include_once 'controler/register.php';

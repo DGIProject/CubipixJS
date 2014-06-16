@@ -87,3 +87,10 @@ code {
     background-color: #ff5e3c;
     border-radius: 4px;
 }
+
+#mapEditor {
+    margin-top: 51px;
+    display: block;
+    overflow: auto;
+    text-align: center;
+}

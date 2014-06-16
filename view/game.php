@@ -81,7 +81,7 @@
                         </div>
                         <div class="panel-body">
                             <h4>Controls</h4>
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">UP</label>
                                     <div class="col-sm-10">
@@ -136,7 +136,7 @@
                 </div>
                 <div class="modal-body">
                     <h4>Controls</h4>
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">UP</label>
                             <div class="col-sm-10">
@@ -175,7 +175,7 @@
                         </div>
                     </form>
                     <h4>Volume</h4>
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Music</label>
                             <div class="col-sm-10">
@@ -220,6 +220,7 @@
         </div>
     </div>
     <div id="textures" style="display: none;">
+        <img id="0t" src="view/img/texture/0.png">
         <img id="1t" src="view/img/texture/1.png">
         <img id="2t" src="view/img/texture/2.png">
         <img id="3t" src="view/img/texture/3.png">
