@@ -49,25 +49,18 @@
 
 <div id="content">
     <div id="game">
-        <div class="container">
-            <h1 id="map">Map : <span id="currentMap"></span>, <span id="countdown">3</span></h1>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Player</th>
-                    <th>Coin</th>
-                    <th>Health</th>
-                    <th>Time elapsed</th>
-                    <th>Ranking</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td id="playerId0">0</td><td id="playerName0"><?php echo $_SESSION['user']; ?></td><td><span id="currentCoins0">0</span> / <span id="totalCoins0">0</span></td><td><progress id="currentHealth0" value="0" max="10"></progress></td><td><span id="currentTimeElapsed0">0</span>s</td><td id="playerRanking0">1654</td></tr>
-                </tbody>
-            </table>
-        </div>
         <canvas id="canvas"></canvas>
+    </div>
+    <div id="informations">
+        <span id="mapName">
+            <span id="currentMap"></span>, <span id="countdown">3</span>
+        </span>
+        <span>
+            <span class="marginInformations">Player : <span id="playerName0"><?php echo $_SESSION['user']; ?></span></span>
+            <span class="marginInformations">Coins : <span id="currentCoins0">0</span> / <span id="totalCoins0">0</span></span>
+            <span class="marginInformations">Health : <progress id="currentHealth0" class="progressHealth" value="0" max="10"></progress></span>
+            <span class="marginInformations">Time elapsed : <span id="currentTimeElapsed0">0</span>s</span>
+        </span>
     </div>
     <div id="startGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

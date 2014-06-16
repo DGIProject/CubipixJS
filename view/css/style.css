@@ -39,7 +39,7 @@ code {
 }
 
 #game {
-    margin-top: 75px;
+    margin-top: 51px;
     display: block;
     overflow: auto;
     text-align: center;
@@ -51,4 +51,39 @@ code {
 
 .center {
     text-align: center;
+}
+
+#informations {
+    position: fixed;
+    top : 50px;
+    left : 5px;
+    width: 100%;
+    font-weight: bold;
+}
+
+#mapName {
+    font-size: 25px;
+}
+
+.marginInformations {
+    margin-left: 40px;
+}
+
+.progressHealth {
+    height: 18px;
+    width: 100px;
+    border: 0;
+    border-radius: 4px;
+    background-color: #391a16;
+    color: #ff645b;
+}
+
+.progressHealth::-webkit-progress-value {
+    background-color: #ff5e3c;
+    border-radius: 4px;
+}
+
+.progressHealth::-moz-progress-bar {
+    background-color: #ff5e3c;
+    border-radius: 4px;
 }
