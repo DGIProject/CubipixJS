@@ -143,6 +143,22 @@ function startGame()
             console.log('gameFinished');
 
             clearInterval(timerPlayer1);
+
+            if(player1.coins == map.totalCoins)
+            {
+                document.getElementById('titleFG').innerHTML = 'You win the map';
+            }
+            else
+            {
+                document.getElementById('titleFG').innerHTML = 'You lose the map';
+            }
+
+            document.getElementById('timeElapsedFG').innerHTML = player1.timeElapsed;
+
+            document.getElementById('currentCoinsFG').innerHTML = player1.coins;
+            document.getElementById('totalCoinsFG').innerHTML = map.totalCoins;
+
+            $('#finishGameModal').modal('show');
         }
     }, 1000);
 

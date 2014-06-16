@@ -210,7 +210,18 @@
                     <h4 class="modal-title">Finish game</h4>
                 </div>
                 <div class="modal-body center">
-                    <h4>You win</h4>
+                    <h4 id="titleFG">Unknown</h4>
+                    <div class="well">
+                        <span>Time elapsed : <span id="timeElapsedFG"></span>s.</span>
+                        </br>
+                        <span>Coins : <span id="currentCoinsFG"></span> / <span id="totalCoinsFG"></span>.</span>
+                        </br>
+                        <span>Current ranking : <span id="currentRankingFG"></span>.</span>
+                        </br>
+                        <span>Best ranking : <span id="bestRankingFG"></span>.</span>
+                    </div>
+                    <button type="button" onclick="location.reload();" class="btn btn-default btn-block">Play again</button>
+                    <button type="button" onclick="location.href = 'index.php?type=game';" class="btn btn-default btn-block">Exit</button>
                 </div>
             </div>
         </div>
