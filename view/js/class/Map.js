@@ -55,7 +55,7 @@ Map.prototype.detectCollisionMob = function(x, y) {
         {
             console.log('collision');
 
-            this.listPlayers[i].updateHealth(1);
+            this.listPlayers[i].updateHealth(1, true);
         }
     }
 }

@@ -31,10 +31,10 @@ function Player(id, username, url, x, y, direction) {
     };
 
     this.health = 10;
-    this.updateHealth(0);
+    this.updateHealth(0, false);
 
     this.coins = 0;
-    this.updateCoins(0);
+    this.updateCoins(0, false);
 
     this.timeElapsed = 0;
 }
@@ -199,26 +199,28 @@ Player.prototype.updateItem = function(map) {
     {
         setTimeout(function() { map.itemsLand[yBlock][xBlock] = 0; }, 500);
 
-        this.updateCoins(1);
+        this.updateCoins(1, true);
     }
     else if(map.itemsLand[yBlock][xBlock] == 2)
     {
-        this.updateHealth(1);
+        this.updateHealth(1, true);
     }
 };
 
-Player.prototype.updateHealth = function(lost) {
+Player.prototype.updateHealth = function(lost, playMusic) {
     this.health = this.health - lost;
 
     document.getElementById('currentHealth' + this.id).value = this.health;
 
-    health.play();
+    if(playMusic) { health.play(); }
 };
 
-Player.prototype.updateCoins = function(count) {
+Player.prototype.updateCoins = function(count, playMusic) {
     this.coins = this.coins + count;
 
     document.getElementById('currentCoins' + this.id).innerHTML = this.coins;
+
+    if(playMusic) { coins.play(); }
 };
 
 Player.prototype.isGameFinished = function(map) {

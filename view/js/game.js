@@ -6,9 +6,9 @@ var countdown;
 
 var controlsPlayer1 = {
     'UP' : 90,
-    'DOWN' : 83,
     'LEFT' : 81,
-    'RIGHT' : 68
+    'RIGHT' : 68,
+    'DOWN' : 83
 };
 
 soundManager.url = 'view/music/';
@@ -21,7 +21,7 @@ soundManager.onload = function() {
         {
             id : "music01",
             url : "view/music/music01.mp3",
-            volume : 10,
+            volume : 20,
             onfinish : function() {
                 this.play();
             }
@@ -30,8 +30,53 @@ soundManager.onload = function() {
     health = soundManager.createSound(
         {
             id : "health",
-            url : "view/music/sounds/health.mp3"
+            url : "view/music/sounds/health.mp3",
+            volume : 10
         });
+
+    coins = soundManager.createSound(
+        {
+            id : "coins",
+            url : "view/music/sounds/coins.mp3",
+            volume : 20
+        });
+};
+
+function updateVolume(value, type)
+{
+    if(type == 'music')
+    {
+        music01.setVolume(value);
+    }
+    else if(type == 'sound')
+    {
+        health.setVolume(value);
+        coins.setVolume(value);
+    }
+    else
+    {
+        console.log('error');
+    }
+}
+
+function updateControls(direction, value)
+{
+    switch (direction) {
+        case 0 :
+            controlsPlayer1.UP = parseInt(value);
+            break;
+        case 1 :
+            controlsPlayer1.LEFT = parseInt(value);
+            break;
+        case 2 :
+            controlsPlayer1.RIGHT = parseInt(value);
+            break;
+        case 3 :
+            controlsPlayer1.DOWN = parseInt(value);
+            break;
+        default :
+            console.log('error');
+    }
 }
 
 function loadMap(name)

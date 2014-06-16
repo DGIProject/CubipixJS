@@ -87,35 +87,45 @@
                             <h3 class="panel-title">Player 1 : <?php echo $_SESSION['user']; ?></h3>
                         </div>
                         <div class="panel-body">
-                            Control keys :
-                            <div class="input-group col-md-4">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-up"></span></span>
-                                <select id="player1Up" class="form-control">
-                                    <option>Z</option>
-                                    <option>Key up</option>
-                                </select>
-                            </div>
-                            <div class="input-group col-md-4">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-left"></span></span>
-                                <select id="player1Left" class="form-control">
-                                    <option>Q</option>
-                                    <option>Key left</option>
-                                </select>
-                            </div>
-                            <div class="input-group col-md-4">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-right"></span></span>
-                                <select id="player1Right" class="form-control">
-                                    <option>D</option>
-                                    <option>Key right</option>
-                                </select>
-                            </div>
-                            <div class="input-group col-md-4">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-arrow-down"></span></span>
-                                <select id="player1Down" class="form-control">
-                                    <option>S</option>
-                                    <option>Key down</option>
-                                </select>
-                            </div>
+                            <h4>Controls</h4>
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">UP</label>
+                                    <div class="col-sm-10">
+                                        <select id="upControl" onchange="updateControls(0, this.value);" class="form-control">
+                                            <option value="90">Z</option>
+                                            <option value="38">Key up</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">LEFT</label>
+                                    <div class="col-sm-10">
+                                        <select id="leftControl" onchange="updateControls(1, this.value);" class="form-control">
+                                            <option value="81">Q</option>
+                                            <option value="37">Key left</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">RIGHT</label>
+                                    <div class="col-sm-10">
+                                        <select id="rightControl" onchange="updateControls(2, this.value);" class="form-control">
+                                            <option value="68">D</option>
+                                            <option value="39">Key right</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">DOWN</label>
+                                    <div class="col-sm-10">
+                                        <select id="downControl" onchange="updateControls(3, this.value);" class="form-control">
+                                            <option value="83">S</option>
+                                            <option value="40">Key down</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div id="loadMap">
@@ -132,8 +142,60 @@
                     <h4 class="modal-title">Menu</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>Music</h4>
-                    <button type="button" onclick="music01.pause();" class="btn btn-default btn-block">Pause</button>
+                    <h4>Controls</h4>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">UP</label>
+                            <div class="col-sm-10">
+                                <select id="upControl" onchange="updateControls(0, this.value);" class="form-control">
+                                    <option value="90">Z</option>
+                                    <option value="38">Key up</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">LEFT</label>
+                            <div class="col-sm-10">
+                                <select id="leftControl" onchange="updateControls(1, this.value);" class="form-control">
+                                    <option value="81">Q</option>
+                                    <option value="37">Key left</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">RIGHT</label>
+                            <div class="col-sm-10">
+                                <select id="rightControl" onchange="updateControls(2, this.value);" class="form-control">
+                                    <option value="68">D</option>
+                                    <option value="39">Key right</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">DOWN</label>
+                            <div class="col-sm-10">
+                                <select id="downControl" onchange="updateControls(3, this.value);" class="form-control">
+                                    <option value="83">S</option>
+                                    <option value="40">Key down</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <h4>Volume</h4>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Music</label>
+                            <div class="col-sm-10">
+                                <input type="range" name="volumeMusic" onchange="updateVolume(this.value, 'music');" class="form-control" min="0" max="100" value="20">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sound</label>
+                            <div class="col-sm-10">
+                                <input type="range" name="volumeSound" onchange="updateVolume(this.value, 'sound');" class="form-control" min="0" max="100" value="10">
+                            </div>
+                        </div>
+                    </form>
                     </br>
                     <button type="button" class="btn btn-default btn-block" data-dismiss="modal">Back</button>
                     <button type="button" onclick="location.href = 'index.php?type=game';" class="btn btn-default btn-block">Exit</button>
