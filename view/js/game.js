@@ -1,5 +1,5 @@
 var canvas, context2d;
-var map;
+var mapId, map;
 var player1, player2;
 var playerId = 0;
 var countdown;
@@ -79,8 +79,10 @@ function updateControls(direction, value)
     }
 }
 
-function loadMap(name)
+function loadMap(id, name)
 {
+    mapId = parseInt(id);
+
     map = new Map(name);
 
     document.getElementById('currentMap').innerHTML = name;
@@ -146,10 +148,14 @@ function startGame()
 
             if(player1.coins == map.totalCoins)
             {
+                addScore(1);
+
                 document.getElementById('titleFG').innerHTML = 'You win the map';
             }
             else
             {
+                addScore(0);
+
                 document.getElementById('titleFG').innerHTML = 'You lose the map';
             }
 
@@ -188,6 +194,62 @@ function startGame()
 
         return false;
     }
+}
+
+function getRanking(points)
+{
+    var OAjax;
+
+    if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
+    else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
+    OAjax.open('POST', 'index.php?type=game&a=getRanking',true);
+    OAjax.onreadystatechange = function()
+    {
+        if (OAjax.readyState == 4 && OAjax.status==200)
+        {
+            console.log(OAjax.responseText);
+
+            document.getElementById('currentRankingFG').innerHTML = OAjax.responseText;
+        }
+    }
+
+    OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    OAjax.send('mapId=' + mapId + '&points=' + points);
+}
+
+function addScore(win)
+{
+    var pointsTime = (60/100) * ((40 / player1.timeElapsed) * 2);
+    var pointsHealth = (50/100) * (((player1.health / 10) * 20) * 2);
+
+    var totalPoints = Math.ceil((win == 1) ? ((110/100) * (pointsTime + pointsHealth)) : ((20/100) * (pointsTime + pointsHealth))) * 2;
+
+    document.getElementById('currentPointsFG').innerHTML = totalPoints;
+
+    var OAjax;
+
+    if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
+    else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
+    OAjax.open('POST', 'index.php?type=game&a=addScore',true);
+    OAjax.onreadystatechange = function()
+    {
+        if (OAjax.readyState == 4 && OAjax.status==200)
+        {
+            console.log(OAjax.responseText);
+
+            if(OAjax.responseText == 'true')
+            {
+                getRanking(totalPoints);
+            }
+            else
+            {
+                console.log('error');
+            }
+        }
+    }
+
+    OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    OAjax.send('mapId=' + mapId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
 }
 
 function getXMLHttpRequest() {

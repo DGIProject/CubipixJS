@@ -19,12 +19,29 @@ function getInfoMap($id)
     return $req->fetch();
 }
 
-function getBestScoreMap($mapId)
+function addScore($mapId, $win, $points, $health, $timeG)
 {
     global $bdd;
 
-    $req = $bdd->prepare('SELECT * FROM score WHERE usernameId = ? AND mapId = ? ORDER BY timeG DESC');
-    $req->execute(array($_SESSION['userId'], $mapId));
+    $req = $bdd->prepare('INSERT INTO score (usernameId, mapId, win, points, health, timeG) VALUES (:usernameId, :mapId, :win, :points, :health, :timeG)');
 
-    return $req->fetch();
+    if($req->execute(array('usernameId' => $_SESSION['userId'], 'mapId' => $mapId, 'win' => $win, 'points' => $points, 'health' => $health, 'timeG' => $timeG)))
+    {
+        return 'true';
+    }
+    else
+    {
+        return 'false';
+    }
+}
+
+function getRanking($mapId, $points)
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT COUNT(*) AS ranking FROM score WHERE mapId = ? AND points >= ?');
+    $req->execute(array($mapId, $points));
+
+    $return = $req->fetch();
+    return $return['ranking'];
 }

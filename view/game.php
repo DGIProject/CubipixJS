@@ -73,7 +73,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Map : <?php echo $map['name']; ?></h3>
                         </div>
-                        <div class="panel-body"><?php echo $map['description']; ?> </br>Meilleur score : <?php echo ($score['timeG'] != NULL) ? $score['timeG'] . 's' : 'Aucun'; ?>.</div>
+                        <div class="panel-body"><?php echo $map['description']; ?> </br>Ranking : <?php echo getRanking($map['id'], 0); ?>.</div>
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -209,9 +209,9 @@
                         </br>
                         <span>Coins : <span id="currentCoinsFG"></span> / <span id="totalCoinsFG"></span>.</span>
                         </br>
-                        <span>Current ranking : <span id="currentRankingFG"></span>.</span>
+                        <span>Points : <span id="currentPointsFG"></span>.</span>
                         </br>
-                        <span>Best ranking : <span id="bestRankingFG"></span>.</span>
+                        <span>Ranking : <span id="currentRankingFG"><img src="view/img/ajax-loader.gif"></span>.</span>
                     </div>
                     <button type="button" onclick="location.reload();" class="btn btn-default btn-block">Play again</button>
                     <button type="button" onclick="location.href = 'index.php?type=game';" class="btn btn-default btn-block">Exit</button>
@@ -269,7 +269,7 @@
 
         $('#startGameModal').modal('show');
 
-        loadMap("<?php echo $map['name']; ?>");
+        loadMap("<?php echo $map['id']; ?>", "<?php echo $map['name']; ?>");
     };
 </script>
 
