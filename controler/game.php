@@ -24,6 +24,7 @@ if($_SESSION['user'] != NULL)
     }
     else
     {
+        $listLevels = getListLevels();
         $listMaps = getListMaps();
 
         include_once 'view/dashboard.php';

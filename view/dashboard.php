@@ -51,13 +51,37 @@
     <div class="page-header">
         <h1>Map solo</h1>
     </div>
+    <h4>Levels</h4>
     <div class="list-group">
         <?php
-        foreach($listMaps as $map)
+        if($listLevels != NULL)
         {
-            echo '<a href="index.php?type=game&mapId=' . $map['id'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+            foreach($listLevels as $level)
+            {
+                echo '<a href="index.php?type=game&mapId=' . $level['id'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $level['name'] . '</h4><p class="list-group-item-text">' . $level['description'] . '</p></a>';
+            }
+        }
+        else
+        {
+            echo '<p>There is no levels.</p>';
         }?>
     </div>
+    <h4>My maps</h4>
+    <div class="list-group">
+        <?php
+        if($listMaps != NULL)
+        {
+            foreach($listMaps as $map)
+            {
+                echo '<a href="index.php?type=game&mapId=' . $map['id'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+            }
+        }
+        else
+        {
+            echo '<p>You don\'t have any map.</p>';
+        }?>
+    </div>
+    <a href="index.php?type=mapEditor" class="btn btn-success">Create a map</a>
     <div class="page-header">
         <h1>Map multiplayer</h1>
     </div>

@@ -1,4 +1,14 @@
 <?php
+function getListLevels()
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT * FROM levels ORDER BY numberL');
+    $req->execute();
+
+    return $req->fetchAll();
+}
+
 function getListMaps()
 {
     global $bdd;
