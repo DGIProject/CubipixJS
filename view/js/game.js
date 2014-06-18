@@ -186,18 +186,30 @@ function startGame()
 {
     document.onkeydown = function(e) {
         var code = e.keyCode;
-        if(tabKeys.indexOf(code)<0) {
-            tabKeys.push(code);
+
+        if(code == 27)
+        {
+            $('#menuGameModal').modal('toggle');
+        }
+        else
+        {
+            if(tabKeys.indexOf(code) < 0)
+            {
+                tabKeys.push(code);
+            }
         }
     };
 
     document.onkeyup = function(e) {
-        var code = e.keyCode,
-            index = tabKeys.indexOf(code);
-        if(index>=0) {
+        var code = e.keyCode;
+        var index = tabKeys.indexOf(code);
+
+        if(index >= 0)
+        {
             tabKeys.splice(index,1);
         }
     };
+
     setInterval(function() {
         map.drawMap(context2d);
 
@@ -218,76 +230,88 @@ function startGame()
                     case map.listPlayers[x].keyControls.RIGHT :
                         map.listPlayers[x].movePlayer(DIRECTION.RIGHT, map);
                         break;
-                    case 27 :
-                        $('#menuGameModal').modal('toggle');
-                        break;
                     default :
-                        console.log('error');
+                        console.log('notGameKey');
                 }
             }
         }
     }, 40);
 
-    var timerPlayer1 = setInterval(function() {
-        player1.actualizeTimeElapsed();
+    var timerPlayers = setInterval(function() {
+        if(stillAlive() && !haveTotalCoins())
+        {
+            for(var i = 0; i < map.listPlayers.length; i++)
+            {
+                console.log('ok');
 
-        if(player1.isGameFinished(map))
+                if(!map.listPlayers[i].isGameFinished(map))
+                {
+                    map.listPlayers[i].actualizeTimeElapsed();
+                }
+            }
+        }
+        else
         {
             console.log('gameFinished');
 
-            clearInterval(timerPlayer1);
+            clearInterval(timerPlayers);
 
-            if(player1.coins == map.totalCoins)
+            if(stillAlive())
             {
-                addScore(1);
-
                 document.getElementById('titleFG').innerHTML = 'You win the map';
             }
             else
             {
-                addScore(0);
-
-                document.getElementById('titleFG').innerHTML = 'You lose the map';
+                document.getElementById('titleFG').innerHTML = 'You lost the map';
             }
 
-            document.getElementById('timeElapsedFG').innerHTML = player1.timeElapsed;
+            for(var x = 0; x < map.listPlayers.length; x++)
+            {
+                var divPlayer = document.createElement('div');
+                divPlayer.classList.add('well');
+                divPlayer.innerHTML = '<div class="well">' +
+                    '<span>Player : ' + map.listPlayers[x].username + '</span></br>' +
+                    '<span>Time elapsed : ' + map.listPlayers[x].timeElapsed + 's.</span></br>' +
+                    '<span>Coins : ' + map.listPlayers[x].coins + ' / ' + map.totalCoins + '.</span></br>' +
+                    '<span>Points : .</span></br>' +
+                    '<span>Ranking : <span id="currentRankingFG"><img src="view/img/ajax-loader.gif"></span>.</span>' +
+                    '</div>';
 
-            document.getElementById('currentCoinsFG').innerHTML = player1.coins;
-            document.getElementById('totalCoinsFG').innerHTML = map.totalCoins;
+                document.getElementById('playersFinish').appendChild(divPlayer);
+            }
 
             $('#finishGameModal').modal('show');
         }
     }, 1000);
+}
 
-    /*
-    window.onkeydown = function(event) {
-        var e = event || window.event;
-        var key = e.which || e.keyCode;
+function haveTotalCoins()
+{
+    var totalCoins = 0;
 
-        switch(key) {
-            case controlsPlayer1.UP :
-                player1.movePlayer(DIRECTION.UP, map);
-                break;
-            case controlsPlayer1.DOWN :
-                player1.movePlayer(DIRECTION.DOWN, map);
-                break;
-            case controlsPlayer1.LEFT :
-                player1.movePlayer(DIRECTION.LEFT, map);
-                break;
-            case controlsPlayer1.RIGHT :
-                player1.movePlayer(DIRECTION.RIGHT, map);
-                break;
-            case 27 :
-                player2.movePlayer(DIRECTION.UP, map);
-                //$('#menuGameModal').modal('toggle');
-                break;
-            default :
-                return true;
-        }
-
-        return false;
+    for(var i = 0; i < map.listPlayers.length; i++)
+    {
+        totalCoins += parseInt(map.listPlayers[i].coins);
     }
-    */
+
+    return totalCoins == map.totalCoins;
+}
+
+function stillAlive()
+{
+    var stillAlive = false;
+
+    for(var i = 0; i < map.listPlayers.length; i++)
+    {
+        console.log(map.listPlayers[i].health);
+
+        if(map.listPlayers[i].health >= 0)
+        {
+            stillAlive = true;
+        }
+    }
+
+    return stillAlive;
 }
 
 function getRanking(points)

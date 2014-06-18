@@ -157,15 +157,7 @@
                 </div>
                 <div class="modal-body center">
                     <h4 id="titleFG">Unknown</h4>
-                    <div class="well">
-                        <span>Time elapsed : <span id="timeElapsedFG"></span>s.</span>
-                        </br>
-                        <span>Coins : <span id="currentCoinsFG"></span> / <span id="totalCoinsFG"></span>.</span>
-                        </br>
-                        <span>Points : <span id="currentPointsFG"></span>.</span>
-                        </br>
-                        <span>Ranking : <span id="currentRankingFG"><img src="view/img/ajax-loader.gif"></span>.</span>
-                    </div>
+                    <div id="playersFinish"></div>
                     <button type="button" onclick="location.reload();" class="btn btn-default btn-block">Play again</button>
                     <button type="button" onclick="location.href = 'index.php?type=game';" class="btn btn-default btn-block">Exit</button>
                 </div>
