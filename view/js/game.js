@@ -3,6 +3,7 @@ var mapId, map;
 var player1, player2;
 var playerId = 0;
 var countdown;
+var tabKeys = [];
 
 var controlsPlayer1 = {
     'UP' : 90,
@@ -12,7 +13,7 @@ var controlsPlayer1 = {
 };
 
 soundManager.url = 'view/music/';
-soundManager.debugMode = true;
+soundManager.debugMode = false;
 
 var music01, health;
 
@@ -59,20 +60,73 @@ function updateVolume(value, type)
     }
 }
 
-function updateControls(direction, value)
+function addPlayer()
+{
+    console.log('addPlayer');
+
+    if(playerId < 4)
+    {
+        var divPlayer = document.createElement('div');
+        divPlayer.setAttribute('class', 'panel panel-default');
+        divPlayer.innerHTML = '<div class="panel-heading">' +
+            '<h3 class="panel-title">Player ' + (playerId + 1) + '</h3>' +
+            '</div>' +
+            '<div class="panel-body">' +
+            '<h4>Controls</h4>' +
+            '<form class="form-horizontal">' +
+            '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-10"><select id="upControl" onchange="updateControls(' + playerId + ', 0, this.value);" class="form-control"><option value="90">Z</option><option value="38">Key up</option></select></div></div>' +
+            '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-10"><select id="leftControl" onchange="updateControls(' + playerId + ', 1, this.value);" class="form-control"><option value="81">Q</option><option value="37">Key left</option></select></div></div>' +
+            '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-10"><select id="rightControl" onchange="updateControls(' + playerId + ', 2, this.value);" class="form-control"><option value="68">D</option><option value="39">Key right</option></select></div></div>' +
+            '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-10"><select id="downControl" onchange="updateControls(' + playerId + ', 3, this.value);" class="form-control"><option value="83">S</option><option value="40">Key down</option></select></div></div>' +
+            '</form>' +
+            '</div>';
+
+        document.getElementById('playersStart').appendChild(divPlayer);
+
+        var spanPlayer = document.createElement('span');
+        spanPlayer.innerHTML = '<span class="marginInformations">Player : <span id="playerName' + playerId + '">player' + (playerId + 1) + '</span></span>' +
+            '<span class="marginInformations">Coins : <span id="currentCoins' + playerId + '">0</span> / <span id="totalCoins' + playerId + '">0</span></span>' +
+            '<span class="marginInformations">Health : <progress id="currentHealth' + playerId + '" class="progressHealth" value="0" max="10"></progress></span>' +
+            '<span class="marginInformations">Time elapsed : <span id="currentTimeElapsed' + playerId + '">0</span>s</span>';
+
+        document.getElementById('players').appendChild(spanPlayer);
+
+        document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
+
+        var player = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, map.playerSpawn.direction);
+
+        if(playerId == 0)
+        {
+            player.keyControls.UP = 90;
+            player.keyControls.LEFT = 81;
+            player.keyControls.RIGHT = 68;
+            player.keyControls.DOWN = 83;
+        }
+
+        map.addPlayer(player);
+
+        playerId++;
+    }
+    else
+    {
+        console.log('enoughPlayer');
+    }
+}
+
+function updateControls(playerId, direction, value)
 {
     switch (direction) {
         case 0 :
-            controlsPlayer1.UP = parseInt(value);
+            map.listPlayers[playerId].keyControls.UP = parseInt(value);
             break;
         case 1 :
-            controlsPlayer1.LEFT = parseInt(value);
+            map.listPlayers[playerId].keyControls.LEFT = parseInt(value);
             break;
         case 2 :
-            controlsPlayer1.RIGHT = parseInt(value);
+            map.listPlayers[playerId].keyControls.RIGHT = parseInt(value);
             break;
         case 3 :
-            controlsPlayer1.DOWN = parseInt(value);
+            map.listPlayers[playerId].keyControls.DOWN = parseInt(value);
             break;
         default :
             console.log('error');
@@ -90,12 +144,9 @@ function loadMap(id, name)
     canvas.width = map.getWidth() * 32;
     canvas.height = map.getHeight() * 32;
 
-    player1 = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, DIRECTION.DOWN);
-
-    document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
-
     setTimeout(function() {
-        map.addPlayer(player1);
+        document.getElementById('buttonAddPlayer').removeAttribute('disabled');
+        addPlayer();
         map.drawMap(context2d);
     }, 500);
 
@@ -133,8 +184,48 @@ function showCountDown(i)
 
 function startGame()
 {
+    document.onkeydown = function(e) {
+        var code = e.keyCode;
+        if(tabKeys.indexOf(code)<0) {
+            tabKeys.push(code);
+        }
+    };
+
+    document.onkeyup = function(e) {
+        var code = e.keyCode,
+            index = tabKeys.indexOf(code);
+        if(index>=0) {
+            tabKeys.splice(index,1);
+        }
+    };
     setInterval(function() {
         map.drawMap(context2d);
+
+        for(var i = 0; i < tabKeys.length; i++)
+        {
+            for(var x = 0; x < map.listPlayers.length; x++)
+            {
+                switch(tabKeys[i]) {
+                    case map.listPlayers[x].keyControls.UP :
+                        map.listPlayers[x].movePlayer(DIRECTION.UP, map);
+                        break;
+                    case map.listPlayers[x].keyControls.DOWN :
+                        map.listPlayers[x].movePlayer(DIRECTION.DOWN, map);
+                        break;
+                    case map.listPlayers[x].keyControls.LEFT :
+                        map.listPlayers[x].movePlayer(DIRECTION.LEFT, map);
+                        break;
+                    case map.listPlayers[x].keyControls.RIGHT :
+                        map.listPlayers[x].movePlayer(DIRECTION.RIGHT, map);
+                        break;
+                    case 27 :
+                        $('#menuGameModal').modal('toggle');
+                        break;
+                    default :
+                        console.log('error');
+                }
+            }
+        }
     }, 40);
 
     var timerPlayer1 = setInterval(function() {
@@ -168,6 +259,7 @@ function startGame()
         }
     }, 1000);
 
+    /*
     window.onkeydown = function(event) {
         var e = event || window.event;
         var key = e.which || e.keyCode;
@@ -186,7 +278,8 @@ function startGame()
                 player1.movePlayer(DIRECTION.RIGHT, map);
                 break;
             case 27 :
-                $('#menuGameModal').modal('toggle');
+                player2.movePlayer(DIRECTION.UP, map);
+                //$('#menuGameModal').modal('toggle');
                 break;
             default :
                 return true;
@@ -194,6 +287,7 @@ function startGame()
 
         return false;
     }
+    */
 }
 
 function getRanking(points)

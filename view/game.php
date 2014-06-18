@@ -55,12 +55,8 @@
         <span id="mapName">
             <span id="currentMap"></span>, <span id="countdown">3</span>
         </span>
-        <span>
-            <span class="marginInformations">Player : <span id="playerName0"><?php echo $_SESSION['user']; ?></span></span>
-            <span class="marginInformations">Coins : <span id="currentCoins0">0</span> / <span id="totalCoins0">0</span></span>
-            <span class="marginInformations">Health : <progress id="currentHealth0" class="progressHealth" value="0" max="10"></progress></span>
-            <span class="marginInformations">Time elapsed : <span id="currentTimeElapsed0">0</span>s</span>
-        </span>
+        </br>
+        <div id="players"></div>
     </div>
     <div id="startGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -75,52 +71,9 @@
                         </div>
                         <div class="panel-body"><?php echo $map['description']; ?> </br>Ranking : <?php echo getRanking($map['id'], 0); ?>.</div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Player 1 : <?php echo $_SESSION['user']; ?></h3>
-                        </div>
-                        <div class="panel-body">
-                            <h4>Controls</h4>
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">UP</label>
-                                    <div class="col-sm-10">
-                                        <select id="upControl" onchange="updateControls(0, this.value);" class="form-control">
-                                            <option value="90">Z</option>
-                                            <option value="38">Key up</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">LEFT</label>
-                                    <div class="col-sm-10">
-                                        <select id="leftControl" onchange="updateControls(1, this.value);" class="form-control">
-                                            <option value="81">Q</option>
-                                            <option value="37">Key left</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">RIGHT</label>
-                                    <div class="col-sm-10">
-                                        <select id="rightControl" onchange="updateControls(2, this.value);" class="form-control">
-                                            <option value="68">D</option>
-                                            <option value="39">Key right</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">DOWN</label>
-                                    <div class="col-sm-10">
-                                        <select id="downControl" onchange="updateControls(3, this.value);" class="form-control">
-                                            <option value="83">S</option>
-                                            <option value="40">Key down</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <div id="playersStart"></div>
+                    <button type="button" id="buttonAddPlayer" onclick="addPlayer();" class="btn btn-default" disabled="">Add player</button>
+                    <hr>
                     <div id="loadMap">
                         <img src="view/img/ajax-loader.gif"> Chargement de la map en cours ...
                     </div>

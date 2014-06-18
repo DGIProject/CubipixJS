@@ -75,6 +75,9 @@
             <button type="button" id="button1i" onclick="setBloc(1, 'i');" class="btn btn-default"><img id="1i" src="view/img/item/1.png"></button>
             <button type="button" id="button2i" onclick="setBloc(2, 'i');" class="btn btn-default"><img id="2i" src="view/img/item/2.png"></button>
         </div>
+        <h4>Mobs</h4>
+        <div id="mobs" class="list-group"></div>
+        <button type="button" onclick="addMob();" class="btn btn-success">Add mob</button>
         <h4>Player</h4>
         <form class="form-horizontal">
             <div class="form-group">

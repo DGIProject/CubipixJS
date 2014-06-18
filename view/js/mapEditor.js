@@ -58,7 +58,7 @@ function startMapEditor(widthMapBloc, heightMapBloc)
 }
 
 window.onclick = function(e) {
-    var x = Math.floor(e.clientX / 32);
+    var x = Math.floor((e.clientX - $('#canvas').offset().left) / 32);
     var y = Math.floor((e.clientY - 51) / 32);
 
     console.log(x, y);
@@ -134,6 +134,19 @@ function setPosXPlayer(x)
 function setPosYPlayer(y)
 {
     playerPos.y = y;
+}
+
+function addMob()
+{
+    var mob = [0, 0, 0, 0];
+
+    tabMobs.push(mob);
+
+    var mobE = document.createElement('a');
+    mobE.classList.add('list-group-item');
+    mobE.innerHTML = '<span class="pull-right"><button type="button" onclick="deleteMob();" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span><h4 class="list-group-item-heading">Mob</h4><p class="list-group-item-text"><form class="form-horizontal"><div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-10"><input type="text" onkeyup="setPosXPlayer(this.value);" class="form-control" value="0"></div></div><div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-10"><input type="text" onkeyup="setPosYPlayer(this.value);" class="form-control" value="0"></div></div></form></p>';
+
+    document.getElementById('mobs').appendChild(mobE);
 }
 
 function saveMap(name, description, difficult)

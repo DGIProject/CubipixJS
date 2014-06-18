@@ -16,7 +16,25 @@ function Player(id, username, url, x, y, direction) {
     this.direction = direction;
     this.etatAnimation = -1;
 
-    // Chargement de l'image dans l'attribut image
+    this.keyControls = {
+        'UP' : 0,
+        'LEFT' : 0,
+        'RIGHT' : 0,
+        'DOWN' : 0
+    };
+
+    this.loadSprite(url);
+
+    this.health = 10;
+    this.updateHealth(0, false);
+
+    this.coins = 0;
+    this.updateCoins(0, false);
+
+    this.timeElapsed = 0;
+}
+
+Player.prototype.loadSprite = function(url) {
     this.image = new Image();
     this.image.onload = function() {
         if(!this.complete)
@@ -29,15 +47,7 @@ function Player(id, username, url, x, y, direction) {
         "width" : this.image.width / 4,
         "height" : this.image.height / 4
     };
-
-    this.health = 10;
-    this.updateHealth(0, false);
-
-    this.coins = 0;
-    this.updateCoins(0, false);
-
-    this.timeElapsed = 0;
-}
+};
 
 Player.prototype.drawPlayer = function(context) {
     var frame = 0; // Numéro de l'image à prendre pour l'animation
