@@ -216,6 +216,24 @@
 
         setValues('bgvgfv6e1f92f9-dafb-17d4-f9aa-9f4f8a0c7ff6');
         loadMap("<?php echo $map['id']; ?>", "<?php echo $map['name']; ?>");
+
+        var image = new Image();
+        image.sizeMob = null;
+        var width;
+        image.onload = function() {
+            if(!this.complete)
+            {
+                throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
+            }
+            else
+            {
+                console.log('good1');
+            }
+
+            console.log('image : ' + image.width);
+        };
+
+        image.src = 'http://clangue.net/view/img/mob/' + 'mob01.png';
     };
 </script>
 

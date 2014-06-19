@@ -163,9 +163,10 @@ function loadMap(id, name)
     canvas.width = map.getWidth() * 32;
     canvas.height = map.getHeight() * 32;
 
+    addPlayer(false);
+
     setTimeout(function() {
         document.getElementById('buttonAddPlayer').removeAttribute('disabled');
-        addPlayer(false);
         map.drawMap(context2d);
     }, 500);
 
@@ -256,6 +257,7 @@ function startGame()
         }
     }, 40);
 
+    /*
     setInterval(function() {
         for(var i = 0; i < map.listPlayers.length; i++)
         {
@@ -265,6 +267,7 @@ function startGame()
             }
         }
     }, 500);
+    */
 
     var timerPlayers = setInterval(function() {
         if(stillAlive() && !haveTotalCoins())

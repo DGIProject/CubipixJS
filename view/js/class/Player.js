@@ -39,17 +39,17 @@ function Player(id, username, url, x, y, direction, online) {
 
 Player.prototype.loadSprite = function(url) {
     this.image = new Image();
+    this.image.playerImageSRC = { "width" : 0, "height" : 0 };
+    this.playerImage = this.image.playerImageSRC;
     this.image.onload = function() {
         if(!this.complete)
             throw "Erreur de chargement du sprite nommé \"" + url + "\".";
+
+        this.playerImageSRC.width = this.width / 4;
+        this.playerImageSRC.height = this.height / 4;
     };
 
     this.image.src = "view/img/player/" + url;
-
-    this.playerImage = {
-        "width" : this.image.width / 4,
-        "height" : this.image.height / 4
-    };
 };
 
 Player.prototype.drawPlayer = function(context) {

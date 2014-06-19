@@ -8,23 +8,30 @@ function Mob(id, type, x, y, direction) {
     this.y = y;
     this.direction = direction;
 
-    try {
-        this.image = new Image();
-        this.image.onload = function() {
-            if(!this.complete)
-                throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
-        };
+    this.loadSprite('mob01.png');
+}
 
-        this.image.src = "view/img/mob/" + 'mob01.png';
+Mob.prototype.loadSprite = function(url) {
+    console.log('loadSprite');
 
-        this.mobImage = {
-            "width" : this.image.width / 4,
-            "height" : this.image.height / 4
+    this.image = new Image();
+    this.image.mobImageSRC = { "width" : 0, "height" : 0 };
+    this.mobImage = this.image.mobImageSRC;
+    this.image.onload = function() {
+        if(!this.complete)
+        {
+            throw "Erreur de chargement du sprite nommé \"" + url + "\".";
         }
-    }
-    catch(e) {
-        console.log(e);
-    }
+        else
+        {
+            console.log('good');
+        }
+
+        this.mobImageSRC.width = this.width / 4;
+        this.mobImageSRC.height = this.height / 4;
+    };
+
+    this.image.src = 'http://clangue.net/view/img/mob/' + url;
 }
 
 Mob.prototype.drawMob = function(context) {
