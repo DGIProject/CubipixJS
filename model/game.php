@@ -9,6 +9,16 @@ function getListLevels()
     return $req->fetchAll();
 }
 
+function getListServers()
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT * FROM servers ORDER BY id');
+    $req->execute();
+
+    return $req->fetchAll();
+}
+
 function getListMaps()
 {
     global $bdd;

@@ -5,6 +5,7 @@ var countdown;
 var tabKeys = [];
 
 var usernameUId = null;
+var serverUId = null;
 
 var controlsPlayer1 = {
     'UP' : 90,
@@ -147,9 +148,10 @@ function updateControls(playerId, direction, value)
     }
 }
 
-function setValues(uUId)
+function setValues(uUId, sUId)
 {
     usernameUId = uUId;
+    serverUId = (sUId != '') ? sUId : null;
 }
 
 function loadMap(id, name)
@@ -257,17 +259,18 @@ function startGame()
         }
     }, 40);
 
-    /*
-    setInterval(function() {
-        for(var i = 0; i < map.listPlayers.length; i++)
-        {
-            if(!map.listPlayers[i].online)
+    if(serverUId)
+    {
+        setInterval(function() {
+            for(var i = 0; i < map.listPlayers.length; i++)
             {
-                sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y);
+                if(!map.listPlayers[i].online)
+                {
+                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y);
+                }
             }
-        }
-    }, 500);
-    */
+        }, 500);
+    }
 
     var timerPlayers = setInterval(function() {
         if(stillAlive() && !haveTotalCoins())
@@ -462,7 +465,7 @@ function sendQueryServer(uUId, x, y)
     };
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('sUid=' + '7588b72c-d2a9-422d-c453-f4a21b754be0' + '&uUid=' + uUId + '&posX=' + x + '&posY=' + y);
+    OAjax.send('sUid=' + serverUId + '&uUid=' + uUId + '&posX=' + x + '&posY=' + y);
 }
 
 function s4() {

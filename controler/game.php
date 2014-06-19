@@ -26,6 +26,7 @@ if($_SESSION['user'] != NULL)
     {
         $listLevels = getListLevels();
         $listMaps = getListMaps();
+        $listServers = getListServers();
 
         include_once 'view/dashboard.php';
     }

@@ -214,7 +214,7 @@
 
         $('#startGameModal').modal('show');
 
-        setValues('bgvgfv6e1f92f9-dafb-17d4-f9aa-9f4f8a0c7ff6');
+        setValues("<?php echo $_SESSION['uUId']; ?>", "<?php echo $_GET['sUId']; ?>");
         loadMap("<?php echo $map['id']; ?>", "<?php echo $map['name']; ?>");
 
         var image = new Image();

@@ -48,6 +48,7 @@
 </div>
 
 <div class="container">
+    <a href="controler/logout.php" class="btn btn-default">Logout</a>
     <div class="page-header">
         <h1>Map solo</h1>
     </div>
@@ -85,7 +86,20 @@
     <div class="page-header">
         <h1>Map multiplayer</h1>
     </div>
-    <p>This functionnality is not available.</p>
+    <div class="list-group">
+        <?php
+        if($listServers != NULL)
+        {
+            foreach($listServers as $server)
+            {
+                echo '<a href="index.php?type=game&mapId=' . $server['mapId'] . '&sUId=' . $server['sUId'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $server['name'] . '</h4><p class="list-group-item-text">' . $server['description'] . '</p></a>';
+            }
+        }
+        else
+        {
+            echo '<p>There is no servers available now.</p>';
+        }?>
+    </div>
 </div>
 
 <div id="footer">
