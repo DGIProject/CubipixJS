@@ -14,6 +14,8 @@ function Player(id, username, url, x, y, direction, online) {
     this.usernameUId = null;
     this.x = x;
     this.y = y;
+    this.lastX = 0;
+    this.lastY = 0;
     this.direction = direction;
     this.etatAnimation = -1;
 
@@ -49,7 +51,7 @@ Player.prototype.loadSprite = function(url) {
         this.playerImageSRC.height = this.height / 4;
     };
 
-    this.image.src = "view/img/player/" + url;
+    this.image.src = 'view/img/player/' + url;
 };
 
 Player.prototype.drawPlayer = function(context) {

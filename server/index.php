@@ -1,48 +1,22 @@
 <?php
-if($_POST['sUid'] != NULL)
+if($_POST['sUId'] != NULL)
 {
-    if(!file_exists('files/' . $_POST['sUid'] . '.cs'))
+    if(!file_exists('files/' . $_POST['sUId'] . '.cs'))
     {
-        $file = fopen('files/' . $_POST['sUid'] . '.cs', 'w');
-        fwrite($file, $_POST['sUid']);
+        $file = fopen('files/' . $_POST['sUId'] . '.cs', 'w');
+        fwrite($file, $_POST['sUId']);
         fclose($file);
 
-        //echo 'false' . $_POST['uid'];
+        sleep(1);
+
+        actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY']);
+
+        exit();
     }
 
-    sleep(2);
+    actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY']);
 
-    if(file_exists('files/' . $_POST['uUid'] . '.cr'))
-    {
-        $file = fopen('files/' . $_POST['uUid'] . '.cr', 'w');
-        fwrite($file, $_POST['posX'] . '||' . $_POST['posY']);
-        fclose($file);
-
-        //echo 'true';
-    }
-    else
-    {
-        $fileServer = fopen('files/' . $_POST['sUid'] . '.cs', 'r');
-
-        $listPlayers = NULL;
-        $listPlayers = fread($fileServer, 255) . '||' . $_POST['uUid'];
-
-        fclose($fileServer);
-
-        unlink('files/' . $_POST['sUid'] . '.cs');
-
-        $fileServer = fopen('files/' . $_POST['sUid'] . '.cs', 'w');
-        fwrite($fileServer, $listPlayers);
-        fclose($fileServer);
-
-        $file = fopen('files/' . $_POST['uUid'] . '.cr', 'w');
-        fwrite($file, $_POST['posX'] . '||' . $_POST['posY']);
-        fclose($file);
-
-        //echo 'false' . $listPlayers;
-    }
-
-    $fileServer = fopen('files/' . $_POST['sUid'] . '.cs', 'r');
+    $fileServer = fopen('files/' . $_POST['sUId'] . '.cs', 'r');
 
     $tabServer = explode('||', fread($fileServer, 255));
     $tabPlayers = array();
@@ -65,4 +39,35 @@ if($_POST['sUid'] != NULL)
 else
 {
     echo 'callAServer';
+}
+
+function actualizePlayer($sUId, $uUId, $posX, $posY)
+{
+    if(file_exists('files/' . $uUId . '.cr'))
+    {
+        $file = fopen('files/' . $uUId . '.cr', 'w');
+        fwrite($file, $posX . '||' . $posY);
+        fclose($file);
+    }
+    else
+    {
+        $fileServer = fopen('files/' . $sUId . '.cs', 'r');
+
+        $listPlayers = NULL;
+        $listPlayers = fread($fileServer, 255) . '||' . $uUId;
+
+        fclose($fileServer);
+
+        unlink('files/' . $sUId . '.cs');
+
+        $fileServer = fopen('files/' . $sUId . '.cs', 'w');
+        fwrite($fileServer, $listPlayers);
+        fclose($fileServer);
+
+        $file = fopen('files/' . $uUId . '.cr', 'w');
+        fwrite($file, $posX . '||' . $posY);
+        fclose($file);
+
+        //echo 'false' . $listPlayers;
+    }
 }

@@ -31,7 +31,7 @@ Mob.prototype.loadSprite = function(url) {
         this.mobImageSRC.height = this.height / 4;
     };
 
-    this.image.src = 'http://clangue.net/view/img/mob/' + url;
+    this.image.src = 'view/img/mob/' + url;
 }
 
 Mob.prototype.drawMob = function(context) {
