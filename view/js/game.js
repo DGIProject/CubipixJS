@@ -1,9 +1,10 @@
 var canvas, context2d;
 var mapId, map;
-var player1, player2;
 var playerId = 0;
 var countdown;
 var tabKeys = [];
+
+var usernameUId = null;
 
 var controlsPlayer1 = {
     'UP' : 90,
@@ -60,7 +61,7 @@ function updateVolume(value, type)
     }
 }
 
-function addPlayer()
+function addPlayer(online, usernameUIdN)
 {
     console.log('addPlayer');
 
@@ -93,14 +94,27 @@ function addPlayer()
 
         document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
 
-        var player = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, map.playerSpawn.direction);
+        var player = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, map.playerSpawn.direction, online);
 
-        if(playerId == 0)
+        if(online)
         {
-            player.keyControls.UP = 90;
-            player.keyControls.LEFT = 81;
-            player.keyControls.RIGHT = 68;
-            player.keyControls.DOWN = 83;
+            player.usernameUId = usernameUIdN;
+        }
+        else
+        {
+            if(playerId == 0)
+            {
+                player.usernameUId = usernameUId;
+
+                player.keyControls.UP = 90;
+                player.keyControls.LEFT = 81;
+                player.keyControls.RIGHT = 68;
+                player.keyControls.DOWN = 83;
+            }
+            else
+            {
+                player.usernameUId = getUId();
+            }
         }
 
         map.addPlayer(player);
@@ -133,6 +147,11 @@ function updateControls(playerId, direction, value)
     }
 }
 
+function setValues(uUId)
+{
+    usernameUId = uUId;
+}
+
 function loadMap(id, name)
 {
     mapId = parseInt(id);
@@ -146,7 +165,7 @@ function loadMap(id, name)
 
     setTimeout(function() {
         document.getElementById('buttonAddPlayer').removeAttribute('disabled');
-        addPlayer();
+        addPlayer(false);
         map.drawMap(context2d);
     }, 500);
 
@@ -237,13 +256,21 @@ function startGame()
         }
     }, 40);
 
+    setInterval(function() {
+        for(var i = 0; i < map.listPlayers.length; i++)
+        {
+            if(!map.listPlayers[i].online)
+            {
+                sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y);
+            }
+        }
+    }, 500);
+
     var timerPlayers = setInterval(function() {
         if(stillAlive() && !haveTotalCoins())
         {
             for(var i = 0; i < map.listPlayers.length; i++)
             {
-                console.log('ok');
-
                 if(!map.listPlayers[i].isGameFinished(map))
                 {
                     map.listPlayers[i].actualizeTimeElapsed();
@@ -303,8 +330,6 @@ function stillAlive()
 
     for(var i = 0; i < map.listPlayers.length; i++)
     {
-        console.log(map.listPlayers[i].health);
-
         if(map.listPlayers[i].health >= 0)
         {
             stillAlive = true;
@@ -312,6 +337,14 @@ function stillAlive()
     }
 
     return stillAlive;
+}
+
+function getTotalPoints(id, win)
+{
+    var pointsTime = (60/100) * ((40 / map.listPlayers[id].timeElapsed) * 2);
+    var pointsHealth = (50/100) * (((map.listPlayers[id].health / 10) * 20) * 2);
+
+    var totalPoints = Math.ceil((win == 1) ? ((110/100) * (pointsTime + pointsHealth)) : ((20/100) * (pointsTime + pointsHealth))) * 2;
 }
 
 function getRanking(points)
@@ -337,13 +370,6 @@ function getRanking(points)
 
 function addScore(win)
 {
-    var pointsTime = (60/100) * ((40 / player1.timeElapsed) * 2);
-    var pointsHealth = (50/100) * (((player1.health / 10) * 20) * 2);
-
-    var totalPoints = Math.ceil((win == 1) ? ((110/100) * (pointsTime + pointsHealth)) : ((20/100) * (pointsTime + pointsHealth))) * 2;
-
-    document.getElementById('currentPointsFG').innerHTML = totalPoints;
-
     var OAjax;
 
     if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
@@ -368,6 +394,83 @@ function addScore(win)
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     OAjax.send('mapId=' + mapId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
+}
+
+function sendQueryServer(uUId, x, y)
+{
+    var OAjax;
+
+    if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
+    else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
+    OAjax.open('POST', 'server/index.php',true);
+    OAjax.onreadystatechange = function()
+    {
+        if (OAjax.readyState == 4 && OAjax.status==200)
+        {
+            //console.log(OAjax.responseText);
+
+            var tabPlayers = JSON.parse(OAjax.responseText);
+
+            //console.log(tabPlayers);
+
+            for(var i = 0; i < tabPlayers.length; i++)
+            {
+                var playerExist = false;
+                var playerRow = null;
+
+                for(var x = 0; x < map.listPlayers.length; x++)
+                {
+                    if(tabPlayers[i][0] == map.listPlayers[x].usernameUId)
+                    {
+                        playerExist = true;
+                        playerRow = x;
+                    }
+                }
+
+                if(playerExist)
+                {
+                    //console.log('playerExist');
+
+                    if(map.listPlayers[playerRow].online)
+                    {
+                        //console.log('online');
+
+                        if(tabPlayers[i][1] != '' && tabPlayers[i][1] != null && tabPlayers[i][2] != '' && tabPlayers[i][2] != null)
+                        {
+                            map.listPlayers[playerRow].x = tabPlayers[i][1];
+                            map.listPlayers[playerRow].y = tabPlayers[i][2];
+                        }
+                        else
+                        {
+                            //console.log('notGoodPos');
+                        }
+                    }
+                    else
+                    {
+                        //console.log('notOnline');
+                    }
+                }
+                else
+                {
+                    addPlayer(true, tabPlayers[i][0]);
+                }
+            }
+        }
+    };
+
+    OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    OAjax.send('sUid=' + '7588b72c-d2a9-422d-c453-f4a21b754be0' + '&uUid=' + uUId + '&posX=' + x + '&posY=' + y);
+}
+
+function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+}
+
+function getUId()
+{
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 function getXMLHttpRequest() {

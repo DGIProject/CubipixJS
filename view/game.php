@@ -72,7 +72,7 @@
                         <div class="panel-body"><?php echo $map['description']; ?> </br>Ranking : <?php echo getRanking($map['id'], 0); ?>.</div>
                     </div>
                     <div id="playersStart"></div>
-                    <button type="button" id="buttonAddPlayer" onclick="addPlayer();" class="btn btn-default" disabled="">Add player</button>
+                    <button type="button" id="buttonAddPlayer" onclick="addPlayer(false);" class="btn btn-default" disabled="">Add player</button>
                     <hr>
                     <div id="loadMap">
                         <img src="view/img/ajax-loader.gif"> Chargement de la map en cours ...
@@ -214,6 +214,7 @@
 
         $('#startGameModal').modal('show');
 
+        setValues('bgvgfv6e1f92f9-dafb-17d4-f9aa-9f4f8a0c7ff6');
         loadMap("<?php echo $map['id']; ?>", "<?php echo $map['name']; ?>");
     };
 </script>

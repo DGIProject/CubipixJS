@@ -8,17 +8,22 @@ function Mob(id, type, x, y, direction) {
     this.y = y;
     this.direction = direction;
 
-    this.image = new Image();
-    this.image.onload = function() {
-        if(!this.complete)
-            throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
-    };
+    try {
+        this.image = new Image();
+        this.image.onload = function() {
+            if(!this.complete)
+                throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
+        };
 
-    this.image.src = "view/img/mob/" + 'mob01.png';
+        this.image.src = "view/img/mob/" + 'mob01.png';
 
-    this.mobImage = {
-        "width" : this.image.width / 4,
-        "height" : this.image.height / 4
+        this.mobImage = {
+            "width" : this.image.width / 4,
+            "height" : this.image.height / 4
+        }
+    }
+    catch(e) {
+        console.log(e);
     }
 }
 

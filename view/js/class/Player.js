@@ -8,9 +8,10 @@ var DIRECTION = {
 var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 15;
 
-function Player(id, username, url, x, y, direction) {
+function Player(id, username, url, x, y, direction, online) {
     this.id = id;
     this.username = username;
+    this.usernameUId = null;
     this.x = x;
     this.y = y;
     this.direction = direction;
@@ -32,6 +33,8 @@ function Player(id, username, url, x, y, direction) {
     this.updateCoins(0, false);
 
     this.timeElapsed = 0;
+
+    this.online = online;
 }
 
 Player.prototype.loadSprite = function(url) {
