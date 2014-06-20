@@ -1,4 +1,14 @@
 <?php
+function getListMaps()
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT * FROM maps WHERE usernameId = ? ORDER BY id');
+    $req->execute(array($_SESSION['userId']));
+
+    return $req->fetchAll();
+}
+
 function generateFileMap($name, $json)
 {
     $file = fopen('maps/' . $name . '.cm', "w");

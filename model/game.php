@@ -23,18 +23,18 @@ function getListMaps()
 {
     global $bdd;
 
-    $req = $bdd->prepare('SELECT * FROM maps ORDER BY id');
-    $req->execute();
+    $req = $bdd->prepare('SELECT * FROM maps WHERE usernameId = ? ORDER BY id');
+    $req->execute(array($_SESSION['userId']));
 
     return $req->fetchAll();
 }
 
-function getInfoMap($id)
+function getInfoMap($mUId)
 {
     global $bdd;
 
-    $req = $bdd->prepare('SELECT * FROM maps WHERE id = ?');
-    $req->execute(array($id));
+    $req = $bdd->prepare('SELECT * FROM maps WHERE mUId = ?');
+    $req->execute(array($mUId));
 
     return $req->fetch();
 }

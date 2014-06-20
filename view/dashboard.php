@@ -59,7 +59,7 @@
         {
             foreach($listLevels as $level)
             {
-                echo '<a href="index.php?type=game&mapId=' . $level['id'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $level['name'] . '</h4><p class="list-group-item-text">' . $level['description'] . '</p></a>';
+                echo '<a href="index.php?type=game&mUId=' . $level['lUId'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $level['name'] . '</h4><p class="list-group-item-text">' . $level['description'] . '</p></a>';
             }
         }
         else
@@ -74,7 +74,7 @@
         {
             foreach($listMaps as $map)
             {
-                echo '<a href="index.php?type=game&mapId=' . $map['id'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+                echo '<a href="index.php?type=game&mUId=' . $map['mUId'] . '" class="list-group-item"><span class="pull-right">Ranking : <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-share"></span></button></span><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
             }
         }
         else
@@ -92,7 +92,7 @@
         {
             foreach($listServers as $server)
             {
-                echo '<a href="index.php?type=game&mapId=' . $server['mapId'] . '&sUId=' . $server['sUId'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $server['name'] . '</h4><p class="list-group-item-text">' . $server['description'] . '</p></a>';
+                echo '<a href="index.php?type=game&mUId=' . $server['mUId'] . '&sUId=' . $server['sUId'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $server['name'] . '</h4><p class="list-group-item-text">' . $server['description'] . '</p></a>';
             }
         }
         else

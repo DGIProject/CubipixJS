@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['user'] != NULL)
+if($_SESSION['userId'] != NULL)
 {
     include_once 'model/game.php';
 
@@ -16,9 +16,9 @@ if($_SESSION['user'] != NULL)
         exit();
     }
 
-    if($_GET['mapId'] != NULL)
+    if($_GET['mUId'] != NULL)
     {
-        $map = getInfoMap($_GET['mapId']);
+        $map = getInfoMap($_GET['mUId']);
 
         include_once 'view/game.php';
     }

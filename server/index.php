@@ -1,46 +1,74 @@
 <?php
-if($_POST['sUId'] != NULL)
+if($_GET['sUId'] != NULL)
 {
-    if(!file_exists('files/' . $_POST['sUId'] . '.cs'))
+    $sUId = $_GET['sUId'];
+    $uUId = $_GET['uUId'];
+    $posX = $_GET['posX'];
+    $posY = $_GET['posY'];
+    $direction = $_GET['direction'];
+    $samePos = $_GET['samePos'];
+
+    $server = $_GET['server'];
+
+    if($server == 'leftUser')
     {
-        $file = fopen('files/' . $_POST['sUId'] . '.cs', 'w');
-        fwrite($file, $_POST['sUId']);
-        fclose($file);
+        $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        sleep(1);
+        $listPlayers = json_decode(fread($fileServer, 255));
+        $listPlayers[array_search($uUId, $listPlayers)] = NULL;
 
-        //if($_POST['samePos'] == 0)
+        fclose($fileServer);
+
+        unlink('files/' . $sUId . '.cs');
+
+        $fileServer = fopen('files/' . $sUId . '.cs', 'w');
+        fwrite($fileServer, json_encode($listPlayers));
+        fclose($fileServer);
+
+        unlink('files/' . $uUId . '.cr');
+    }
+    else
+    {
+        if(!file_exists('files/' . $sUId . '.cs'))
+        {
+            $file = fopen('files/' . $sUId . '.cs', 'w');
+            fwrite($file, json_encode(array($sUId, 0)));
+            fclose($file);
+
+            sleep(1);
+
+            //if($samePos == 0)
+            //{
+            actualizePlayer($sUId, $uUId, $posX, $posY, $direction);
+            //}
+
+            exit();
+        }
+
+        //if($samePos == 0)
         //{
-            actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY'], $_POST['direction']);
+        actualizePlayer($sUId, $uUId, $posX, $posY, $direction);
         //}
 
-        exit();
-    }
+        $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-    //if($_POST['samePos'] == 0)
-    //{
-        actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY'], $_POST['direction']);
-    //}
+        $tabServer = json_decode(fread($fileServer, 255));
+        $tabPlayers = array();
 
-    $fileServer = fopen('files/' . $_POST['sUId'] . '.cs', 'r');
-
-    $tabServer = explode('||', fread($fileServer, 255));
-    $tabPlayers = array();
-
-    for($i = 0; $i < count($tabServer); $i++)
-    {
-        if($i != 0)
+        for($i = 0; $i < count($tabServer); $i++)
         {
-            $filePlayer = fopen('files/' . $tabServer[$i] . '.cr', 'r');
+            if($i > 1)
+            {
+                $filePlayer = fopen('files/' . $tabServer[$i] . '.cr', 'r');
 
-            $tabInfoPlayer = explode('||', fread($filePlayer, 255));
+                $tabInfoPlayer = explode('||', fread($filePlayer, 255));
 
-            $tabPlayers[($i - 1)] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1], $tabInfoPlayer[2]);
+                $tabPlayers[($i - 2)] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1], $tabInfoPlayer[2]);
+            }
         }
+
+        echo json_encode($tabPlayers);
     }
-
-    echo json_encode($tabPlayers);
-
 }
 else
 {
@@ -59,14 +87,16 @@ function actualizePlayer($sUId, $uUId, $posX, $posY, $direction)
     {
         $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        $listPlayers = fread($fileServer, 255) . '||' . $uUId;
+        $listPlayers = json_decode(fread($fileServer, 255));
+        $listPlayers[1] = $listPlayers[1] + 1;
+        $listPlayers[$listPlayers[1] + 1] = $uUId;
 
         fclose($fileServer);
 
         unlink('files/' . $sUId . '.cs');
 
         $fileServer = fopen('files/' . $sUId . '.cs', 'w');
-        fwrite($fileServer, $listPlayers);
+        fwrite($fileServer, json_encode($listPlayers));
         fclose($fileServer);
 
         $file = fopen('files/' . $uUId . '.cr', 'w');

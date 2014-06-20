@@ -1,5 +1,5 @@
 var canvas, context2d;
-var mapId, map;
+var mapUId, map;
 var playerId = 0;
 var countdown;
 var tabKeys = [];
@@ -154,11 +154,10 @@ function setValues(uUId, sUId)
     serverUId = (sUId != '') ? sUId : null;
 }
 
-function loadMap(id, name)
+function loadMap(mUId, name)
 {
-    mapId = parseInt(id);
-
-    map = new Map(name);
+    mapUId = mUId;
+    map = new Map(mUId, name);
 
     document.getElementById('currentMap').innerHTML = name;
 
@@ -388,7 +387,7 @@ function getRanking(points)
     }
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('mapId=' + mapId + '&points=' + points);
+    OAjax.send('mUId=' + mapUId + '&points=' + points);
 }
 
 function addScore(win)
@@ -416,7 +415,7 @@ function addScore(win)
     }
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('mapId=' + mapId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
+    OAjax.send('mUId=' + mapUId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
 }
 
 function sendQueryServer(uUId, x, y, direction, samePos)
@@ -497,20 +496,30 @@ function getUId()
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-function getXMLHttpRequest() {
+function getXMLHttpRequest()
+{
     var xhr = null;
 
-    if (window.XMLHttpRequest || window.ActiveXObject) {
-        if (window.ActiveXObject) {
-            try {
+    if (window.XMLHttpRequest || window.ActiveXObject)
+    {
+        if (window.ActiveXObject)
+        {
+            try
+            {
                 xhr = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch(e) {
+            }
+            catch(e)
+            {
                 xhr = new ActiveXObject("Microsoft.XMLHTTP");
             }
-        } else {
+        }
+        else
+        {
             xhr = new XMLHttpRequest();
         }
-    } else {
+    }
+    else
+    {
         alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
         return null;
     }

@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['user'] != NULL)
+if($_SESSION['userId'] == NULL)
 {
     include_once 'model/register.php';
 

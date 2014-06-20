@@ -1,18 +1,27 @@
 <?php
-include_once 'model/mapEditor.php';
-
-if($_GET['a'] == 'generateFileMap')
+if($_SESSION['userId'] != NULL)
 {
-    if(generateFileMap($_POST['name'], $_POST['json']))
+    include_once 'model/mapEditor.php';
+
+    if($_GET['a'] == 'generateFileMap')
     {
-        echo addMap($_POST['name'], $_POST['description'], $_POST['difficult']);
-    }
-    else
-    {
-        echo 'false';
+        if(generateFileMap($_POST['name'], $_POST['json']))
+        {
+            echo addMap($_POST['name'], $_POST['description'], $_POST['difficult']);
+        }
+        else
+        {
+            echo 'false';
+        }
+
+        exit();
     }
 
-    exit();
+    $listMaps = getListMaps();
+
+    include_once 'view/mapEditor.php';
 }
-
-include_once 'view/mapEditor.php';
+else
+{
+    echo 'notLogged';
+}

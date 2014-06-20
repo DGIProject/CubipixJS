@@ -1,18 +1,18 @@
-function Map(name)
+function Map(mUId, name)
 {
     var xhr = getXMLHttpRequest();
 
-    // Chargement du fichier
-    xhr.open("GET", 'maps/' + name + '.cm', false);
+    xhr.open("GET", 'maps/' + mUId + '.cm', false);
     xhr.send(null);
     if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
-        throw new Error("Impossible de charger la carte nommée \"" + name + "\" (code HTTP : " + xhr.status + ").");
+        throw new Error("Impossible de charger la carte nommée \"" + mUId + "\" (code HTTP : " + xhr.status + ").");
     var mapJsonData = xhr.responseText;
 
     var tabMapData = JSON.parse(mapJsonData);
 
     console.log(tabMapData.name);
 
+    this.mapUId = mUId;
     this.name = name;
     this.playerSpawn = tabMapData.playerSpawn;
     this.land = tabMapData.land;

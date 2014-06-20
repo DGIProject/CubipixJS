@@ -49,6 +49,7 @@
 
 <div id="content">
     <div id="mapEditor">
+        <h2>Map</h2>
         <canvas id="canvas"></canvas>
     </div>
     <div class="container">
@@ -82,15 +83,22 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">X</label>
-                <div class="col-sm-10">
+                <div class="col-sm-4">
                     <input type="text" onkeyup="setPosXPlayer(this.value);" class="form-control" value="0">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Y</label>
-                <div class="col-sm-10">
+                <div class="col-sm-4">
                     <input type="text" onkeyup="setPosYPlayer(this.value);" class="form-control" value="0">
                 </div>
+            </div>
+        </form>
+        <h2>Informations</h2>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-4"></div>
             </div>
         </form>
     </div>
@@ -101,7 +109,8 @@
                     <h4 class="modal-title">Map editor</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>Size of the map (blocs)</h4>
+                    <p>Welcome on the map editor.</p>
+                    <h4>Create a map</h4>
                     <form method="post" onsubmit="startMapEditor(this.widthMapBloc.value, this.heightMapBloc.value);return false" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">WIDTH</label>
@@ -121,6 +130,21 @@
                             </div>
                         </div>
                     </form>
+                    <h4>Load a map</h4>
+                    <div class="list-group">
+                        <?php
+                        if($listMaps != NULL)
+                        {
+                            foreach($listMaps as $map)
+                            {
+                                echo '<a href="#" onclick="loadMap(\'' . $map['mUId'] . '\');" class="list-group-item"><h4 class="list-group-item-heading">' . $map['name'] . '</h4><p class="list-group-item-text">' . $map['description'] . '</p></a>';
+                            }
+                        }
+                        else
+                        {
+                            echo 'You don\'t have any map.';
+                        }?>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,6 +13,8 @@ var playerPos = {
     "y" : 0
 };
 
+var mapUId;
+
 window.onload = function() {
     canvas = document.getElementById('canvas');
     context2d = canvas.getContext('2d');
@@ -57,14 +59,69 @@ function startMapEditor(widthMapBloc, heightMapBloc)
     $('#startMapEditorModal').modal('hide');
 }
 
+function loadMap(mUId)
+{
+    console.log('loadMap');
+
+    mapUId = mUId;
+
+    var xhr = getXMLHttpRequest();
+
+    xhr.open("GET", 'maps/' + mUId + '.cm', false);
+    xhr.send(null);
+    if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
+        throw new Error("Impossible de charger la carte nommée \"" + mUId + "\" (code HTTP : " + xhr.status + ").");
+    var mapJsonData = xhr.responseText;
+
+    var tabMapData = JSON.parse(mapJsonData);
+
+    tabMapTexture = tabMapData.land;
+    tabMapItem = tabMapData.itemsLand;
+
+    blocsWidth = tabMapData.land[0].length;
+    blocsHeight = tabMapData.land.length;
+
+    canvas.width = blocsWidth * 32;
+    canvas.height = blocsHeight * 32;
+
+    for(var i = 0, l = tabMapData.land.length; i < l; i++)
+    {
+        var line = tabMapData.land[i];
+        var y = i * 32;
+
+        for(var j = 0, k = line.length; j < k; j++)
+        {
+            context2d.drawImage(document.getElementById(line[j] + 't'), j * 32, y, 32, 32);
+        }
+    }
+
+    for(var a = 0, b = tabMapData.itemsLand.length; a < b; a++)
+    {
+        var lineItem = tabMapData.itemsLand[a];
+        var c = a * 32;
+
+        for(var d = 0, e = lineItem.length; d < e; d++)
+        {
+            if(lineItem[d] != 0)
+            {
+                context2d.drawImage(document.getElementById(lineItem[d] + 'i'), d * 32, c, 32, 32);
+            }
+        }
+    }
+
+    $('#startMapEditorModal').modal('hide');
+}
+
 window.onclick = function(e) {
     var x = Math.floor((e.clientX - $('#canvas').offset().left) / 32);
-    var y = Math.floor((e.clientY - 51) / 32);
+    var y = Math.floor((e.clientY - ($('#canvas').offset().top)) / 32);
 
+    console.log(e.clientX, e.clientY);
     console.log(x, y);
     console.log(currentType);
+    console.log($('#canvas').offset().left, $('#canvas').offset().top);
 
-    if((x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
+    if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
         if(currentType == 't')
         {
@@ -120,7 +177,7 @@ function removeTextureDisabled()
 
 function removeItemDisabled()
 {
-    for(var i = 0; i < 1; i++)
+    for(var i = 1; i < 3; i++)
     {
         document.getElementById('button' + i + 'i').classList.remove('disabled');
     }
@@ -128,25 +185,63 @@ function removeItemDisabled()
 
 function setPosXPlayer(x)
 {
-    playerPos.x = x;
+    playerPos.x = parseInt(x);
 }
 
 function setPosYPlayer(y)
 {
-    playerPos.y = y;
+    playerPos.y = parseInt(y);
 }
 
 function addMob()
 {
     var mob = [0, 0, 0, 0];
+    var mobId = tabMobs.length;
 
     tabMobs.push(mob);
 
     var mobE = document.createElement('a');
+    mobE.id = 'mob' + mobId;
     mobE.classList.add('list-group-item');
-    mobE.innerHTML = '<span class="pull-right"><button type="button" onclick="deleteMob();" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span><h4 class="list-group-item-heading">Mob</h4><p class="list-group-item-text"><form class="form-horizontal"><div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-10"><input type="text" onkeyup="setPosXPlayer(this.value);" class="form-control" value="0"></div></div><div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-10"><input type="text" onkeyup="setPosYPlayer(this.value);" class="form-control" value="0"></div></div></form></p>';
+    mobE.innerHTML = '<span class="pull-right"><button type="button" onclick="deleteMob(' + mobId + ');" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></span>' +
+        '<h4 class="list-group-item-heading">Mob</h4>' +
+        '<p class="list-group-item-text">' +
+        '<form class="form-horizontal">' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Type</label><div class="col-sm-4"><select onchange="setTypeMob(' + mobId + ', this.value);" class="form-control"><option value="0">Nice</option><option value="1">Bad</option><option value="2">Naughty</option></select></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Direction</label><div class="col-sm-4"><select onchange="setDirectionMob(' + mobId + ', this.value);" class="form-control"><option value="0">UP - DOWN</option><option value="1">LEFT - RIGHT</option><option value="2">RIGHT - LEFT</option><option value="3">DOWN - UP</option></select></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-4"><input type="text" onkeyup="setPosXMob(' + mobId + ', this.value);" class="form-control" value="0"></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-4"><input type="text" onkeyup="setPosYMob(' + mobId + ', this.value);" class="form-control" value="0"></div></div>' +
+        '</form>' +
+        '</p>';
 
     document.getElementById('mobs').appendChild(mobE);
+}
+
+function deleteMob(id)
+{
+    tabMobs[id] = null;
+
+    document.getElementById('mobs').removeChild(document.getElementById('mob' + id));
+}
+
+function setTypeMob(id, value)
+{
+    tabMobs[id][0] = parseInt(value);
+}
+
+function setDirectionMob(id, value)
+{
+    tabMobs[id][3] = parseInt(value);
+}
+
+function setPosXMob(id, value)
+{
+    tabMobs[id][1] = parseInt(value);
+}
+
+function setPosYMob(id, value)
+{
+    tabMobs[id][2] = parseInt(value);
 }
 
 function saveMap(name, description, difficult)
@@ -168,4 +263,35 @@ function saveMap(name, description, difficult)
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     OAjax.send('name=' + name + '&description=' + encodeURIComponent(description) + '&difficult=' + difficult + '&json=' + encodeURIComponent(json));
+}
+
+function getXMLHttpRequest()
+{
+    var xhr = null;
+
+    if (window.XMLHttpRequest || window.ActiveXObject)
+    {
+        if (window.ActiveXObject)
+        {
+            try
+            {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch(e)
+            {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+        else
+        {
+            xhr = new XMLHttpRequest();
+        }
+    }
+    else
+    {
+        alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+        return null;
+    }
+
+    return xhr;
 }

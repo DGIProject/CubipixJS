@@ -90,7 +90,6 @@ code {
 
 #mapEditor {
     margin-top: 51px;
-    display: block;
     overflow: auto;
     text-align: center;
 }
