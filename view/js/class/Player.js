@@ -128,7 +128,7 @@ Player.prototype.getNextPos = function(direction) {
     return coord;
 };
 
-Player.prototype.movePlayer = function(direction, map) {
+Player.prototype.movePlayer = function(direction, map, x, y) {
     if(this.etatAnimation >= 0)
     {
         return false;
@@ -136,17 +136,25 @@ Player.prototype.movePlayer = function(direction, map) {
 
     this.direction = direction;
 
-    var nextCase = this.getNextPos(direction);
-
-    if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !this.isGoodBlock(map, direction))
-    {
-        return false;
-    }
-
     this.etatAnimation = 1;
 
-    this.x = nextCase.x;
-    this.y = nextCase.y;
+    if(x != null && y != null)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    else
+    {
+        var nextCase = this.getNextPos(direction);
+
+        if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !this.isGoodBlock(map, direction))
+        {
+            return false;
+        }
+
+        this.x = nextCase.x;
+        this.y = nextCase.y;
+    }
 
     this.updateItem(map);
 

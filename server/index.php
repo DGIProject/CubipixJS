@@ -9,12 +9,18 @@ if($_POST['sUId'] != NULL)
 
         sleep(1);
 
-        actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY']);
+        //if($_POST['samePos'] == 0)
+        //{
+            actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY'], $_POST['direction']);
+        //}
 
         exit();
     }
 
-    actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY']);
+    //if($_POST['samePos'] == 0)
+    //{
+        actualizePlayer($_POST['sUId'], $_POST['uUId'], $_POST['posX'], $_POST['posY'], $_POST['direction']);
+    //}
 
     $fileServer = fopen('files/' . $_POST['sUId'] . '.cs', 'r');
 
@@ -29,7 +35,7 @@ if($_POST['sUId'] != NULL)
 
             $tabInfoPlayer = explode('||', fread($filePlayer, 255));
 
-            $tabPlayers[($i - 1)] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1]);
+            $tabPlayers[($i - 1)] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1], $tabInfoPlayer[2]);
         }
     }
 
@@ -41,19 +47,18 @@ else
     echo 'callAServer';
 }
 
-function actualizePlayer($sUId, $uUId, $posX, $posY)
+function actualizePlayer($sUId, $uUId, $posX, $posY, $direction)
 {
     if(file_exists('files/' . $uUId . '.cr'))
     {
         $file = fopen('files/' . $uUId . '.cr', 'w');
-        fwrite($file, $posX . '||' . $posY);
+        fwrite($file, $posX . '||' . $posY . '||' . $direction);
         fclose($file);
     }
     else
     {
         $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        $listPlayers = NULL;
         $listPlayers = fread($fileServer, 255) . '||' . $uUId;
 
         fclose($fileServer);
@@ -65,7 +70,7 @@ function actualizePlayer($sUId, $uUId, $posX, $posY)
         fclose($fileServer);
 
         $file = fopen('files/' . $uUId . '.cr', 'w');
-        fwrite($file, $posX . '||' . $posY);
+        fwrite($file, $posX . '||' . $posY . '||' . $direction);
         fclose($file);
 
         //echo 'false' . $listPlayers;

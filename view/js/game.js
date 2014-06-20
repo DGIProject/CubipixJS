@@ -262,26 +262,31 @@ function startGame()
     if(serverUId)
     {
         setInterval(function() {
+            var samePos;
+
             for(var i = 0; i < map.listPlayers.length; i++)
             {
                 if(!map.listPlayers[i].online)
                 {
-                    console.log(map.listPlayers[i].x, map.listPlayers[i].lastX);
-                    console.log(map.listPlayers[i].y, map.listPlayers[i].lastY);
+                    //console.log(map.listPlayers[i].x, map.listPlayers[i].lastX);
+                    //console.log(map.listPlayers[i].y, map.listPlayers[i].lastY);
+
+                    samePos = 0;
 
                     if(map.listPlayers[i].x == map.listPlayers[i].lastX && map.listPlayers[i].y == map.listPlayers[i].lastY)
                     {
-                        console.log('samePos');
-                    }
-                    else
-                    {
-                        console.log('notSamePos');
+                        samePos = 1;
                     }
 
-                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y);
+                    map.listPlayers[i].lastX = map.listPlayers[i].x;
+                    map.listPlayers[i].lastY = map.listPlayers[i].y;
+
+                    //console.log('direction : ' + map.listPlayers[i].direction);
+
+                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y, map.listPlayers[i].direction, samePos);
                 }
             }
-        }, 500);
+        }, 200);
     }
 
     var timerPlayers = setInterval(function() {
@@ -414,7 +419,7 @@ function addScore(win)
     OAjax.send('mapId=' + mapId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
 }
 
-function sendQueryServer(uUId, x, y)
+function sendQueryServer(uUId, x, y, direction, samePos)
 {
     var OAjax;
 
@@ -425,7 +430,7 @@ function sendQueryServer(uUId, x, y)
     {
         if (OAjax.readyState == 4 && OAjax.status==200)
         {
-            console.log(OAjax.responseText);
+            //console.log(OAjax.responseText);
 
             var tabPlayers = JSON.parse(OAjax.responseText);
 
@@ -455,8 +460,10 @@ function sendQueryServer(uUId, x, y)
 
                         if(tabPlayers[i][1] != '' && tabPlayers[i][1] != null && tabPlayers[i][2] != '' && tabPlayers[i][2] != null)
                         {
-                            map.listPlayers[playerRow].x = tabPlayers[i][1];
-                            map.listPlayers[playerRow].y = tabPlayers[i][2];
+                            map.listPlayers[playerRow].movePlayer(tabPlayers[i][3], map, tabPlayers[i][1], tabPlayers[i][2]);
+
+                            //map.listPlayers[playerRow].x = tabPlayers[i][1];
+                            //map.listPlayers[playerRow].y = tabPlayers[i][2];
                         }
                         else
                         {
@@ -477,13 +484,12 @@ function sendQueryServer(uUId, x, y)
     };
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y);
+    OAjax.send('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos);
 }
 
-function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
+function s4()
+{
+    return Math.floor((1 + Math.random()) * 0x10000) . toString(16) . substring(1);
 }
 
 function getUId()
