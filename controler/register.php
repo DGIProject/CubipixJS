@@ -5,7 +5,7 @@ if($_SESSION['userId'] == NULL)
 
     if($_GET['a'] == 'register')
     {
-        echo registerUser($_POST['username'], $_POST['password'], $_POST['email']);
+        echo registerUser($_POST['uUId'], $_POST['username'], $_POST['password'], $_POST['confirmPassword'], $_POST['email']);
 
         exit();
     }
@@ -14,5 +14,5 @@ if($_SESSION['userId'] == NULL)
 }
 else
 {
-    echo 'alreadyLogged';
+    header('Location: index.php?type=game');
 }
