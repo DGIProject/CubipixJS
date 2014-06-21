@@ -13,7 +13,14 @@ var playerPos = {
     "y" : 0
 };
 
-var mapUId;
+var map = {
+    "mapUId" : null,
+    "name" : "Map",
+    "description" : "Description",
+    "difficult" : 0,
+    "texture" : 0,
+    "alreadyEdited" : false
+};
 
 window.onload = function() {
     canvas = document.getElementById('canvas');
@@ -24,6 +31,9 @@ window.onload = function() {
 
 function startMapEditor(widthMapBloc, heightMapBloc)
 {
+    map.mapUId = getUId();
+    map.alreadyEdited = false;
+
     blocsWidth = widthMapBloc;
     blocsHeight = heightMapBloc;
 
@@ -63,7 +73,8 @@ function loadMap(mUId)
 {
     console.log('loadMap');
 
-    mapUId = mUId;
+    map.mapUId = mUId;
+    map.alreadyEdited = true;
 
     var xhr = getXMLHttpRequest();
 
@@ -110,6 +121,16 @@ function loadMap(mUId)
     }
 
     $('#startMapEditorModal').modal('hide');
+}
+
+function s4()
+{
+    return Math.floor((1 + Math.random()) * 0x10000) . toString(16) . substring(1);
+}
+
+function getUId()
+{
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 window.onclick = function(e) {
@@ -193,6 +214,26 @@ function setPosYPlayer(y)
     playerPos.y = parseInt(y);
 }
 
+function setNameMap(value)
+{
+    map.name = value;
+}
+
+function setDescriptionMap(value)
+{
+    map.description = value;
+}
+
+function setDifficultMap(value)
+{
+    map.difficult = value;
+}
+
+function setTextureMap(value)
+{
+    map.texture = value;
+}
+
 function addMob()
 {
     var mob = [0, 0, 0, 0];
@@ -244,9 +285,9 @@ function setPosYMob(id, value)
     tabMobs[id][2] = parseInt(value);
 }
 
-function saveMap(name, description, difficult)
+function saveMap()
 {
-    var json = '{ "name" : "' + name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "totalCoins" : ' + totalCoins + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
+    var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "totalCoins" : ' + totalCoins + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
 
     var OAjax;
 
@@ -255,14 +296,23 @@ function saveMap(name, description, difficult)
     OAjax.open('POST', 'index.php?type=mapEditor&a=generateFileMap',true);
     OAjax.onreadystatechange = function()
     {
-        if (OAjax.readyState == 4 && OAjax.status==200)
+        if (OAjax.readyState == 4 && OAjax.status == 200)
         {
             console.log(OAjax.responseText);
+
+            if(OAjax.responseText == 'true')
+            {
+                map.alreadyEdited = true;
+            }
+            else
+            {
+                console.log('error');
+            }
         }
     }
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('name=' + name + '&description=' + encodeURIComponent(description) + '&difficult=' + difficult + '&json=' + encodeURIComponent(json));
+    OAjax.send('mapUId=' + map.mapUId + '&name=' + map.name + '&description=' + encodeURIComponent(map.description) + '&difficult=' + map.difficult + '&alreadyEdited=' + ((map.alreadyEdited) ? 1 : 0) + '&json=' + encodeURIComponent(json));
 }
 
 function getXMLHttpRequest()

@@ -31,7 +31,6 @@ function addMap($name, $description, $difficult)
 
     $req = $bdd->prepare('INSERT INTO maps (usernameId, name, description, difficult) VALUES (:usernameId, :name, :description, :difficult)');
 
-
     if($req->execute(array('usernameId' => $_SESSION['userId'], 'name' => $name, 'description' => $description, 'difficult' => $difficult)))
     {
         return 'true';

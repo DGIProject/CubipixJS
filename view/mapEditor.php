@@ -98,6 +98,28 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" onkeyup="setNameMap(this.value);" class="form-control" value="Map">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-4">
+                    <textarea onkeyup="setDescriptionMap(this.value);" class="form-control">Description</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Difficult</label>
+                <div class="col-sm-4">
+                    <select onchange="setDifficultMap(this.value);" class="form-control">
+                        <option value="0">Easy</option>
+                        <option value="1">Medium</option>
+                        <option value="2">Hard</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Texture</label>
                 <div class="col-sm-4"></div>
             </div>
         </form>
