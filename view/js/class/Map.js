@@ -17,7 +17,7 @@ function Map(mUId, name)
     this.playerSpawn = tabMapData.playerSpawn;
     this.land = tabMapData.land;
     this.itemsLand = tabMapData.itemsLand;
-    this.totalCoins = tabMapData.totalCoins;
+    this.totalCoins = this.getTotalCoins();
     this.mobs = tabMapData.mobs;
     this.listPlayers = [];
     this.listMobs = [];
@@ -43,6 +43,23 @@ Map.prototype.getWidth = function() {
 Map.prototype.getHeight = function() {
     return this.land.length;
 };
+
+Map.prototype.getTotalCoins = function() {
+    var totalCoins = 0;
+
+    for(var i = 0; i < this.itemsLand.length; i++)
+    {
+        for(var x = 0; x < this.itemsLand[i].length; x++)
+        {
+            if(this.itemsLand[i][x] == 1)
+            {
+                totalCoins++;
+            }
+        }
+    }
+
+    return totalCoins;
+}
 
 Map.prototype.addPlayer = function(player) {
     this.listPlayers.push(player);

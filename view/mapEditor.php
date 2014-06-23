@@ -115,16 +115,16 @@
                 </div>
             </div>
         </form>
-    </div>
-    <div id="dropdownOptionDiv" class="dropdown clearfix">
-        <button type="button" id="dropdownOption" class="btn dropdown-toggle sr-only" data-toggle="dropdown">Dropdown<span class="caret"></span></button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a tabindex="-1" href="#">Action</a></li>
-            <li><a tabindex="-1" href="#">Another action</a></li>
-            <li><a tabindex="-1" href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a tabindex="-1" href="#">Separated link</a></li>
-        </ul>
+        <div id="dropdownOptionDiv" class="dropdown clearfix" style="position: fixed;">
+            <button type="button" id="dropdownOption" class="btn dropdown-toggle sr-only" data-toggle="dropdown">Dropdown<span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a tabindex="-1" href="#">Action</a></li>
+                <li><a tabindex="-1" href="#">Another action</a></li>
+                <li><a tabindex="-1" href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#">Separated link</a></li>
+            </ul>
+        </div>
     </div>
     <div id="startMapEditorModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

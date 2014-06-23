@@ -216,24 +216,6 @@
 
         setValues("<?php echo $_SESSION['uUId']; ?>", "<?php echo $_GET['sUId']; ?>");
         loadMap("<?php echo $map['mUId']; ?>", "<?php echo $map['name']; ?>");
-
-        var image = new Image();
-        image.sizeMob = null;
-        var width;
-        image.onload = function() {
-            if(!this.complete)
-            {
-                throw "Erreur de chargement du sprite nommé \"" + 'mob01.png' + "\".";
-            }
-            else
-            {
-                console.log('good1');
-            }
-
-            console.log('image : ' + image.width);
-        };
-
-        image.src = 'http://clangue.net/view/img/mob/' + 'mob01.png';
     };
 </script>
 

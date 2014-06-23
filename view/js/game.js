@@ -172,7 +172,7 @@ function loadMap(mUId, name)
     }, 500);
 
     setTimeout(function() {
-        document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button>';
+        document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button><button type="button" onclick="location.href = \'index.php?type=game\';" class="btn btn-default btn-block">Exit</button>';
     }, 1000);
 }
 

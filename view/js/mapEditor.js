@@ -7,7 +7,6 @@ var tabMapTexture = [];
 var tabMapItem = [];
 var tabMobs = [];
 
-var totalCoins = 0;
 var playerPos = {
     "x" : 0,
     "y" : 0
@@ -165,18 +164,30 @@ document.getElementById('mapEditor').onmousemove = function(e) {
 document.getElementById('mapEditor').oncontextmenu = function(e) {
     console.log('contextMenu');
 
-    console.log(e.clientX);
+    console.log(window.scrollY);
 
-    document.getElementById('dropdownOptionDiv').style.left = e.clientX;
-    document.getElementById('dropdownOptionDiv').style.top = e.clientY;
+    console.log(document.body.scrollLeft, document.body.scrollTop, document.body.scrollWidth, document.body.scrollHeight);
 
-    $('#dropdownOption').dropdown('toggle');
+    var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
+    var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
+
+    if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
+    {
+        document.getElementById('dropdownOptionDiv').style.left = e.clientX + 'px';
+        document.getElementById('dropdownOptionDiv').style.top = e.clientY + 'px';
+
+        $('#dropdownOption').dropdown('toggle');
+
+        return false;
+    }
 };
 
 function drawBloc(xMouse, yMouse)
 {
-    var x = Math.floor((xMouse - $('#canvas').offset().left) / 32);
-    var y = Math.floor((yMouse - $('#canvas').offset().top) / 32);
+    var x = Math.floor(((xMouse + window.scrollX) - $('#canvas').offset().left) / 32);
+    var y = Math.floor(((yMouse + window.scrollY) - $('#canvas').offset().top) / 32);
+
+    console.log(x, document.body.scrollTop);
 
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
@@ -202,9 +213,6 @@ function drawBloc(xMouse, yMouse)
                 playerPos.x = x;
                 playerPos.y = y;
 
-                document.getElementById('playerPosX').value = x;
-                document.getElementById('playerPosY').value = y;
-
                 tabMapTexture[y][x] = 15;
 
                 context2d.drawImage(document.getElementById('15t'), x * 32, y * 32, 32, 32);
@@ -221,30 +229,16 @@ function drawBloc(xMouse, yMouse)
             if(currentType == 't')
             {
                 tabMapTexture[y][x] = currentBloc;
-
-                if(tabMapItem[y][x] == 1)
-                {
-                    totalCoins--;
-                }
             }
             else if(currentType == 'i')
             {
                 if(currentBloc == 0)
                 {
-                    if(tabMapItem[y][x] == 1)
-                    {
-                        totalCoins--;
-                    }
-
                     tabMapItem[y][x] = 0;
 
                     context2d.drawImage(document.getElementById(tabMapTexture[y][x] + 't'), x * 32, y * 32, 32, 32);
 
                     return false;
-                }
-                else if(currentBloc == 1)
-                {
-                    totalCoins++;
                 }
 
                 tabMapItem[y][x] = currentBloc;
@@ -366,38 +360,92 @@ function setPosYMob(id, value)
     tabMobs[id][2] = parseInt(value);
 }
 
-function saveMap()
+function getTotalCoins()
 {
-    document.getElementById('buttonSaveMap').setAttribute('disabled', '');
+    var totalCoins = 0;
 
-    var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "totalCoins" : ' + totalCoins + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
-
-    var OAjax;
-
-    if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
-    else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
-    OAjax.open('POST', 'index.php?type=mapEditor&a=generateFileMap',true);
-    OAjax.onreadystatechange = function()
+    for(var i = 0; i < tabMapItem.length; i++)
     {
-        if (OAjax.readyState == 4 && OAjax.status == 200)
+        for(var x = 0; x < tabMapItem[i].length; x++)
         {
-            console.log(OAjax.responseText);
-
-            if(OAjax.responseText == 'true')
+            if(tabMapItem[i][x] == 1)
             {
-                map.alreadyEdited = true;
+                totalCoins++;
             }
-            else
-            {
-                console.log('error');
-            }
-
-            document.getElementById('buttonSaveMap').removeAttribute('disabled');
         }
     }
 
-    OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('mUId=' + map.mapUId + '&name=' + map.name + '&description=' + encodeURIComponent(map.description) + '&difficult=' + map.difficult + '&alreadyEdited=' + ((map.alreadyEdited) ? 1 : 0) + '&json=' + encodeURIComponent(json));
+    return totalCoins;
+}
+
+function existSpawn()
+{
+    var existSpawn = false;
+
+    for(var i = 0; i < tabMapTexture.length; i++)
+    {
+        for(var x = 0; x < tabMapTexture[i].length; x++)
+        {
+            if(tabMapTexture[i][x] == 15)
+            {
+                existSpawn = true;
+            }
+        }
+    }
+
+    return existSpawn;
+}
+
+function saveMap()
+{
+    if(getTotalCoins() > 0)
+    {
+        if(existSpawn())
+        {
+            document.getElementById('buttonSaveMap').setAttribute('disabled', '');
+
+            var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
+
+            var OAjax;
+
+            if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
+            else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
+            OAjax.open('POST', 'index.php?type=mapEditor&a=generateFileMap',true);
+            OAjax.onreadystatechange = function()
+            {
+                if (OAjax.readyState == 4 && OAjax.status == 200)
+                {
+                    console.log(OAjax.responseText);
+
+                    if(OAjax.responseText == 'true')
+                    {
+                        map.alreadyEdited = true;
+
+                        var n = noty({text: 'The map is saved.', layout: 'topRight', type: 'success'});
+                    }
+                    else
+                    {
+                        console.log('error');
+
+                        var n = noty({text: 'Error, unable to save the map.', layout: 'topRight', type: 'error'});
+                    }
+
+                    document.getElementById('buttonSaveMap').removeAttribute('disabled');
+                }
+            }
+
+            OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+            OAjax.send('mUId=' + map.mapUId + '&name=' + map.name + '&description=' + encodeURIComponent(map.description) + '&difficult=' + map.difficult + '&alreadyEdited=' + ((map.alreadyEdited) ? 1 : 0) + '&json=' + encodeURIComponent(json));
+        }
+        else
+        {
+            var n = noty({text: 'There is no spawn.', layout: 'topRight', type: 'error'});
+        }
+    }
+    else
+    {
+        var n = noty({text: 'There is no coins.', layout: 'topRight', type: 'error'});
+    }
 }
 
 function getInfoMap(mUId)

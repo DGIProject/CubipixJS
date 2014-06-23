@@ -136,10 +136,10 @@ Player.prototype.movePlayer = function(direction, map, x, y) {
 
     this.direction = direction;
 
-    this.etatAnimation = 1;
-
     if(x != null && y != null)
     {
+        this.etatAnimation = 1;
+
         this.x = x;
         this.y = y;
     }
@@ -151,6 +151,8 @@ Player.prototype.movePlayer = function(direction, map, x, y) {
         {
             return false;
         }
+
+        this.etatAnimation = 1;
 
         this.x = nextCase.x;
         this.y = nextCase.y;
