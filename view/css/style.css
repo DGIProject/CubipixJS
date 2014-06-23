@@ -92,6 +92,7 @@ code {
     margin-top: 51px;
     overflow: auto;
     text-align: center;
+    max-height: 500px;
 }
 
 .featurette-divider {

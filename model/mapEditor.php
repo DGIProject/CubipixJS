@@ -9,9 +9,21 @@ function getListMaps()
     return $req->fetchAll();
 }
 
-function generateFileMap($name, $json)
+function getInfoMap($mUId)
 {
-    $file = fopen('maps/' . $name . '.cm', "w");
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT * FROM maps WHERE mUId = ?');
+    $req->execute(array($mUId));
+
+    $map = $req->fetch();
+
+    return json_encode(array($map['name'], $map['description'], $map['difficult'], $map['texture']));
+}
+
+function generateFileMap($mUId, $json)
+{
+    $file = fopen('maps/' . $mUId . '.cm', "w");
 
     if(fwrite($file, $json))
     {
@@ -25,13 +37,22 @@ function generateFileMap($name, $json)
     fclose($file);
 }
 
-function addMap($name, $description, $difficult)
+function addMap($mUId, $name, $description, $difficult, $alreadyEdited)
 {
     global $bdd;
 
-    $req = $bdd->prepare('INSERT INTO maps (usernameId, name, description, difficult) VALUES (:usernameId, :name, :description, :difficult)');
+    $req = NULL;
 
-    if($req->execute(array('usernameId' => $_SESSION['userId'], 'name' => $name, 'description' => $description, 'difficult' => $difficult)))
+    if($alreadyEdited == 1)
+    {
+        $req = $bdd->prepare('UPDATE maps SET name = :name, description = :description, difficult = :difficult WHERE mUId = :mUId AND usernameId = :usernameId');
+    }
+    else
+    {
+        $req = $bdd->prepare('INSERT INTO maps (mUId, usernameId, name, description, difficult) VALUES (:mUId, :usernameId, :name, :description, :difficult)');
+    }
+
+    if($req->execute(array('mUId' => $mUId, 'usernameId' => $_SESSION['userId'], 'name' => $name, 'description' => $description, 'difficult' => $difficult)))
     {
         return 'true';
     }

@@ -68,7 +68,7 @@ Map.prototype.drawMap = function(context) {
 
         for(var j = 0, k = line.length; j < k; j++)
         {
-            this.drawBloc(line[j], context, j * 32, y);
+            this.drawBloc((line[j] == 15) ? 1 : line[j], context, j * 32, y);
         }
     }
 

@@ -40,8 +40,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li class="active"><a href="index.php?type=game">Game</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.php#about">About</a></li>
+                <li><a href="index.php#contact">Contact</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -82,7 +82,7 @@
             echo '<p>You don\'t have any map.</p>';
         }?>
     </div>
-    <a href="index.php?type=mapEditor" class="btn btn-success">Create a map</a>
+    <a href="index.php?type=mapEditor" class="btn btn-success">Map editor</a>
     <div class="page-header">
         <h1>Map multiplayer</h1>
     </div>

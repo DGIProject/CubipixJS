@@ -70,48 +70,35 @@
             <button type="button" id="button12t" onclick="setBloc(12, 't');" class="btn btn-default"><img id="12t" src="view/img/texture/12.png"></button>
             <button type="button" id="button13t" onclick="setBloc(13, 't');" class="btn btn-default"><img id="13t" src="view/img/texture/13.png"></button>
             <button type="button" id="button14t" onclick="setBloc(14, 't');" class="btn btn-default"><img id="14t" src="view/img/texture/14.png"></button>
+            <button type="button" id="button15t" onclick="setBloc(15, 't');" class="btn btn-default"><img id="15t" src="view/img/texture/15.png"></button>
         </div>
         <h4>Items</h4>
         <div id="items">
+            <button type="button" id="button0i" onclick="setBloc(0, 'i');" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
             <button type="button" id="button1i" onclick="setBloc(1, 'i');" class="btn btn-default"><img id="1i" src="view/img/item/1.png"></button>
             <button type="button" id="button2i" onclick="setBloc(2, 'i');" class="btn btn-default"><img id="2i" src="view/img/item/2.png"></button>
         </div>
         <h4>Mobs</h4>
         <div id="mobs" class="list-group"></div>
         <button type="button" onclick="addMob();" class="btn btn-success">Add mob</button>
-        <h4>Player</h4>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">X</label>
-                <div class="col-sm-4">
-                    <input type="text" onkeyup="setPosXPlayer(this.value);" class="form-control" value="0">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Y</label>
-                <div class="col-sm-4">
-                    <input type="text" onkeyup="setPosYPlayer(this.value);" class="form-control" value="0">
-                </div>
-            </div>
-        </form>
         <h2>Informations</h2>
         <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-4">
-                    <input type="text" onkeyup="setNameMap(this.value);" class="form-control" value="Map">
+                    <input type="text" id="mapName" name="mapName" onkeyup="setNameMap(this.value);" class="form-control" value="Map">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Description</label>
                 <div class="col-sm-4">
-                    <textarea onkeyup="setDescriptionMap(this.value);" class="form-control">Description</textarea>
+                    <textarea id="mapDescription" name="mapDescription" onkeyup="setDescriptionMap(this.value);" class="form-control">Description</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Difficult</label>
                 <div class="col-sm-4">
-                    <select onchange="setDifficultMap(this.value);" class="form-control">
+                    <select id="mapDifficult" name="mapDifficult" onchange="setDifficultMap(this.value);" class="form-control">
                         <option value="0">Easy</option>
                         <option value="1">Medium</option>
                         <option value="2">Hard</option>
@@ -120,9 +107,24 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Texture</label>
-                <div class="col-sm-4"></div>
+                <div class="col-sm-4">None</div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="button" id="buttonSaveMap" onclick="saveMap();" class="btn btn-success btn-lg btn-block">Save map</button>
+                </div>
             </div>
         </form>
+    </div>
+    <div id="dropdownOptionDiv" class="dropdown clearfix">
+        <button type="button" id="dropdownOption" class="btn dropdown-toggle sr-only" data-toggle="dropdown">Dropdown<span class="caret"></span></button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a tabindex="-1" href="#">Action</a></li>
+            <li><a tabindex="-1" href="#">Another action</a></li>
+            <li><a tabindex="-1" href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a tabindex="-1" href="#">Separated link</a></li>
+        </ul>
     </div>
     <div id="startMapEditorModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -184,6 +186,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="view/js/jquery.noty.packaged.min.js"></script>
 <script src="view/js/bootstrap.min.js"></script>
 <script src="view/js/mapEditor.js"></script>
 

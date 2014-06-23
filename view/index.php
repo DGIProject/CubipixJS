@@ -38,7 +38,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
+                <li class="active"><a href="#">Home</a></li>
                 <li><a href="index.php?type=game">Game</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -49,17 +49,27 @@
 
 <!-- Begin page content -->
 <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron" id="home">
         <h1>CubipixJS - Beta</h1>
         <p>Discover a new fantastic game when you're bored and play with friends.</p>
     </div>
     <div class="row">
-        <div class="col-sm-6">
-            <a href="index.php?type=game" class="btn btn-primary btn-lg btn-block">Login</a>
-        </div>
-        <div class="col-sm-6">
-            <a href="index.php?type=register" class="btn btn-primary btn-lg btn-block">Register</a>
-        </div>
+        <?php
+        if($_SESSION['userId'] != NULL)
+        {
+            echo '<div class="span12">
+                    <a href="index.php?type=game" class="btn btn-success btn-lg btn-block">Play now</a>
+                  </div>';
+        }
+        else
+        {
+            echo '<div class="col-sm-6">
+                    <a href="index.php?type=game" class="btn btn-primary btn-lg btn-block">Login</a>
+                  </div>
+                  <div class="col-sm-6">
+                    <a href="index.php?type=register" class="btn btn-primary btn-lg btn-block">Register</a>
+                  </div>';
+        }?>
     </div>
     <div id="about" class="page-header">
         <h2>About</h2>
@@ -86,6 +96,32 @@
     <div id="contact" class="page-header">
         <h2>Contact</h2>
     </div>
+    <p class="lead">Contact us to learn informations or say a problem. We'll try to answer at time.</p>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-4">
+                <input type="text" id="username" name="username" class="form-control" required="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Subject</label>
+            <div class="col-sm-4">
+                <input type="text" id="subject" name="subject" class="form-control" required="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Message</label>
+            <div class="col-sm-4">
+                <textarea id="message" name="message" class="form-control" required=""></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" id="buttonSendMessage" class="btn btn-default">Send</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div id="footer">

@@ -13,12 +13,14 @@ var playerPos = {
     "y" : 0
 };
 
+var leftClick = false;
+
 var map = {
     "mapUId" : null,
     "name" : "Map",
     "description" : "Description",
-    "difficult" : 0,
-    "texture" : 0,
+    "difficult" : null,
+    "texture" : null,
     "alreadyEdited" : false
 };
 
@@ -75,6 +77,8 @@ function loadMap(mUId)
 
     map.mapUId = mUId;
     map.alreadyEdited = true;
+
+    getInfoMap(mUId);
 
     var xhr = getXMLHttpRequest();
 
@@ -133,49 +137,136 @@ function getUId()
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-window.onclick = function(e) {
-    var x = Math.floor((e.clientX - $('#canvas').offset().left) / 32);
-    var y = Math.floor((e.clientY - ($('#canvas').offset().top)) / 32);
+document.getElementById('mapEditor').onmousedown = function(e) {
+    console.log(e.button);
 
-    console.log(e.clientX, e.clientY);
-    console.log(x, y);
-    console.log(currentType);
-    console.log($('#canvas').offset().left, $('#canvas').offset().top);
+    if(e.button == 0)
+    {
+        leftClick = true;
+
+        drawBloc(e.clientX, e.clientY);
+    }
+};
+
+document.getElementById('mapEditor').onmouseup = function(e) {
+    if(e.button == 0)
+    {
+        leftClick = false;
+    }
+};
+
+document.getElementById('mapEditor').onmousemove = function(e) {
+    if(leftClick)
+    {
+        drawBloc(e.clientX, e.clientY);
+    }
+};
+
+document.getElementById('mapEditor').oncontextmenu = function(e) {
+    console.log('contextMenu');
+
+    console.log(e.clientX);
+
+    document.getElementById('dropdownOptionDiv').style.left = e.clientX;
+    document.getElementById('dropdownOptionDiv').style.top = e.clientY;
+
+    $('#dropdownOption').dropdown('toggle');
+};
+
+function drawBloc(xMouse, yMouse)
+{
+    var x = Math.floor((xMouse - $('#canvas').offset().left) / 32);
+    var y = Math.floor((yMouse - $('#canvas').offset().top) / 32);
 
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
-        if(currentType == 't')
+        if(currentBloc == 15 && currentType == 't')
         {
-            tabMapTexture[y][x] = currentBloc;
+            var existSpawn = false;
 
-            if(tabMapItem[y][x] == 1)
+            for(var i = 0; i < tabMapTexture.length; i++)
             {
-                totalCoins--;
+                for(var j = 0; j < tabMapTexture[i].length; j++)
+                {
+                    if(tabMapTexture[i][j] == 15)
+                    {
+                        console.log('existSpawn');
+
+                        existSpawn = true;
+                    }
+                }
             }
 
-            tabMapItem[y][x] = 0;
-        }
-        else if(currentType == 'i')
-        {
-            if(currentBloc == 1)
+            if(!existSpawn)
             {
-                totalCoins++;
-            }
+                playerPos.x = x;
+                playerPos.y = y;
 
-            tabMapItem[y][x] = currentBloc;
+                document.getElementById('playerPosX').value = x;
+                document.getElementById('playerPosY').value = y;
+
+                tabMapTexture[y][x] = 15;
+
+                context2d.drawImage(document.getElementById('15t'), x * 32, y * 32, 32, 32);
+            }
+            else
+            {
+                console.log('alreadySpawn');
+
+                var n = noty({text: 'Spawn already exist.', layout: 'topRight', type: 'error'});
+            }
         }
         else
         {
-            console.log('error');
-        }
+            if(currentType == 't')
+            {
+                tabMapTexture[y][x] = currentBloc;
 
-        context2d.drawImage(document.getElementById(currentBloc + currentType), x * 32, y * 32, 32, 32);
+                if(tabMapItem[y][x] == 1)
+                {
+                    totalCoins--;
+                }
+            }
+            else if(currentType == 'i')
+            {
+                if(currentBloc == 0)
+                {
+                    if(tabMapItem[y][x] == 1)
+                    {
+                        totalCoins--;
+                    }
+
+                    tabMapItem[y][x] = 0;
+
+                    context2d.drawImage(document.getElementById(tabMapTexture[y][x] + 't'), x * 32, y * 32, 32, 32);
+
+                    return false;
+                }
+                else if(currentBloc == 1)
+                {
+                    totalCoins++;
+                }
+
+                tabMapItem[y][x] = currentBloc;
+            }
+            else
+            {
+                console.log('error');
+            }
+
+            context2d.drawImage(document.getElementById(currentBloc + currentType), x * 32, y * 32, 32, 32);
+
+            if(tabMapItem[y][x] > 0)
+            {
+                context2d.drawImage(document.getElementById(tabMapItem[y][x] + 'i'), x * 32, y * 32, 32, 32);
+            }
+        }
     }
     else
     {
         console.log('out');
     }
-};
+}
 
 function setBloc(id, type)
 {
@@ -190,7 +281,7 @@ function setBloc(id, type)
 
 function removeTextureDisabled()
 {
-    for(var i = 0; i < 14; i++)
+    for(var i = 0; i < 16; i++)
     {
         document.getElementById('button' + i + 't').classList.remove('disabled');
     }
@@ -198,20 +289,10 @@ function removeTextureDisabled()
 
 function removeItemDisabled()
 {
-    for(var i = 1; i < 3; i++)
+    for(var i = 0; i < 3; i++)
     {
         document.getElementById('button' + i + 'i').classList.remove('disabled');
     }
-}
-
-function setPosXPlayer(x)
-{
-    playerPos.x = parseInt(x);
-}
-
-function setPosYPlayer(y)
-{
-    playerPos.y = parseInt(y);
 }
 
 function setNameMap(value)
@@ -287,6 +368,8 @@ function setPosYMob(id, value)
 
 function saveMap()
 {
+    document.getElementById('buttonSaveMap').setAttribute('disabled', '');
+
     var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "totalCoins" : ' + totalCoins + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
 
     var OAjax;
@@ -308,11 +391,43 @@ function saveMap()
             {
                 console.log('error');
             }
+
+            document.getElementById('buttonSaveMap').removeAttribute('disabled');
         }
     }
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('mapUId=' + map.mapUId + '&name=' + map.name + '&description=' + encodeURIComponent(map.description) + '&difficult=' + map.difficult + '&alreadyEdited=' + ((map.alreadyEdited) ? 1 : 0) + '&json=' + encodeURIComponent(json));
+    OAjax.send('mUId=' + map.mapUId + '&name=' + map.name + '&description=' + encodeURIComponent(map.description) + '&difficult=' + map.difficult + '&alreadyEdited=' + ((map.alreadyEdited) ? 1 : 0) + '&json=' + encodeURIComponent(json));
+}
+
+function getInfoMap(mUId)
+{
+    var OAjax;
+
+    if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
+    else if (window.ActiveXObject) OAjax = new ActiveXObject('Microsoft.XMLHTTP');
+    OAjax.open('POST', 'index.php?type=mapEditor&a=getInfoMap',true);
+    OAjax.onreadystatechange = function()
+    {
+        if (OAjax.readyState == 4 && OAjax.status == 200)
+        {
+            console.log(OAjax.responseText);
+
+            var tabInfoMap = JSON.parse(OAjax.responseText);
+
+            setNameMap(tabInfoMap[0]);
+            setDescriptionMap(tabInfoMap[1]);
+            setDifficultMap(tabInfoMap[2]);
+            setTextureMap(tabInfoMap[3]);
+
+            document.getElementById('mapName').value = tabInfoMap[0];
+            document.getElementById('mapDescription').value = tabInfoMap[1];
+            document.getElementById('mapDifficult').options[tabInfoMap[2]].selected = 'selected';
+        }
+    }
+
+    OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    OAjax.send('mUId=' + mUId);
 }
 
 function getXMLHttpRequest()

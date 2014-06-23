@@ -33,5 +33,5 @@ if($_SESSION['userId'] != NULL)
 }
 else
 {
-    echo 'noLogged';
+    header('Location: index.php?type=game');
 }

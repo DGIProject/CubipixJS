@@ -5,14 +5,20 @@ if($_SESSION['userId'] != NULL)
 
     if($_GET['a'] == 'generateFileMap')
     {
-        if(generateFileMap($_POST['name'], $_POST['json']))
+        if(generateFileMap($_POST['mUId'], $_POST['json']))
         {
-            echo addMap($_POST['name'], $_POST['description'], $_POST['difficult']);
+            echo addMap($_POST['mUId'], $_POST['name'], $_POST['description'], $_POST['difficult'], $_POST['alreadyEdited']);
         }
         else
         {
             echo 'false';
         }
+
+        exit();
+    }
+    elseif($_GET['a'] == 'getInfoMap')
+    {
+        echo getInfoMap($_POST['mUId']);
 
         exit();
     }
@@ -23,5 +29,5 @@ if($_SESSION['userId'] != NULL)
 }
 else
 {
-    echo 'notLogged';
+    header('Location: index.php?type=game');
 }
