@@ -1,7 +1,13 @@
 var canvas, context2d;
 var blocsWidth, blocsHeight;
-var currentBloc = 0;
-var currentType = 't';
+
+var currentBloc = {
+    id : 0,
+    type : 't',
+    canRotate : false,
+    rowTRotate : 0,
+    tRotate : []
+};
 
 var tabMapTexture = [];
 var tabMapItem = [];
@@ -9,7 +15,8 @@ var tabMobs = [];
 
 var playerPos = {
     "x" : 0,
-    "y" : 0
+    "y" : 0,
+    "direction" : 0
 };
 
 var leftClick = false;
@@ -92,35 +99,19 @@ function loadMap(mUId)
     tabMapTexture = tabMapData.land;
     tabMapItem = tabMapData.itemsLand;
 
+    var tabMobsT = tabMapData.mobs;
+
     blocsWidth = tabMapData.land[0].length;
     blocsHeight = tabMapData.land.length;
 
     canvas.width = blocsWidth * 32;
     canvas.height = blocsHeight * 32;
 
-    for(var i = 0, l = tabMapData.land.length; i < l; i++)
+    drawMap(tabMapTexture, tabMapItem);
+
+    for(var z = 0; z < tabMobsT.length; z++)
     {
-        var line = tabMapData.land[i];
-        var y = i * 32;
-
-        for(var j = 0, k = line.length; j < k; j++)
-        {
-            context2d.drawImage(document.getElementById(line[j] + 't'), j * 32, y, 32, 32);
-        }
-    }
-
-    for(var a = 0, b = tabMapData.itemsLand.length; a < b; a++)
-    {
-        var lineItem = tabMapData.itemsLand[a];
-        var c = a * 32;
-
-        for(var d = 0, e = lineItem.length; d < e; d++)
-        {
-            if(lineItem[d] != 0)
-            {
-                context2d.drawImage(document.getElementById(lineItem[d] + 'i'), d * 32, c, 32, 32);
-            }
-        }
+        addMob(tabMobsT[z][0], tabMobsT[z][3], tabMobsT[z][1], tabMobsT[z][2]);
     }
 
     $('#startMapEditorModal').modal('hide');
@@ -134,6 +125,34 @@ function s4()
 function getUId()
 {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+function drawMap(tabMapTexture, tabMapItem)
+{
+    for(var i = 0, l = tabMapTexture.length; i < l; i++)
+    {
+        var line = tabMapTexture[i];
+        var y = i * 32;
+
+        for(var j = 0, k = line.length; j < k; j++)
+        {
+            context2d.drawImage(document.getElementById(line[j] + 't'), j * 32, y, 32, 32);
+        }
+    }
+
+    for(var a = 0, b = tabMapItem.length; a < b; a++)
+    {
+        var lineItem = tabMapItem[a];
+        var c = a * 32;
+
+        for(var d = 0, e = lineItem.length; d < e; d++)
+        {
+            if(lineItem[d] != 0)
+            {
+                context2d.drawImage(document.getElementById(lineItem[d] + 'i'), d * 32, c, 32, 32);
+            }
+        }
+    }
 }
 
 document.getElementById('mapEditor').onmousedown = function(e) {
@@ -155,6 +174,20 @@ document.getElementById('mapEditor').onmouseup = function(e) {
 };
 
 document.getElementById('mapEditor').onmousemove = function(e) {
+    var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
+    var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
+
+    drawMap(tabMapTexture, tabMapItem);
+
+    if(currentBloc.id == 0 && currentBloc.type == 'i')
+    {
+        console.log('noDraw');
+    }
+    else
+    {
+        context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+    }
+
     if(leftClick)
     {
         drawBloc(e.clientX, e.clientY);
@@ -164,19 +197,32 @@ document.getElementById('mapEditor').onmousemove = function(e) {
 document.getElementById('mapEditor').oncontextmenu = function(e) {
     console.log('contextMenu');
 
-    console.log(window.scrollY);
-
-    console.log(document.body.scrollLeft, document.body.scrollTop, document.body.scrollWidth, document.body.scrollHeight);
-
     var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
     var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
 
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
-        document.getElementById('dropdownOptionDiv').style.left = e.clientX + 'px';
-        document.getElementById('dropdownOptionDiv').style.top = e.clientY + 'px';
+        //document.getElementById('dropdownOptionDiv').style.left = e.clientX + 'px';
+        //document.getElementById('dropdownOptionDiv').style.top = e.clientY + 'px';
 
-        $('#dropdownOption').dropdown('toggle');
+        //$('#dropdownOption').dropdown('toggle');
+
+        if(currentBloc.canRotate)
+        {
+            currentBloc.rowTRotate = ((currentBloc.rowTRotate + 1) == currentBloc.tRotate.length) ? 0 : currentBloc.rowTRotate + 1;
+            currentBloc.id = currentBloc.tRotate[currentBloc.rowTRotate];
+
+            drawMap(tabMapTexture, tabMapItem);
+
+            if(currentBloc.id == 0 && currentBloc.type == 'i')
+            {
+                console.log('noDraw');
+            }
+            else
+            {
+                context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+            }
+        }
 
         return false;
     }
@@ -191,7 +237,7 @@ function drawBloc(xMouse, yMouse)
 
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
-        if(currentBloc == 15 && currentType == 't')
+        if(currentBloc.id == 15 && currentBloc.type == 't')
         {
             var existSpawn = false;
 
@@ -226,13 +272,13 @@ function drawBloc(xMouse, yMouse)
         }
         else
         {
-            if(currentType == 't')
+            if(currentBloc.type == 't')
             {
-                tabMapTexture[y][x] = currentBloc;
+                tabMapTexture[y][x] = currentBloc.id;
             }
-            else if(currentType == 'i')
+            else if(currentBloc.type == 'i')
             {
-                if(currentBloc == 0)
+                if(currentBloc.id == 0)
                 {
                     tabMapItem[y][x] = 0;
 
@@ -241,14 +287,14 @@ function drawBloc(xMouse, yMouse)
                     return false;
                 }
 
-                tabMapItem[y][x] = currentBloc;
+                tabMapItem[y][x] = currentBloc.id;
             }
             else
             {
                 console.log('error');
             }
 
-            context2d.drawImage(document.getElementById(currentBloc + currentType), x * 32, y * 32, 32, 32);
+            context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
 
             if(tabMapItem[y][x] > 0)
             {
@@ -262,22 +308,25 @@ function drawBloc(xMouse, yMouse)
     }
 }
 
-function setBloc(id, type)
+function setBloc(id, type, canRotate, tRotate)
 {
-    currentBloc = id;
-    currentType = type;
+    currentBloc.id = id;
+    currentBloc.type = type;
+    currentBloc.canRotate = canRotate;
+    currentBloc.rowTRotate = 0;
+    currentBloc.tRotate = tRotate;
 
     removeTextureDisabled();
     removeItemDisabled();
 
-    document.getElementById('button' + id + type).classList.add('disabled');
+    document.getElementById('liButton' + id + type).classList.add('active');
 }
 
 function removeTextureDisabled()
 {
     for(var i = 0; i < 16; i++)
     {
-        document.getElementById('button' + i + 't').classList.remove('disabled');
+        document.getElementById('liButton' + i + 't').classList.remove('active');
     }
 }
 
@@ -285,7 +334,7 @@ function removeItemDisabled()
 {
     for(var i = 0; i < 3; i++)
     {
-        document.getElementById('button' + i + 'i').classList.remove('disabled');
+        document.getElementById('liButton' + i + 'i').classList.remove('active');
     }
 }
 
@@ -309,9 +358,11 @@ function setTextureMap(value)
     map.texture = value;
 }
 
-function addMob()
+function addMob(type, direction, x, y)
 {
-    var mob = [0, 0, 0, 0];
+    console.log(type, direction, x, y);
+
+    var mob = [type, x, y, direction];
     var mobId = tabMobs.length;
 
     tabMobs.push(mob);
@@ -323,14 +374,17 @@ function addMob()
         '<h4 class="list-group-item-heading">Mob</h4>' +
         '<p class="list-group-item-text">' +
         '<form class="form-horizontal">' +
-        '<div class="form-group"><label class="col-sm-2 control-label">Type</label><div class="col-sm-4"><select onchange="setTypeMob(' + mobId + ', this.value);" class="form-control"><option value="0">Nice</option><option value="1">Bad</option><option value="2">Naughty</option></select></div></div>' +
-        '<div class="form-group"><label class="col-sm-2 control-label">Direction</label><div class="col-sm-4"><select onchange="setDirectionMob(' + mobId + ', this.value);" class="form-control"><option value="0">UP - DOWN</option><option value="1">LEFT - RIGHT</option><option value="2">RIGHT - LEFT</option><option value="3">DOWN - UP</option></select></div></div>' +
-        '<div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-4"><input type="text" onkeyup="setPosXMob(' + mobId + ', this.value);" class="form-control" value="0"></div></div>' +
-        '<div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-4"><input type="text" onkeyup="setPosYMob(' + mobId + ', this.value);" class="form-control" value="0"></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Type</label><div class="col-sm-4"><select id="typeMob' + mobId + '" name="typeMob' + mobId + '" onchange="setTypeMob(' + mobId + ', this.value);" class="form-control"><option value="0">Nice</option><option value="1">Bad</option><option value="2">Naughty</option></select></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Direction</label><div class="col-sm-4"><select id="directionMob' + mobId + '" name="directionMob' + mobId + '" onchange="setDirectionMob(' + mobId + ', this.value);" class="form-control"><option value="0">UP - DOWN</option><option value="1">LEFT - RIGHT</option><option value="2">RIGHT - LEFT</option><option value="3">DOWN - UP</option></select></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-4"><input type="text" id="posXMob' + mobId + '" name="posXMob' + mobId + '" onkeyup="setPosXMob(' + mobId + ', this.value);" class="form-control" value="' + x + '"></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-4"><input type="text" id="posYMob' + mobId + '" name="posYMob' + mobId + '" onkeyup="setPosYMob(' + mobId + ', this.value);" class="form-control" value="' + y + '"></div></div>' +
         '</form>' +
         '</p>';
 
     document.getElementById('mobs').appendChild(mobE);
+
+    document.getElementById('typeMob' + mobId).options[type].selected = 'selected';
+    document.getElementById('directionMob' + mobId).options[direction].selected = 'selected';
 }
 
 function deleteMob(id)
@@ -404,7 +458,7 @@ function saveMap()
         {
             document.getElementById('buttonSaveMap').setAttribute('disabled', '');
 
-            var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
+            var json = '{ "name" : "' + map.name + '", "playerSpawn" : {"x" : ' + playerPos.x + ', "y" : ' + playerPos.y + ', "direction" : ' + playerPos.direction + '}, "land" : ' + JSON.stringify(tabMapTexture) + ', "itemsLand" : ' + JSON.stringify(tabMapItem) + ', "mobs" : ' + JSON.stringify(tabMobs) + ' }';
 
             var OAjax;
 

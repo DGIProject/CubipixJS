@@ -49,72 +49,71 @@
 
 <div id="content">
     <div id="mapEditor">
-        <h2>Map</h2>
         <canvas id="canvas"></canvas>
     </div>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Map editor</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blocs <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">General blocs</li>
+                            <li id="liButton0t" class="active"><a href="#" onclick="setBloc(0, 't');"><img id="0t" src="view/img/texture/0.png"> Empty</a></li>
+                            <li id="liButton1t"><a href="#" onclick="setBloc(1, 't', false);"><img id="1t" src="view/img/texture/1.png"> Grass</a></li>
+                            <li id="liButton2t"><a href="#" onclick="setBloc(2, 't', false);"><img id="2t" src="view/img/texture/2.png"> Brick</a></li>
+                            <li id="liButton3t"><a href="#" onclick="setBloc(3, 't', true, [3, 4, 5, 6]);"><img id="3t" src="view/img/texture/3.png"> Empty</a></li>
+                            <li id="liButton4t" style="display: none;"><a href="#" onclick="setBloc(4, 't');"><img id="4t" src="view/img/texture/4.png"> Empty</a></li>
+                            <li id="liButton5t" style="display: none;"><a href="#" onclick="setBloc(5, 't');"><img id="5t" src="view/img/texture/5.png"> Empty</a></li>
+                            <li id="liButton6t" style="display: none;"><a href="#" onclick="setBloc(6, 't');"><img id="6t" src="view/img/texture/6.png"> Empty</a></li>
+                            <li id="liButton7t"><a href="#" onclick="setBloc(7, 't', true, [7, 8, 9, 10]);"><img id="7t" src="view/img/texture/7.png"> Empty</a></li>
+                            <li id="liButton8t" style="display: none;"><a href="#" onclick="setBloc(8, 't');"><img id="8t" src="view/img/texture/8.png"> Empty</a></li>
+                            <li id="liButton9t" style="display: none;"><a href="#" onclick="setBloc(9, 't');"><img id="9t" src="view/img/texture/9.png"> Empty</a></li>
+                            <li id="liButton10t" style="display: none;"><a href="#" onclick="setBloc(10, 't');"><img id="10t" src="view/img/texture/10.png"> Empty</a></li>
+                            <li id="liButton11t"><a href="#" onclick="setBloc(11, 't', true, [11, 12, 13, 14]);"><img id="11t" src="view/img/texture/11.png"> Empty</a></li>
+                            <li id="liButton12t" style="display: none;"><a href="#" onclick="setBloc(12, 't');"><img id="12t" src="view/img/texture/12.png"> Empty</a></li>
+                            <li id="liButton13t" style="display: none;"><a href="#" onclick="setBloc(13, 't');"><img id="13t" src="view/img/texture/13.png"> Empty</a></li>
+                            <li id="liButton14t" style="display: none;"><a href="#" onclick="setBloc(14, 't');"><img id="14t" src="view/img/texture/14.png"> Empty</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Spawn</li>
+                            <li id="liButton15t"><a href="#" onclick="setBloc(15, 't');"><img id="15t" src="view/img/texture/15.png"> Empty</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Good</li>
+                            <li id="liButton1i"><a href="#" onclick="setBloc(1, 'i', false);"><img id="1i" src="view/img/item/1.png"> Coin</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Bad</li>
+                            <li id="liButton2i"><a href="#" onclick="setBloc(2, 'i', false);"><img id="2i" src="view/img/item/2.png"> Stinging plant (1 health)</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Tool</li>
+                            <li id="liButton0i"><a href="#" onclick="setBloc(0, 'i', false);"><span class="glyphicon glyphicon-remove"></span> Delete item</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#mobsModal" data-toggle="modal">Mobs</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#mapInformationsModal" data-toggle="modal">Map informations</a></li>
+                    <button type="button" id="buttonSaveMap" onclick="saveMap();" class="btn btn-success navbar-btn">Save</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
-        <h4>Blocs</h4>
-        <div id="blocs">
-            <button type="button" id="button0t" onclick="setBloc(0, 't');" class="btn btn-default disabled"><img id="0t" src="view/img/texture/0.png"></button>
-            <button type="button" id="button1t" onclick="setBloc(1, 't');" class="btn btn-default"><img id="1t" src="view/img/texture/1.png"></button>
-            <button type="button" id="button2t" onclick="setBloc(2, 't');" class="btn btn-default"><img id="2t" src="view/img/texture/2.png"></button>
-            <button type="button" id="button3t" onclick="setBloc(3, 't');" class="btn btn-default"><img id="3t" src="view/img/texture/3.png"></button>
-            <button type="button" id="button4t" onclick="setBloc(4, 't');" class="btn btn-default"><img id="4t" src="view/img/texture/4.png"></button>
-            <button type="button" id="button5t" onclick="setBloc(5, 't');" class="btn btn-default"><img id="5t" src="view/img/texture/5.png"></button>
-            <button type="button" id="button6t" onclick="setBloc(6, 't');" class="btn btn-default"><img id="6t" src="view/img/texture/6.png"></button>
-            <button type="button" id="button7t" onclick="setBloc(7, 't');" class="btn btn-default"><img id="7t" src="view/img/texture/7.png"></button>
-            <button type="button" id="button8t" onclick="setBloc(8, 't');" class="btn btn-default"><img id="8t" src="view/img/texture/8.png"></button>
-            <button type="button" id="button9t" onclick="setBloc(9, 't');" class="btn btn-default"><img id="9t" src="view/img/texture/9.png"></button>
-            <button type="button" id="button10t" onclick="setBloc(10, 't');" class="btn btn-default"><img id="10t" src="view/img/texture/10.png"></button>
-            <button type="button" id="button11t" onclick="setBloc(11, 't');" class="btn btn-default"><img id="11t" src="view/img/texture/11.png"></button>
-            <button type="button" id="button12t" onclick="setBloc(12, 't');" class="btn btn-default"><img id="12t" src="view/img/texture/12.png"></button>
-            <button type="button" id="button13t" onclick="setBloc(13, 't');" class="btn btn-default"><img id="13t" src="view/img/texture/13.png"></button>
-            <button type="button" id="button14t" onclick="setBloc(14, 't');" class="btn btn-default"><img id="14t" src="view/img/texture/14.png"></button>
-            <button type="button" id="button15t" onclick="setBloc(15, 't');" class="btn btn-default"><img id="15t" src="view/img/texture/15.png"></button>
-        </div>
-        <h4>Items</h4>
-        <div id="items">
-            <button type="button" id="button0i" onclick="setBloc(0, 'i');" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
-            <button type="button" id="button1i" onclick="setBloc(1, 'i');" class="btn btn-default"><img id="1i" src="view/img/item/1.png"></button>
-            <button type="button" id="button2i" onclick="setBloc(2, 'i');" class="btn btn-default"><img id="2i" src="view/img/item/2.png"></button>
-        </div>
-        <h4>Mobs</h4>
-        <div id="mobs" class="list-group"></div>
-        <button type="button" onclick="addMob();" class="btn btn-success">Add mob</button>
-        <h2>Informations</h2>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-4">
-                    <input type="text" id="mapName" name="mapName" onkeyup="setNameMap(this.value);" class="form-control" value="Map">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-4">
-                    <textarea id="mapDescription" name="mapDescription" onkeyup="setDescriptionMap(this.value);" class="form-control">Description</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Difficult</label>
-                <div class="col-sm-4">
-                    <select id="mapDifficult" name="mapDifficult" onchange="setDifficultMap(this.value);" class="form-control">
-                        <option value="0">Easy</option>
-                        <option value="1">Medium</option>
-                        <option value="2">Hard</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Texture</label>
-                <div class="col-sm-4">None</div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <button type="button" id="buttonSaveMap" onclick="saveMap();" class="btn btn-success btn-lg btn-block">Save map</button>
-                </div>
-            </div>
-        </form>
         <div id="dropdownOptionDiv" class="dropdown clearfix" style="position: fixed;">
             <button type="button" id="dropdownOption" class="btn dropdown-toggle sr-only" data-toggle="dropdown">Dropdown<span class="caret"></span></button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -139,13 +138,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">WIDTH</label>
                             <div class="col-sm-10">
-                                <input type="text" id="widthMapBloc" name="widthMapBloc" class="form-control" value="20">
+                                <input type="text" id="widthMapBloc" name="widthMapBloc" class="form-control" value="25">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">HEIGHT</label>
                             <div class="col-sm-10">
-                                <input type="text" id="heightMapBloc" name="heightMapBloc" class="form-control" value="10">
+                                <input type="text" id="heightMapBloc" name="heightMapBloc" class="form-control" value="15">
                             </div>
                         </div>
                         <div class="form-group">
@@ -169,6 +168,65 @@
                             echo 'You don\'t have any map.';
                         }?>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="mapInformationsModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Map informations</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="mapName" name="mapName" onkeyup="setNameMap(this.value);" class="form-control" value="Map">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-4">
+                                <textarea id="mapDescription" name="mapDescription" onkeyup="setDescriptionMap(this.value);" class="form-control">Description</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Difficult</label>
+                            <div class="col-sm-4">
+                                <select id="mapDifficult" name="mapDifficult" onchange="setDifficultMap(this.value);" class="form-control">
+                                    <option value="0">Easy</option>
+                                    <option value="1">Medium</option>
+                                    <option value="2">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Texture</label>
+                            <div class="col-sm-4">None</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="mobsModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Mobs</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Mobs</h4>
+                    <div id="mobs" class="list-group"></div>
+                    <button type="button" onclick="addMob(0, 0, 0, 0);" class="btn btn-success">Add mob</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
