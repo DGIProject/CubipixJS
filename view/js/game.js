@@ -62,6 +62,24 @@ function updateVolume(value, type)
     }
 }
 
+window.onbeforeunload = function() {
+    console.log('close window');
+
+    return 'You are playing, all data will lost.';
+};
+
+window.onunload = function() {
+    console.log('unload');
+
+    if(serverUId != null)
+    {
+        for(var i = 0; i < map.listPlayers.length; i++)
+        {
+            sendQueryServer(map.listPlayers[i].usernameUId, null, null, null, false, 'leftUser');
+        }
+    }
+};
+
 function addPlayer(online, usernameUIdN)
 {
     console.log('addPlayer');
@@ -282,7 +300,7 @@ function startGame()
 
                     //console.log('direction : ' + map.listPlayers[i].direction);
 
-                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y, map.listPlayers[i].direction, samePos);
+                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y, map.listPlayers[i].direction, samePos, null);
                 }
             }
         }, 200);
@@ -418,8 +436,9 @@ function addScore(win)
     OAjax.send('mUId=' + mapUId + '&win=' + win + '&points=' + totalPoints + '&health=' + player1.health + '&timeG=' + player1.timeElapsed);
 }
 
-function sendQueryServer(uUId, x, y, direction, samePos)
+function sendQueryServer(uUId, x, y, direction, samePos, server)
 {
+    console.log('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos + '&server=' + server);
     var OAjax;
 
     if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
@@ -429,61 +448,70 @@ function sendQueryServer(uUId, x, y, direction, samePos)
     {
         if (OAjax.readyState == 4 && OAjax.status==200)
         {
-            //console.log(OAjax.responseText);
+            console.log(OAjax.responseText);
 
-            var tabPlayers = JSON.parse(OAjax.responseText);
+            var tabAnswerServer = JSON.parse(OAjax.responseText);
 
-            //console.log(tabPlayers);
+            var answer = tabAnswerServer[0];
 
-            for(var i = 0; i < tabPlayers.length; i++)
+            if(answer == 'true')
             {
-                var playerExist = false;
-                var playerRow = null;
+                var tabPlayers = tabAnswerServer[1];
 
-                for(var x = 0; x < map.listPlayers.length; x++)
+                for(var i = 0; i < tabPlayers.length; i++)
                 {
-                    if(tabPlayers[i][0] == map.listPlayers[x].usernameUId)
+                    var playerExist = false;
+                    var playerRow = null;
+
+                    for(var x = 0; x < map.listPlayers.length; x++)
                     {
-                        playerExist = true;
-                        playerRow = x;
-                    }
-                }
-
-                if(playerExist)
-                {
-                    //console.log('playerExist');
-
-                    if(map.listPlayers[playerRow].online)
-                    {
-                        //console.log('online');
-
-                        if(tabPlayers[i][1] != '' && tabPlayers[i][1] != null && tabPlayers[i][2] != '' && tabPlayers[i][2] != null)
+                        if(tabPlayers[i][0] == map.listPlayers[x].usernameUId)
                         {
-                            map.listPlayers[playerRow].movePlayer(tabPlayers[i][3], map, tabPlayers[i][1], tabPlayers[i][2]);
+                            playerExist = true;
+                            playerRow = x;
+                        }
+                    }
 
-                            //map.listPlayers[playerRow].x = tabPlayers[i][1];
-                            //map.listPlayers[playerRow].y = tabPlayers[i][2];
+                    if(playerExist)
+                    {
+                        //console.log('playerExist');
+
+                        if(map.listPlayers[playerRow].online)
+                        {
+                            //console.log('online');
+
+                            if(tabPlayers[i][1] != '' && tabPlayers[i][1] != null && tabPlayers[i][2] != '' && tabPlayers[i][2] != null)
+                            {
+                                map.listPlayers[playerRow].movePlayer(tabPlayers[i][3], map, tabPlayers[i][1], tabPlayers[i][2]);
+
+                                //map.listPlayers[playerRow].x = tabPlayers[i][1];
+                                //map.listPlayers[playerRow].y = tabPlayers[i][2];
+                            }
+                            else
+                            {
+                                //console.log('notGoodPos');
+                            }
                         }
                         else
                         {
-                            //console.log('notGoodPos');
+                            //console.log('notOnline');
                         }
                     }
                     else
                     {
-                        //console.log('notOnline');
+                        addPlayer(true, tabPlayers[i][0]);
                     }
                 }
-                else
-                {
-                    addPlayer(true, tabPlayers[i][0]);
-                }
+            }
+            else
+            {
+                console.log('errorServer');
             }
         }
     };
 
     OAjax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-    OAjax.send('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos);
+    OAjax.send('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos + '&server=' + server);
 }
 
 function s4()

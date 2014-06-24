@@ -1,14 +1,14 @@
 <?php
-if($_GET['sUId'] != NULL)
+if($_POST['sUId'] != NULL)
 {
-    $sUId = $_GET['sUId'];
-    $uUId = $_GET['uUId'];
-    $posX = $_GET['posX'];
-    $posY = $_GET['posY'];
-    $direction = $_GET['direction'];
-    $samePos = $_GET['samePos'];
+    $sUId = $_POST['sUId'];
+    $uUId = $_POST['uUId'];
+    $posX = $_POST['posX'];
+    $posY = $_POST['posY'];
+    $direction = $_POST['direction'];
+    $samePos = $_POST['samePos'];
 
-    $server = $_GET['server'];
+    $server = $_POST['server'];
 
     if($server == 'leftUser')
     {
@@ -26,6 +26,8 @@ if($_GET['sUId'] != NULL)
         fclose($fileServer);
 
         unlink('files/' . $uUId . '.cr');
+
+        echo json_encode(array('leftUser'));
     }
     else
     {
@@ -57,7 +59,7 @@ if($_GET['sUId'] != NULL)
 
         for($i = 0; $i < count($tabServer); $i++)
         {
-            if($i > 1)
+            if($i > 1 && $tabServer[$i] != NULL)
             {
                 $filePlayer = fopen('files/' . $tabServer[$i] . '.cr', 'r');
 
@@ -67,12 +69,12 @@ if($_GET['sUId'] != NULL)
             }
         }
 
-        echo json_encode($tabPlayers);
+        echo json_encode(array('true', $tabPlayers));
     }
 }
 else
 {
-    echo 'callAServer';
+    echo json_encode(array('callAServer'));
 }
 
 function actualizePlayer($sUId, $uUId, $posX, $posY, $direction)
