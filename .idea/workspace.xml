@@ -72,19 +72,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapEditor.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mapEditor.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/js/mapEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="221" column="13" selection-start="5407" selection-end="5407" vertical-scroll-proportion="0.0" vertical-offset="3356" max-vertical-offset="9673">
+            <state line="246" column="23" selection-start="5894" selection-end="5894" vertical-scroll-proportion="-6.213084" vertical-offset="7506" max-vertical-offset="10081">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapEditor.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mapEditor.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/mapEditor.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="78" selection-start="7019" selection-end="7019" vertical-scroll-proportion="0.4027505" vertical-offset="1597" max-vertical-offset="4369">
+            <state line="114" column="69" selection-start="7674" selection-end="7674" vertical-scroll-proportion="-15.0" vertical-offset="1548" max-vertical-offset="5202">
               <folding>
                 <element signature="n#style#0;n#li#5;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#6;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -178,8 +178,8 @@
         <option value="$PROJECT_DIR$/view/js/class/Player.js" />
         <option value="$PROJECT_DIR$/server/index.php" />
         <option value="$PROJECT_DIR$/view/js/game.js" />
-        <option value="$PROJECT_DIR$/view/js/mapEditor.js" />
         <option value="$PROJECT_DIR$/view/mapEditor.php" />
+        <option value="$PROJECT_DIR$/view/js/mapEditor.js" />
       </list>
     </option>
   </component>
@@ -833,16 +833,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/mapEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="13" selection-start="5407" selection-end="5407" vertical-scroll-proportion="0.0" vertical-offset="3356" max-vertical-offset="9673">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/mapEditor.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="78" selection-start="7019" selection-end="7019" vertical-scroll-proportion="0.4027505" vertical-offset="1597" max-vertical-offset="4369">
+        <state line="114" column="69" selection-start="7674" selection-end="7674" vertical-scroll-proportion="-15.0" vertical-offset="1548" max-vertical-offset="5202">
           <folding>
             <element signature="n#style#0;n#li#5;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#6;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -855,6 +848,13 @@
             <element signature="n#style#0;n#li#15;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#nav#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/js/mapEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="246" column="23" selection-start="5894" selection-end="5894" vertical-scroll-proportion="-6.213084" vertical-offset="7506" max-vertical-offset="10081">
+          <folding />
         </state>
       </provider>
     </entry>

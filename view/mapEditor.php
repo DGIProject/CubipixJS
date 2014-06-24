@@ -105,8 +105,16 @@
                         </ul>
                     </li>
                     <li><a href="#mobsModal" data-toggle="modal">Mobs</a></li>
+                    <li><a href="#playerModal" data-toggle="modal">Player</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-resize-full"></span> Resize map <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="addLineWidth();"><span class="glyphicon glyphicon-resize-horizontal"></span> add a line (width)</a></li>
+                            <li><a href="#" onclick="addLineHeight();"><span class="glyphicon glyphicon-resize-vertical"></span> add a line (height)</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#mapInformationsModal" data-toggle="modal">Map informations</a></li>
                     <button type="button" id="buttonSaveMap" onclick="saveMap();" class="btn btn-success navbar-btn">Save</button>
                 </ul>
@@ -227,6 +235,47 @@
                     <div id="mobs" class="list-group"></div>
                     <button type="button" onclick="addMob(0, 0, 0, 0);" class="btn btn-success">Add mob</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="playerModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Player</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Direction</label>
+                            <div class="col-sm-4">
+                                <select id="directionPlayer" name="directionPlayer" onchange="setDirectionPlayer(this.value);" class="form-control">
+                                    <option value="0">UP - DOWN</option>
+                                    <option value="1">LEFT - RIGHT</option>
+                                    <option value="2">RIGHT - LEFT</option>
+                                    <option value="3">DOWN - UP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">X</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="posXPlayer" name="posXPlayer" class="form-control" value="None" disabled="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Y</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="posYPlayer" name="posYPlayer" class="form-control" value="None" disabled="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

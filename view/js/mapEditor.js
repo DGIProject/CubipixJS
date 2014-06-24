@@ -96,6 +96,8 @@ function loadMap(mUId)
 
     var tabMapData = JSON.parse(mapJsonData);
 
+    playerPos = tabMapData.playerSpawn;
+
     tabMapTexture = tabMapData.land;
     tabMapItem = tabMapData.itemsLand;
 
@@ -108,6 +110,8 @@ function loadMap(mUId)
     canvas.height = blocsHeight * 32;
 
     drawMap(tabMapTexture, tabMapItem);
+
+    document.getElementById('directionPlayer').options[playerPos.direction].selected = 'selected';
 
     for(var z = 0; z < tabMobsT.length; z++)
     {
@@ -155,9 +159,35 @@ function drawMap(tabMapTexture, tabMapItem)
     }
 }
 
-document.getElementById('mapEditor').onmousedown = function(e) {
-    console.log(e.button);
+function addLineWidth()
+{
+    for(var i = 0; i < tabMapTexture.length; i++)
+    {
+        tabMapTexture[i].push(0);
+    }
 
+    canvas.width = canvas.width + 32;
+
+    drawMap(tabMapTexture, tabMapItem);
+}
+
+function addLineHeight()
+{
+    var tabWidth = [];
+
+    for(var x = 0; x < tabMapTexture[0].length; x++)
+    {
+        tabWidth.push(0);
+    }
+
+    tabMapTexture.push(tabWidth);
+
+    canvas.height = canvas.height + 32;
+
+    drawMap(tabMapTexture, tabMapItem);
+}
+
+document.getElementById('mapEditor').onmousedown = function(e) {
     if(e.button == 0)
     {
         leftClick = true;
@@ -195,8 +225,6 @@ document.getElementById('mapEditor').onmousemove = function(e) {
 };
 
 document.getElementById('mapEditor').oncontextmenu = function(e) {
-    console.log('contextMenu');
-
     var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
     var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
 
@@ -233,8 +261,6 @@ function drawBloc(xMouse, yMouse)
     var x = Math.floor(((xMouse + window.scrollX) - $('#canvas').offset().left) / 32);
     var y = Math.floor(((yMouse + window.scrollY) - $('#canvas').offset().top) / 32);
 
-    console.log(x, document.body.scrollTop);
-
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
         if(currentBloc.id == 15 && currentBloc.type == 't')
@@ -247,8 +273,6 @@ function drawBloc(xMouse, yMouse)
                 {
                     if(tabMapTexture[i][j] == 15)
                     {
-                        console.log('existSpawn');
-
                         existSpawn = true;
                     }
                 }
@@ -259,14 +283,15 @@ function drawBloc(xMouse, yMouse)
                 playerPos.x = x;
                 playerPos.y = y;
 
+                document.getElementById('posXPlayer').value = x;
+                document.getElementById('posYPlayer').value = y;
+
                 tabMapTexture[y][x] = 15;
 
                 context2d.drawImage(document.getElementById('15t'), x * 32, y * 32, 32, 32);
             }
             else
             {
-                console.log('alreadySpawn');
-
                 var n = noty({text: 'Spawn already exist.', layout: 'topRight', type: 'error'});
             }
         }
@@ -301,10 +326,6 @@ function drawBloc(xMouse, yMouse)
                 context2d.drawImage(document.getElementById(tabMapItem[y][x] + 'i'), x * 32, y * 32, 32, 32);
             }
         }
-    }
-    else
-    {
-        console.log('out');
     }
 }
 
@@ -358,10 +379,13 @@ function setTextureMap(value)
     map.texture = value;
 }
 
+function setDirectionPlayer(value)
+{
+    playerPos.direction = value;
+}
+
 function addMob(type, direction, x, y)
 {
-    console.log(type, direction, x, y);
-
     var mob = [type, x, y, direction];
     var mobId = tabMobs.length;
 
