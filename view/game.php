@@ -57,6 +57,7 @@
         </span>
         </br>
         <div id="players"></div>
+        <div id="logMultiplayer"></div>
     </div>
     <div id="startGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -214,7 +215,7 @@
 
         $('#startGameModal').modal('show');
 
-        setValues("<?php echo $_SESSION['uUId']; ?>", "<?php echo $_GET['sUId']; ?>");
+        setValues("<?php echo $_SESSION['userId']; ?>", "<?php echo $_GET['sUId']; ?>");
         loadMap("<?php echo $map['mUId']; ?>", "<?php echo $map['name']; ?>");
     };
 </script>

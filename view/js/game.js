@@ -4,6 +4,8 @@ var playerId = 0;
 var countdown;
 var tabKeys = [];
 
+var gameTimer, multiplayerTimer, playersTimer;
+
 var usernameUId = null;
 var serverUId = null;
 
@@ -71,13 +73,7 @@ window.onbeforeunload = function() {
 window.onunload = function() {
     console.log('unload');
 
-    if(serverUId != null)
-    {
-        for(var i = 0; i < map.listPlayers.length; i++)
-        {
-            sendQueryServer(map.listPlayers[i].usernameUId, null, null, null, false, 'leftUser');
-        }
-    }
+    stopGame();
 };
 
 function addPlayer(online, usernameUIdN)
@@ -91,15 +87,24 @@ function addPlayer(online, usernameUIdN)
         divPlayer.innerHTML = '<div class="panel-heading">' +
             '<h3 class="panel-title">Player ' + (playerId + 1) + '</h3>' +
             '</div>' +
-            '<div class="panel-body">' +
-            '<h4>Controls</h4>' +
-            '<form class="form-horizontal">' +
-            '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-10"><select id="upControl" onchange="updateControls(' + playerId + ', 0, this.value);" class="form-control"><option value="90">Z</option><option value="38">Key up</option></select></div></div>' +
-            '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-10"><select id="leftControl" onchange="updateControls(' + playerId + ', 1, this.value);" class="form-control"><option value="81">Q</option><option value="37">Key left</option></select></div></div>' +
-            '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-10"><select id="rightControl" onchange="updateControls(' + playerId + ', 2, this.value);" class="form-control"><option value="68">D</option><option value="39">Key right</option></select></div></div>' +
-            '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-10"><select id="downControl" onchange="updateControls(' + playerId + ', 3, this.value);" class="form-control"><option value="83">S</option><option value="40">Key down</option></select></div></div>' +
-            '</form>' +
-            '</div>';
+            '<div class="panel-body">';
+
+        if(online)
+        {
+            divPlayer.innerHTML += 'Online player.';
+        }
+        else
+        {
+            divPlayer.innerHTML += '<h4>Controls</h4>' +
+                '<form class="form-horizontal">' +
+                '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-10"><select id="upControl" onchange="updateControls(' + playerId + ', 0, this.value);" class="form-control"><option value="90">Z</option><option value="38">Key up</option></select></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-10"><select id="leftControl" onchange="updateControls(' + playerId + ', 1, this.value);" class="form-control"><option value="81">Q</option><option value="37">Key left</option></select></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-10"><select id="rightControl" onchange="updateControls(' + playerId + ', 2, this.value);" class="form-control"><option value="68">D</option><option value="39">Key right</option></select></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-10"><select id="downControl" onchange="updateControls(' + playerId + ', 3, this.value);" class="form-control"><option value="83">S</option><option value="40">Key down</option></select></div></div>' +
+                '</form>';
+        }
+
+        divPlayer.innerHTML += '</div>';
 
         document.getElementById('playersStart').appendChild(divPlayer);
 
@@ -184,13 +189,51 @@ function loadMap(mUId, name)
 
     addPlayer(false);
 
+    if(serverUId)
+    {
+        multiplayerTimer = setInterval(function() {
+            var samePos;
+
+            for(var i = 0; i < map.listPlayers.length; i++)
+            {
+                if(!map.listPlayers[i].online)
+                {
+                    //console.log(map.listPlayers[i].x, map.listPlayers[i].lastX);
+                    //console.log(map.listPlayers[i].y, map.listPlayers[i].lastY);
+
+                    samePos = 0;
+
+                    if(map.listPlayers[i].x == map.listPlayers[i].lastX && map.listPlayers[i].y == map.listPlayers[i].lastY)
+                    {
+                        samePos = 1;
+                    }
+
+                    //var direction = null;
+
+                    //if(map.listPlayers[i].direction != map.listPlayers[i].lastDirection)
+                    //{
+                    //direction = map.listPlayers[i].direction;
+                    //}
+
+                    map.listPlayers[i].lastX = map.listPlayers[i].x;
+                    map.listPlayers[i].lastY = map.listPlayers[i].y;
+                    //map.listPlayers[i].lastDirection = map.listPlayers[i].direction;
+
+                    //console.log('direction : ' + map.listPlayers[i].direction);
+
+                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y, map.listPlayers[i].direction, samePos, null);
+                }
+            }
+        }, 200);
+    }
+
     setTimeout(function() {
         document.getElementById('buttonAddPlayer').removeAttribute('disabled');
         map.drawMap(context2d);
     }, 500);
 
     setTimeout(function() {
-        document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">Start</button><button type="button" onclick="location.href = \'index.php?type=game\';" class="btn btn-default btn-block">Exit</button>';
+        document.getElementById('loadMap').innerHTML = '<button type="button" onclick="startGameB();" class="btn btn-success btn-block">' + ((serverUId != null) ? 'Waiting for owner ...' : 'Start') + '</button><button type="button" onclick="location.href = \'index.php?type=game\';" class="btn btn-default btn-block">Exit</button>';
     }, 1000);
 }
 
@@ -249,7 +292,7 @@ function startGame()
         }
     };
 
-    setInterval(function() {
+    gameTimer = setInterval(function() {
         map.drawMap(context2d);
 
         for(var i = 0; i < tabKeys.length; i++)
@@ -276,37 +319,7 @@ function startGame()
         }
     }, 40);
 
-    if(serverUId)
-    {
-        setInterval(function() {
-            var samePos;
-
-            for(var i = 0; i < map.listPlayers.length; i++)
-            {
-                if(!map.listPlayers[i].online)
-                {
-                    //console.log(map.listPlayers[i].x, map.listPlayers[i].lastX);
-                    //console.log(map.listPlayers[i].y, map.listPlayers[i].lastY);
-
-                    samePos = 0;
-
-                    if(map.listPlayers[i].x == map.listPlayers[i].lastX && map.listPlayers[i].y == map.listPlayers[i].lastY)
-                    {
-                        samePos = 1;
-                    }
-
-                    map.listPlayers[i].lastX = map.listPlayers[i].x;
-                    map.listPlayers[i].lastY = map.listPlayers[i].y;
-
-                    //console.log('direction : ' + map.listPlayers[i].direction);
-
-                    sendQueryServer(map.listPlayers[i].usernameUId, map.listPlayers[i].x, map.listPlayers[i].y, map.listPlayers[i].direction, samePos, null);
-                }
-            }
-        }, 200);
-    }
-
-    var timerPlayers = setInterval(function() {
+    playersTimer = setInterval(function() {
         if(stillAlive() && !haveTotalCoins())
         {
             for(var i = 0; i < map.listPlayers.length; i++)
@@ -350,6 +363,24 @@ function startGame()
             $('#finishGameModal').modal('show');
         }
     }, 1000);
+}
+
+function stopGame()
+{
+    console.log('stopGame');
+
+    clearInterval(gameTimer);
+    clearInterval(playersTimer);
+
+    if(serverUId)
+    {
+        clearInterval(multiplayerTimer);
+
+        for(var i = 0; i < map.listPlayers.length; i++)
+        {
+            sendQueryServer(map.listPlayers[i].usernameUId, null, null, null, false, 'leftUser');
+        }
+    }
 }
 
 function haveTotalCoins()
@@ -438,7 +469,7 @@ function addScore(win)
 
 function sendQueryServer(uUId, x, y, direction, samePos, server)
 {
-    console.log('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos + '&server=' + server);
+    //console.log('sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos + '&server=' + server);
     var OAjax;
 
     if (window.XMLHttpRequest) OAjax = new XMLHttpRequest();
@@ -448,7 +479,9 @@ function sendQueryServer(uUId, x, y, direction, samePos, server)
     {
         if (OAjax.readyState == 4 && OAjax.status==200)
         {
-            console.log(OAjax.responseText);
+            //console.log(OAjax.responseText);
+
+            document.getElementById('logMultiplayer').innerHTML = 'sUId=' + serverUId + '&uUId=' + uUId + '&posX=' + x + '&posY=' + y + '&direction=' + direction + '&samePos=' + samePos + '&server=' + server + ' ' + OAjax.responseText;
 
             var tabAnswerServer = JSON.parse(OAjax.responseText);
 
@@ -482,7 +515,14 @@ function sendQueryServer(uUId, x, y, direction, samePos, server)
 
                             if(tabPlayers[i][1] != '' && tabPlayers[i][1] != null && tabPlayers[i][2] != '' && tabPlayers[i][2] != null)
                             {
-                                map.listPlayers[playerRow].movePlayer(tabPlayers[i][3], map, tabPlayers[i][1], tabPlayers[i][2]);
+                                if(tabPlayers[i][4] == 0)
+                                {
+                                    map.listPlayers[playerRow].movePlayer(tabPlayers[i][3], map, tabPlayers[i][1], tabPlayers[i][2]);
+                                }
+                                else
+                                {
+                                    console.log('samePos');
+                                }
 
                                 //map.listPlayers[playerRow].x = tabPlayers[i][1];
                                 //map.listPlayers[playerRow].y = tabPlayers[i][2];
@@ -502,6 +542,12 @@ function sendQueryServer(uUId, x, y, direction, samePos, server)
                         addPlayer(true, tabPlayers[i][0]);
                     }
                 }
+            }
+            else if(answer == 'startGame')
+            {
+                console.log('startGame');
+
+                startGameB();
             }
             else
             {

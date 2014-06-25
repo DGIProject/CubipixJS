@@ -231,7 +231,6 @@
                     <h4 class="modal-title">Mobs</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>Mobs</h4>
                     <div id="mobs" class="list-group"></div>
                     <button type="button" onclick="addMob(0, 0, 0, 0);" class="btn btn-success">Add mob</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

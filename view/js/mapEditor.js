@@ -19,6 +19,8 @@ var playerPos = {
     "direction" : 0
 };
 
+var changePosMob = null;
+
 var leftClick = false;
 
 var map = {
@@ -190,9 +192,27 @@ function addLineHeight()
 document.getElementById('mapEditor').onmousedown = function(e) {
     if(e.button == 0)
     {
-        leftClick = true;
+        if(changePosMob != null)
+        {
+            var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
+            var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
 
-        drawBloc(e.clientX, e.clientY);
+            tabMobs[changePosMob][1] = x;
+            tabMobs[changePosMob][2] = y;
+
+            document.getElementById('posXMob' + changePosMob).value = x;
+            document.getElementById('posYMob' + changePosMob).value = y;
+
+            changePosMob = null;
+
+            var n = noty({text: 'Position updated for the  mob.', layout: 'topRight', type: 'success'});
+        }
+        else
+        {
+            leftClick = true;
+
+            drawBloc(e.clientX, e.clientY);
+        }
     }
 };
 
@@ -204,18 +224,21 @@ document.getElementById('mapEditor').onmouseup = function(e) {
 };
 
 document.getElementById('mapEditor').onmousemove = function(e) {
-    var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
-    var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
-
-    drawMap(tabMapTexture, tabMapItem);
-
-    if(currentBloc.id == 0 && currentBloc.type == 'i')
+    if(changePosMob == null)
     {
-        console.log('noDraw');
-    }
-    else
-    {
-        context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+        var x = Math.floor(((e.clientX + window.scrollX) - $('#canvas').offset().left) / 32);
+        var y = Math.floor(((e.clientY + window.scrollY) - $('#canvas').offset().top) / 32);
+
+        drawMap(tabMapTexture, tabMapItem);
+
+        if(currentBloc.id == 0 && currentBloc.type == 'i')
+        {
+            console.log('noDraw');
+        }
+        else
+        {
+            context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+        }
     }
 
     if(leftClick)
@@ -400,8 +423,9 @@ function addMob(type, direction, x, y)
         '<form class="form-horizontal">' +
         '<div class="form-group"><label class="col-sm-2 control-label">Type</label><div class="col-sm-4"><select id="typeMob' + mobId + '" name="typeMob' + mobId + '" onchange="setTypeMob(' + mobId + ', this.value);" class="form-control"><option value="0">Nice</option><option value="1">Bad</option><option value="2">Naughty</option></select></div></div>' +
         '<div class="form-group"><label class="col-sm-2 control-label">Direction</label><div class="col-sm-4"><select id="directionMob' + mobId + '" name="directionMob' + mobId + '" onchange="setDirectionMob(' + mobId + ', this.value);" class="form-control"><option value="0">UP - DOWN</option><option value="1">LEFT - RIGHT</option><option value="2">RIGHT - LEFT</option><option value="3">DOWN - UP</option></select></div></div>' +
-        '<div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-4"><input type="text" id="posXMob' + mobId + '" name="posXMob' + mobId + '" onkeyup="setPosXMob(' + mobId + ', this.value);" class="form-control" value="' + x + '"></div></div>' +
-        '<div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-4"><input type="text" id="posYMob' + mobId + '" name="posYMob' + mobId + '" onkeyup="setPosYMob(' + mobId + ', this.value);" class="form-control" value="' + y + '"></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">X</label><div class="col-sm-4"><input type="text" id="posXMob' + mobId + '" name="posXMob' + mobId + '" class="form-control" value="' + x + '" disabled=""></div></div>' +
+        '<div class="form-group"><label class="col-sm-2 control-label">Y</label><div class="col-sm-4"><input type="text" id="posYMob' + mobId + '" name="posYMob' + mobId + '" class="form-control" value="' + y + '" disabled=""></div></div>' +
+        '<div class="form-group"><div class="col-sm-offset-2 col-sm-4"><button type="button" onclick="updatePosMob(' + mobId + ');" class="btn btn-default">Change position of the mob</button></div></div>' +
         '</form>' +
         '</p>';
 
@@ -428,14 +452,13 @@ function setDirectionMob(id, value)
     tabMobs[id][3] = parseInt(value);
 }
 
-function setPosXMob(id, value)
+function updatePosMob(id)
 {
-    tabMobs[id][1] = parseInt(value);
-}
+    changePosMob = id;
 
-function setPosYMob(id, value)
-{
-    tabMobs[id][2] = parseInt(value);
+    var n = noty({text: 'Click on the map to change the position of the mob.', layout: 'topRight', type: 'info'});
+
+    $('#mobsModal').modal('hide');
 }
 
 function getTotalCoins()

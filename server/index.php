@@ -41,7 +41,7 @@ if($_POST['sUId'] != NULL)
 
             //if($samePos == 0)
             //{
-            actualizePlayer($sUId, $uUId, $posX, $posY, $direction);
+            actualizePlayer($sUId, $uUId, $posX, $posY, $direction, $samePos);
             //}
 
             exit();
@@ -49,13 +49,15 @@ if($_POST['sUId'] != NULL)
 
         //if($samePos == 0)
         //{
-        actualizePlayer($sUId, $uUId, $posX, $posY, $direction);
+        actualizePlayer($sUId, $uUId, $posX, $posY, $direction, $samePos);
         //}
 
         $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        $tabServer = json_decode(fread($fileServer, 255));
+        $tabServer = json_decode(fread($fileServer, 255), true);
         $tabPlayers = array();
+
+        $row = 0;
 
         for($i = 0; $i < count($tabServer); $i++)
         {
@@ -65,7 +67,9 @@ if($_POST['sUId'] != NULL)
 
                 $tabInfoPlayer = explode('||', fread($filePlayer, 255));
 
-                $tabPlayers[($i - 2)] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1], $tabInfoPlayer[2]);
+                $tabPlayers[$row] = array($tabServer[$i], $tabInfoPlayer[0], $tabInfoPlayer[1], $tabInfoPlayer[2], $tabInfoPlayer[3]);
+
+                $row++;
             }
         }
 
@@ -77,19 +81,19 @@ else
     echo json_encode(array('callAServer'));
 }
 
-function actualizePlayer($sUId, $uUId, $posX, $posY, $direction)
+function actualizePlayer($sUId, $uUId, $posX, $posY, $direction, $samePos)
 {
     if(file_exists('files/' . $uUId . '.cr'))
     {
         $file = fopen('files/' . $uUId . '.cr', 'w');
-        fwrite($file, $posX . '||' . $posY . '||' . $direction);
+        fwrite($file, $posX . '||' . $posY . '||' . $direction . '||' . $samePos);
         fclose($file);
     }
     else
     {
         $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        $listPlayers = json_decode(fread($fileServer, 255));
+        $listPlayers = json_decode(fread($fileServer, 255), true);
         $listPlayers[1] = $listPlayers[1] + 1;
         $listPlayers[$listPlayers[1] + 1] = $uUId;
 
@@ -102,7 +106,7 @@ function actualizePlayer($sUId, $uUId, $posX, $posY, $direction)
         fclose($fileServer);
 
         $file = fopen('files/' . $uUId . '.cr', 'w');
-        fwrite($file, $posX . '||' . $posY . '||' . $direction);
+        fwrite($file, $posX . '||' . $posY . '||' . $direction . '||' . $samePos);
         fclose($file);
 
         //echo 'false' . $listPlayers;

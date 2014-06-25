@@ -17,6 +17,7 @@ function Player(id, username, url, x, y, direction, online) {
     this.lastX = 0;
     this.lastY = 0;
     this.direction = direction;
+    this.lastDirection = 0;
     this.etatAnimation = -1;
 
     this.keyControls = {
