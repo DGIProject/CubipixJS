@@ -28,6 +28,11 @@ function Map(mUId, name)
     }
 }
 
+Map.prototype.GenerateBlocs = function(land)
+{
+
+};
+
 Map.prototype.getName = function () {
     return this.name;
 };

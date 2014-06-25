@@ -92,7 +92,7 @@
         {
             foreach($listServers as $server)
             {
-                echo '<a href="index.php?type=game&mUId=' . $server['mUId'] . '&sUId=' . $server['sUId'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $server['name'] . '</h4><p class="list-group-item-text">' . $server['description'] . '</p></a>';
+                echo '<a href="index.php?type=game&mUId=' . $server['mUId'] . '&sUId=' . $server['sUId'] . '&owner=' . $server['uUId'] . '" class="list-group-item"><h4 class="list-group-item-heading">' . $server['name'] . '</h4><p class="list-group-item-text">' . $server['description'] . '</p></a>';
             }
         }
         else

@@ -8,13 +8,30 @@ if($_POST['sUId'] != NULL)
     $direction = $_POST['direction'];
     $samePos = $_POST['samePos'];
 
+    $ownerServer = $_POST['ownerServer'];
+
     $server = $_POST['server'];
 
-    if($server == 'leftUser')
+    if($server == 'startGame')
     {
         $fileServer = fopen('files/' . $sUId . '.cs', 'r');
 
-        $listPlayers = json_decode(fread($fileServer, 255));
+        $listPlayers = json_decode(fread($fileServer, 255), true);
+        $listPlayers[1] = true;
+
+        fclose($fileServer);
+
+        unlink('files/' . $uUId . '.cs');
+
+        $fileServer = fopen('files/' . $sUId . '.cs', 'w');
+        fwrite($fileServer, json_encode($listPlayers));
+        fclose($fileServer);
+    }
+    elseif($server == 'leftUser')
+    {
+        $fileServer = fopen('files/' . $sUId . '.cs', 'w');
+
+        $listPlayers = json_decode(fread($fileServer, 255), true);
         $listPlayers[array_search($uUId, $listPlayers)] = NULL;
 
         fclose($fileServer);

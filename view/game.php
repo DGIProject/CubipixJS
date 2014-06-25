@@ -215,7 +215,7 @@
 
         $('#startGameModal').modal('show');
 
-        setValues("<?php echo $_SESSION['userId']; ?>", "<?php echo $_GET['sUId']; ?>");
+        setValues("<?php echo $_SESSION['userId']; ?>", "<?php echo $_GET['sUId']; ?>", "<?php echo $_GET['owner']; ?>");
         loadMap("<?php echo $map['mUId']; ?>", "<?php echo $map['name']; ?>");
     };
 </script>

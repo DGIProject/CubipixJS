@@ -9,6 +9,8 @@ var gameTimer, multiplayerTimer, playersTimer;
 var usernameUId = null;
 var serverUId = null;
 
+var ownerServer = false;
+
 var controlsPlayer1 = {
     'UP' : 90,
     'LEFT' : 81,
@@ -86,25 +88,24 @@ function addPlayer(online, usernameUIdN)
         divPlayer.setAttribute('class', 'panel panel-default');
         divPlayer.innerHTML = '<div class="panel-heading">' +
             '<h3 class="panel-title">Player ' + (playerId + 1) + '</h3>' +
-            '</div>' +
-            '<div class="panel-body">';
+            '</div>';
 
         if(online)
         {
-            divPlayer.innerHTML += 'Online player.';
+            divPlayer.innerHTML += '<div class="panel-body">Online player.</div>';
         }
         else
         {
-            divPlayer.innerHTML += '<h4>Controls</h4>' +
+            divPlayer.innerHTML += '<div class="panel-body">' +
+                '<h4>Controls</h4>' +
                 '<form class="form-horizontal">' +
                 '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-10"><select id="upControl" onchange="updateControls(' + playerId + ', 0, this.value);" class="form-control"><option value="90">Z</option><option value="38">Key up</option></select></div></div>' +
                 '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-10"><select id="leftControl" onchange="updateControls(' + playerId + ', 1, this.value);" class="form-control"><option value="81">Q</option><option value="37">Key left</option></select></div></div>' +
                 '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-10"><select id="rightControl" onchange="updateControls(' + playerId + ', 2, this.value);" class="form-control"><option value="68">D</option><option value="39">Key right</option></select></div></div>' +
                 '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-10"><select id="downControl" onchange="updateControls(' + playerId + ', 3, this.value);" class="form-control"><option value="83">S</option><option value="40">Key down</option></select></div></div>' +
-                '</form>';
+                '</form>' +
+                '</div>';
         }
-
-        divPlayer.innerHTML += '</div>';
 
         document.getElementById('playersStart').appendChild(divPlayer);
 
@@ -171,10 +172,15 @@ function updateControls(playerId, direction, value)
     }
 }
 
-function setValues(uUId, sUId)
+function setValues(uUId, sUId, ownerUId)
 {
     usernameUId = uUId;
     serverUId = (sUId != '') ? sUId : null;
+
+    if(ownerUId == uUId)
+    {
+        ownerServer = true;
+    }
 }
 
 function loadMap(mUId, name)
@@ -239,13 +245,20 @@ function loadMap(mUId, name)
 
 function startGameB()
 {
-    var i = 3;
+    if(serverUId != null && ownerServer)
+    {
+        sendQueryServer(usernameUId, null, null, null, 0, 'startGame');
+    }
+    else
+    {
+        var i = 3;
 
-    countdown = setInterval(function() { showCountDown(i);i--; }, 1000);
+        countdown = setInterval(function() { showCountDown(i);i--; }, 1000);
 
-    music01.play();
+        music01.play();
 
-    $('#startGameModal').modal('hide');
+        $('#startGameModal').modal('hide');
+    }
 }
 
 function showCountDown(i)
@@ -548,6 +561,10 @@ function sendQueryServer(uUId, x, y, direction, samePos, server)
                 console.log('startGame');
 
                 startGameB();
+            }
+            else if(answer == 'leftUser')
+            {
+                console.log('leftUser');
             }
             else
             {
