@@ -15,9 +15,11 @@ function Map(mUId, name)
     this.mapUId = mUId;
     this.name = name;
     this.playerSpawn = tabMapData.playerSpawn;
-    this.land = tabMapData.land;
-    this.itemsLand = tabMapData.itemsLand;
-    this.totalCoins = this.getTotalCoins();
+    //this.land = tabMapData.land;
+    this.land = this.generateBlocs(tabMapData.land);
+    //this.itemsLand = tabMapData.itemsLand;
+    this.itemsLand = this.generateItems(tabMapData.itemsLand);
+    this.totalCoins = this.getTotalCoins(tabMapData.itemsLand);
     this.mobs = tabMapData.mobs;
     this.listPlayers = [];
     this.listMobs = [];
@@ -28,9 +30,55 @@ function Map(mUId, name)
     }
 }
 
-Map.prototype.GenerateBlocs = function(land)
+Map.prototype.generateBlocs = function(land)
 {
+    var tabLand = [];
+    var id = 0;
 
+    for(var i = 0; i < land.length; i++)
+    {
+        var tabWidth = [];
+
+        for(var x = 0; x < land[i].length; x++)
+        {
+            tabWidth.push(new Bloc(id, land[i][x][0], x, i, land[i][x][1][0], land[i][x][1][1]));
+
+            id++;
+        }
+
+        tabLand.push(tabWidth);
+    }
+
+    return tabLand;
+};
+
+Map.prototype.generateItems = function(itemsLand)
+{
+    var tabItemsLand = [];
+    var id = 0;
+
+    for(var i = 0; i < itemsLand.length; i++)
+    {
+        var tabWidth = [];
+
+        for(var x = 0; x < itemsLand[i].length; x++)
+        {
+            if(itemsLand[i][x] != 0)
+            {
+                tabWidth.push(new Item(id, itemsLand[i][x], x, i));
+            }
+            else
+            {
+                tabWidth.push(0);
+            }
+
+            id++;
+        }
+
+        tabItemsLand.push(tabWidth);
+    }
+
+    return tabItemsLand;
 };
 
 Map.prototype.getName = function () {
@@ -49,14 +97,14 @@ Map.prototype.getHeight = function() {
     return this.land.length;
 };
 
-Map.prototype.getTotalCoins = function() {
+Map.prototype.getTotalCoins = function(itemsLand) {
     var totalCoins = 0;
 
-    for(var i = 0; i < this.itemsLand.length; i++)
+    for(var i = 0; i < itemsLand.length; i++)
     {
-        for(var x = 0; x < this.itemsLand[i].length; x++)
+        for(var x = 0; x < itemsLand[i].length; x++)
         {
-            if(this.itemsLand[i][x] == 1)
+            if(itemsLand[i][x] == 1)
             {
                 totalCoins++;
             }
@@ -90,7 +138,7 @@ Map.prototype.drawMap = function(context) {
 
         for(var j = 0, k = line.length; j < k; j++)
         {
-            this.drawBloc((line[j] == 15) ? 1 : line[j], context, j * 32, y);
+            this.drawBloc(line[j].imageId, context, j * 32, y);
         }
     }
 
@@ -103,7 +151,7 @@ Map.prototype.drawMap = function(context) {
         {
             if(lineItem[d] != 0)
             {
-                this.drawItem(lineItem[d], context, d * 32, c);
+                this.drawItem(lineItem[d].imageId, context, d * 32, c);
             }
         }
     }

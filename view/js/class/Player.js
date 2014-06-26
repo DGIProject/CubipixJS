@@ -148,15 +148,20 @@ Player.prototype.movePlayer = function(direction, map, x, y) {
     {
         var nextCase = this.getNextPos(direction);
 
-        if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !this.isGoodBlock(map, direction))
+        console.log('canMove : ' + map.land[nextCase.y][nextCase.x].canGo);
+
+        if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !map.land[nextCase.y][nextCase.x].canGo)
         {
             return false;
         }
-
         this.etatAnimation = 1;
+
+        map.land[this.y][this.x].stopAction(map);
 
         this.x = nextCase.x;
         this.y = nextCase.y;
+
+        map.land[this.y][this.x].startAction(map);
     }
 
     this.updateItem(map);
@@ -164,6 +169,7 @@ Player.prototype.movePlayer = function(direction, map, x, y) {
     return true;
 };
 
+/*
 Player.prototype.isGoodBlock = function(map, direction) {
     var nextBloc;
 
@@ -216,6 +222,7 @@ Player.prototype.getBlock = function(map, block) {
         return false;
     }
 };
+*/
 
 Player.prototype.updateItem = function(map) {
     var xBlock = this.x % map.getWidth();
@@ -223,7 +230,7 @@ Player.prototype.updateItem = function(map) {
 
     if(map.itemsLand[yBlock][xBlock] == 1)
     {
-        setTimeout(function() { map.itemsLand[yBlock][xBlock] = 0; }, 500);
+        setTimeout(function() { map.itemsLand[yBlock][xBlock].imageId = 0; }, 500);
 
         this.updateCoins(1, true);
     }
