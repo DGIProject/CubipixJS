@@ -17,9 +17,28 @@ function Item(id, itemId, x, y)
     }
 }
 
-Item.prototype.startAnimation = function(map) {
+Item.prototype.startAnimation = function() {
     if(this.isAnimation)
     {
+        this.intervalAnimation = setInterval(function(classItem) {
+            var countImage = classItem.images.length;
+            var rowNextImage = classItem.images.indexOf(classItem.imageId) + 1;
 
+            if(rowNextImage == countImage)
+            {
+                rowNextImage = 0;
+            }
+
+            classItem.imageId = classItem.images[rowNextImage];
+        }, 200, this);
+    }
+};
+
+Item.prototype.stopAnimation = function() {
+    if(this.isAnimation)
+    {
+        clearInterval(this.intervalAnimation);
+
+        this.imageId = items[this.itemId].imageId;
     }
 };

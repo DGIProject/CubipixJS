@@ -347,7 +347,7 @@ function startGame()
         {
             console.log('gameFinished');
 
-            clearInterval(timerPlayers);
+            stopGame();
 
             if(stillAlive())
             {

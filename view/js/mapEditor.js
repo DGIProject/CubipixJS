@@ -32,12 +32,67 @@ var map = {
     "alreadyEdited" : false
 };
 
+var loadTabImages = 0;
+var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203];
+var tabItemImages = [1, 10, 100];
+var countLoadedImages = 0;
+var totalImages = tabTextureImages.length + tabItemImages.length;
+
 window.onload = function() {
     canvas = document.getElementById('canvas');
     context2d = canvas.getContext('2d');
 
-    $('#startMapEditorModal').modal('show');
+    $('#loadMapEditorModal').modal('show');
+
+    loadImages('t');
 };
+
+function loadImages(type)
+{
+    document.getElementById('progressLoadMapEditor').style.width = ((countLoadedImages / totalImages) * 100) + '%';
+
+    if(type == 't')
+    {
+        if(loadTabImages == tabTextureImages.length)
+        {
+            loadTabImages = 0;
+
+            loadImages('i');
+        }
+        else
+        {
+            downloadImage(tabTextureImages[loadTabImages], type);
+        }
+    }
+    else
+    {
+        if(loadTabImages == tabItemImages.length)
+        {
+            $('#loadMapEditorModal').modal('hide');
+            $('#startMapEditorModal').modal('show');
+        }
+        else
+        {
+            downloadImage(tabItemImages[loadTabImages], type);
+        }
+    }
+}
+
+function downloadImage(id, type)
+{
+    var image = document.createElement('img');
+    image.id = id + type;
+    image.src = 'view/img/' + ((type == 't') ? 'texture' : 'item') + '/' + id + '.png';
+
+    image.onload = function() {
+        countLoadedImages++;
+        loadTabImages++;
+
+        loadImages(type);
+    };
+
+    document.getElementById('images').appendChild(image);
+}
 
 function startMapEditor(widthMapBloc, heightMapBloc)
 {
@@ -56,7 +111,7 @@ function startMapEditor(widthMapBloc, heightMapBloc)
 
         for(var x = 0; x < blocsWidth; x++)
         {
-            widthTab.push(0);
+            widthTab.push([0, null, null]);
 
             context2d.drawImage(document.getElementById('0t'), x * 32, i * 32, 32, 32);
         }
@@ -142,7 +197,7 @@ function drawMap(tabMapTexture, tabMapItem)
 
         for(var j = 0, k = line.length; j < k; j++)
         {
-            context2d.drawImage(document.getElementById(line[j] + 't'), j * 32, y, 32, 32);
+            context2d.drawImage(document.getElementById(line[j][0] + 't'), j * 32, y, 32, 32);
         }
     }
 
@@ -309,7 +364,7 @@ function drawBloc(xMouse, yMouse)
                 document.getElementById('posXPlayer').value = x;
                 document.getElementById('posYPlayer').value = y;
 
-                tabMapTexture[y][x] = 15;
+                tabMapTexture[y][x] = [15, null, null];
 
                 context2d.drawImage(document.getElementById('15t'), x * 32, y * 32, 32, 32);
             }
@@ -322,7 +377,7 @@ function drawBloc(xMouse, yMouse)
         {
             if(currentBloc.type == 't')
             {
-                tabMapTexture[y][x] = currentBloc.id;
+                tabMapTexture[y][x] = [currentBloc.id, null, null];
             }
             else if(currentBloc.type == 'i')
             {
@@ -368,8 +423,10 @@ function setBloc(id, type, canRotate, tRotate)
 
 function removeTextureDisabled()
 {
-    for(var i = 0; i < 16; i++)
+    for(var i = 0; i < 6; i++)
     {
+        console.log(i);
+
         document.getElementById('liButton' + i + 't').classList.remove('active');
     }
 }

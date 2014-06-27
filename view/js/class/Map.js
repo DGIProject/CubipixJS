@@ -112,11 +112,11 @@ Map.prototype.getTotalCoins = function(itemsLand) {
     }
 
     return totalCoins;
-}
+};
 
 Map.prototype.addPlayer = function(player) {
     this.listPlayers.push(player);
-}
+};
 
 Map.prototype.detectCollisionMob = function(x, y) {
     for(var i = 0; i < this.listPlayers.length; i++)

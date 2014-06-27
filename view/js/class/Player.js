@@ -228,13 +228,14 @@ Player.prototype.updateItem = function(map) {
     var xBlock = this.x % map.getWidth();
     var yBlock = this.y % map.getHeight();
 
-    if(map.itemsLand[yBlock][xBlock] == 1)
+    if(map.itemsLand[yBlock][xBlock].itemId == 1)
     {
-        setTimeout(function() { map.itemsLand[yBlock][xBlock].imageId = 0; }, 500);
-
-        this.updateCoins(1, true);
+        setTimeout(function(classPlayer) {
+            map.itemsLand[yBlock][xBlock] = 0;
+            classPlayer.updateCoins(1, true);
+        }, 500, this);
     }
-    else if(map.itemsLand[yBlock][xBlock] == 2)
+    else if(map.itemsLand[yBlock][xBlock].itemId == 100)
     {
         this.updateHealth(1, true);
     }

@@ -71,34 +71,25 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blocs <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">General blocs</li>
-                            <li id="liButton0t" class="active"><a href="#" onclick="setBloc(0, 't');"><img id="0t" src="view/img/texture/0.png"> Empty</a></li>
-                            <li id="liButton1t"><a href="#" onclick="setBloc(1, 't', false);"><img id="1t" src="view/img/texture/1.png"> Grass</a></li>
-                            <li id="liButton2t"><a href="#" onclick="setBloc(2, 't', false);"><img id="2t" src="view/img/texture/2.png"> Brick</a></li>
-                            <li id="liButton3t"><a href="#" onclick="setBloc(3, 't', true, [3, 4, 5, 6]);"><img id="3t" src="view/img/texture/3.png"> Empty</a></li>
-                            <li id="liButton4t" style="display: none;"><a href="#" onclick="setBloc(4, 't');"><img id="4t" src="view/img/texture/4.png"> Empty</a></li>
-                            <li id="liButton5t" style="display: none;"><a href="#" onclick="setBloc(5, 't');"><img id="5t" src="view/img/texture/5.png"> Empty</a></li>
-                            <li id="liButton6t" style="display: none;"><a href="#" onclick="setBloc(6, 't');"><img id="6t" src="view/img/texture/6.png"> Empty</a></li>
-                            <li id="liButton7t"><a href="#" onclick="setBloc(7, 't', true, [7, 8, 9, 10]);"><img id="7t" src="view/img/texture/7.png"> Empty</a></li>
-                            <li id="liButton8t" style="display: none;"><a href="#" onclick="setBloc(8, 't');"><img id="8t" src="view/img/texture/8.png"> Empty</a></li>
-                            <li id="liButton9t" style="display: none;"><a href="#" onclick="setBloc(9, 't');"><img id="9t" src="view/img/texture/9.png"> Empty</a></li>
-                            <li id="liButton10t" style="display: none;"><a href="#" onclick="setBloc(10, 't');"><img id="10t" src="view/img/texture/10.png"> Empty</a></li>
-                            <li id="liButton11t"><a href="#" onclick="setBloc(11, 't', true, [11, 12, 13, 14]);"><img id="11t" src="view/img/texture/11.png"> Empty</a></li>
-                            <li id="liButton12t" style="display: none;"><a href="#" onclick="setBloc(12, 't');"><img id="12t" src="view/img/texture/12.png"> Empty</a></li>
-                            <li id="liButton13t" style="display: none;"><a href="#" onclick="setBloc(13, 't');"><img id="13t" src="view/img/texture/13.png"> Empty</a></li>
-                            <li id="liButton14t" style="display: none;"><a href="#" onclick="setBloc(14, 't');"><img id="14t" src="view/img/texture/14.png"> Empty</a></li>
+                            <li id="liButton0t" class="active"><a href="#" onclick="setBloc(0, 't');"><img src="view/img/texture/0.png"> Empty</a></li>
+                            <li id="liButton1t"><a href="#" onclick="setBloc(1, 't', false);"><img src="view/img/texture/1.png" style="width: 32px; height: auto;"> Brick</a></li>
+                            <li id="liButton2t"><a href="#" onclick="setBloc(2, 't', false);"><img src="view/img/texture/2.png" style="width: 32px; height: auto;"> Grass</a></li>
+                            <li id="liButton3t"><a href="#" onclick="setBloc(3, 't', true, [3, 4, 5, 6]);"><img src="view/img/texture/3.png" style="width: 32px; height: auto;"> Corner grass</a></li>
+                            <li id="liButton4t"><a href="#" onclick="setBloc(7, 't', true, [7, 8, 9, 10]);"><img src="view/img/texture/7.png" style="width: 32px; height: auto;"> Side</a></li>
+                            <li id="liButton5t"><a href="#" onclick="setBloc(11, 't', true, [11, 12, 13, 14]);"><img src="view/img/texture/11.png" style="width: 32px; height: auto;"> Corner ground</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Spawn</li>
-                            <li id="liButton15t"><a href="#" onclick="setBloc(15, 't');"><img id="15t" src="view/img/texture/15.png"> Empty</a></li>
+                            <li id="liButton6t"><a href="#" onclick="setBloc(100, 't');"><img src="view/img/texture/100.png" style="width: 32px; height: auto;"> Spawn block</a></li>
                         </ul>
                     </li>
                     <li class="dropup">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">Good</li>
-                            <li id="liButton1i"><a href="#" onclick="setBloc(1, 'i', false);"><img id="1i" src="view/img/item/1.png"> Coin</a></li>
+                            <li id="liButton1i"><a href="#" onclick="setBloc(1, 'i', false);"><img src="view/img/item/1.png"> Coin</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Bad</li>
-                            <li id="liButton2i"><a href="#" onclick="setBloc(2, 'i', false);"><img id="2i" src="view/img/item/2.png"> Stinging plant (1 health)</a></li>
+                            <li id="liButton2i"><a href="#" onclick="setBloc(100, 'i', false);"><img src="view/img/item/100.png"> Stinging plant (1 health)</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Tool</li>
                             <li id="liButton0i"><a href="#" onclick="setBloc(0, 'i', false);"><span class="glyphicon glyphicon-remove"></span> Delete item</a></li>
@@ -133,6 +124,7 @@
             </ul>
         </div>
     </div>
+    <div id="images" style="display: none;"></div>
     <div id="startMapEditorModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -275,6 +267,23 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loadMapEditorModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading of Map Editor</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div id="progressLoadMapEditor" class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0% Complete</span>
+                        </div>
+                    </div>
+                    <span id="infoLoadMapEditor">Loading textures & items ...</span>
                 </div>
             </div>
         </div>
