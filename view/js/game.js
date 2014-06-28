@@ -11,12 +11,64 @@ var serverUId = null;
 
 var ownerServer = false;
 
-var controlsPlayer1 = {
-    'UP' : 90,
-    'LEFT' : 81,
-    'RIGHT' : 68,
-    'DOWN' : 83
-};
+var loadTabImages = 0;
+var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209];
+var tabItemImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100];
+var countLoadedImages = 0;
+var totalImages = tabTextureImages.length + tabItemImages.length;
+
+function loadImages(type)
+{
+    document.getElementById('progressLoadMap').style.width = ((countLoadedImages / totalImages) * 100) + '%';
+
+    if(type == 't')
+    {
+        if(loadTabImages == tabTextureImages.length)
+        {
+            loadTabImages = 0;
+
+            loadImages('i');
+        }
+        else
+        {
+            downloadImage(tabTextureImages[loadTabImages], type);
+        }
+    }
+    else
+    {
+        if(loadTabImages == tabItemImages.length)
+        {
+            $('#loadMapModal').modal('hide');
+            $('#startGameModal').modal('show');
+
+            map.drawMap(context2d);
+        }
+        else
+        {
+            downloadImage(tabItemImages[loadTabImages], type);
+        }
+    }
+}
+
+function downloadImage(id, type)
+{
+    var image = document.createElement('img');
+    image.id = id + type;
+    image.src = 'view/img/' + ((type == 't') ? 'texture' : 'item') + '/' + id + '.png';
+
+    image.onload = function() {
+        countLoadedImages++;
+        loadTabImages++;
+
+        loadImages(type);
+    };
+
+    image.onerror = function() {
+      alert('Error');
+    };
+
+    document.getElementById('images').appendChild(image);
+}
 
 soundManager.url = 'view/music/';
 soundManager.debugMode = false;
@@ -235,7 +287,6 @@ function loadMap(mUId, name)
 
     setTimeout(function() {
         document.getElementById('buttonAddPlayer').removeAttribute('disabled');
-        map.drawMap(context2d);
     }, 500);
 
     setTimeout(function() {

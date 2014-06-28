@@ -1,7 +1,8 @@
-function Bloc(id, blocId, x, y, parentPos, childPos) {
+function Bloc(id, blocId, rotate, x, y, parentPos, childPos) {
     this.id = id;
     this.blocId = blocId;
-    this.imageId = blocs[blocId].imageId;
+    this.rotate = rotate;
+    this.imageId = blocs[blocId].imageId[rotate];
     this.name = blocs[blocId].name;
 
     this.x = x;
@@ -48,16 +49,19 @@ Bloc.prototype.startAction = function(map) {
             console.log('inverseBloc : ' + inverseBloc);
 
             classBloc.blocId = inverseBloc;
-            classBloc.imageId = blocs[inverseBloc].imageId;
+            classBloc.imageId = blocs[inverseBloc].imageId[classBloc.rotate];
             classBloc.name = blocs[inverseBloc].name;
             classBloc.canGo = blocs[inverseBloc].canGo;
 
             var inverseBlocChild = blocs[map.land[classBloc.childPos.y][classBloc.childPos.x].blocId].inverseBloc;
+            var classInverseBlocChild = map.land[classBloc.childPos.y][classBloc.childPos.x];
 
-            map.land[classBloc.childPos.y][classBloc.childPos.x].blocId = inverseBlocChild;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].imageId = blocs[inverseBlocChild].imageId;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].name = blocs[inverseBlocChild].name;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].canGo = blocs[inverseBlocChild].canGo;
+            classInverseBlocChild.blocId = inverseBlocChild;
+            classInverseBlocChild.imageId = blocs[inverseBlocChild].imageId[classInverseBlocChild.rotate];
+            classInverseBlocChild.name = blocs[inverseBlocChild].name;
+            classInverseBlocChild.canGo = blocs[inverseBlocChild].canGo;
+
+            console.log(classInverseBlocChild.imageId);
         }, 500, this);
     }
 };
@@ -76,16 +80,17 @@ Bloc.prototype.stopAction = function(map) {
             console.log('inverseBloc : ' + inverseBloc);
 
             classBloc.blocId = inverseBloc;
-            classBloc.imageId = blocs[inverseBloc].imageId;
+            classBloc.imageId = blocs[inverseBloc].imageId[classBloc.rotate];
             classBloc.name = blocs[inverseBloc].name;
             classBloc.canGo = blocs[inverseBloc].canGo;
 
             var inverseBlocChild = blocs[map.land[classBloc.childPos.y][classBloc.childPos.x].blocId].inverseBloc;
+            var classInverseBlocChild = map.land[classBloc.childPos.y][classBloc.childPos.x];
 
-            map.land[classBloc.childPos.y][classBloc.childPos.x].blocId = inverseBlocChild;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].imageId = blocs[inverseBlocChild].imageId;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].name = blocs[inverseBlocChild].name;
-            map.land[classBloc.childPos.y][classBloc.childPos.x].canGo = blocs[inverseBlocChild].canGo;
+            classInverseBlocChild.blocId = inverseBlocChild;
+            classInverseBlocChild.imageId = blocs[inverseBlocChild].imageId[classInverseBlocChild.rotate];
+            classInverseBlocChild.name = blocs[inverseBlocChild].name;
+            classInverseBlocChild.canGo = blocs[inverseBlocChild].canGo;
         }, 2000, this);
     }
 };

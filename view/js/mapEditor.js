@@ -33,7 +33,7 @@ var map = {
 };
 
 var loadTabImages = 0;
-var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203];
+var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209];
 var tabItemImages = [1, 10, 100];
 var countLoadedImages = 0;
 var totalImages = tabTextureImages.length + tabItemImages.length;
@@ -407,7 +407,7 @@ function drawBloc(xMouse, yMouse)
     }
 }
 
-function setBloc(id, type, canRotate, tRotate)
+function setBloc(id, type, row, canRotate, tRotate)
 {
     currentBloc.id = id;
     currentBloc.type = type;
@@ -418,12 +418,12 @@ function setBloc(id, type, canRotate, tRotate)
     removeTextureDisabled();
     removeItemDisabled();
 
-    document.getElementById('liButton' + id + type).classList.add('active');
+    document.getElementById('liButton' + row + type).classList.add('active');
 }
 
 function removeTextureDisabled()
 {
-    for(var i = 0; i < 6; i++)
+    for(var i = 0; i < 12; i++)
     {
         console.log(i);
 
@@ -666,3 +666,25 @@ function getXMLHttpRequest()
 
     return xhr;
 }
+
+$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+    // Avoid following the href location when clicking
+    event.preventDefault();
+    // Avoid having the menu to close when clicking
+    event.stopPropagation();
+    // If a menu is already open we close it
+    //$('ul.dropdown-menu [data-toggle=dropdown]').parent().removeClass('open');
+    // opening the one you clicked on
+    $(this).parent().addClass('open');
+
+    var menu = $(this).parent().find("ul");
+    var menupos = menu.offset();
+
+    if ((menupos.left + menu.width()) + 30 > $(window).width()) {
+        var newpos = - menu.width();
+    } else {
+        var newpos = $(this).parent().width();
+    }
+    menu.css({ left:newpos });
+
+});

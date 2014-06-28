@@ -41,7 +41,7 @@ Map.prototype.generateBlocs = function(land)
 
         for(var x = 0; x < land[i].length; x++)
         {
-            tabWidth.push(new Bloc(id, land[i][x][0], x, i, land[i][x][1][0], land[i][x][1][1]));
+            tabWidth.push(new Bloc(id, land[i][x][0], land[i][x][1], x, i, land[i][x][2][0], land[i][x][2][1]));
 
             id++;
         }

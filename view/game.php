@@ -59,6 +59,7 @@
         <div id="players"></div>
         <div id="logMultiplayer"></div>
     </div>
+    <div id="images" style="display: none;"></div>
     <div id="startGameModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -165,43 +166,22 @@
             </div>
         </div>
     </div>
-    <div id="textures" style="display: none;">
-        <img id="0t" src="view/img/texture/0.png">
-        <img id="1t" src="view/img/texture/1.png">
-        <img id="2t" src="view/img/texture/2.png">
-        <img id="3t" src="view/img/texture/3.png">
-        <img id="4t" src="view/img/texture/4.png">
-        <img id="5t" src="view/img/texture/5.png">
-        <img id="6t" src="view/img/texture/6.png">
-        <img id="7t" src="view/img/texture/7.png">
-        <img id="8t" src="view/img/texture/8.png">
-        <img id="9t" src="view/img/texture/9.png">
-        <img id="10t" src="view/img/texture/10.png">
-        <img id="11t" src="view/img/texture/11.png">
-        <img id="12t" src="view/img/texture/12.png">
-        <img id="13t" src="view/img/texture/13.png">
-        <img id="14t" src="view/img/texture/14.png">
-        <img id="15t" src="view/img/texture/15.png">
-        <img id="16t" src="view/img/texture/16.png">
-        <img id="17t" src="view/img/texture/17.png">
-        <img id="18t" src="view/img/texture/18.png">
-        <img id="19t" src="view/img/texture/19.png">
-        <img id="100t" src="view/img/texture/100.png">
-        <img id="200t" src="view/img/texture/200.png">
-        <img id="201t" src="view/img/texture/201.png">
-        <img id="202t" src="view/img/texture/202.png">
-        <img id="203t" src="view/img/texture/203.png">
-
-        <img id="1i" src="view/img/item/1.png">
-        <img id="2i" src="view/img/item/2.png">
-        <img id="3i" src="view/img/item/3.png">
-        <img id="4i" src="view/img/item/4.png">
-        <img id="5i" src="view/img/item/5.png">
-        <img id="6i" src="view/img/item/6.png">
-        <img id="7i" src="view/img/item/7.png">
-        <img id="8i" src="view/img/item/8.png">
-        <img id="9i" src="view/img/item/9.png">
-        <img id="100i" src="view/img/item/100.png">
+    <div id="loadMapModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading of map</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div id="progressLoadMap" class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0% Complete</span>
+                        </div>
+                    </div>
+                    <span id="infoLoadMapEditor">Loading textures & items ...</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -235,10 +215,12 @@
         canvas = document.getElementById('canvas');
         context2d = canvas.getContext('2d');
 
-        $('#startGameModal').modal('show');
+        $('#loadMapModal').modal('show');
 
         setValues("<?php echo $_SESSION['userId']; ?>", "<?php echo $_GET['sUId']; ?>", "<?php echo $_GET['owner']; ?>");
         loadMap("<?php echo $map['mUId']; ?>", "<?php echo $map['name']; ?>");
+
+        loadImages('t');
     };
 </script>
 
