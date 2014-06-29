@@ -75,50 +75,48 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="view/img/texture/0.png"> Materials</a>
                                 <ul class="dropdown-menu">
                                     <li id="liButton0t" class="active"><a href="#" onclick="setBloc(0, 't', 0);"><img src="view/img/texture/0.png"> Empty</a></li>
-                                    <li id="liButton1t"><a href="#" onclick="setBloc(1, 't', 1, false);"><img src="view/img/texture/1.png" style="width: 32px; height: auto;"> Brick</a></li>
-                                    <li id="liButton2t"><a href="#" onclick="setBloc(2, 't', 2, false);"><img src="view/img/texture/2.png" style="width: 32px; height: auto;"> Grass</a></li>
-                                    <li id="liButton3t"><a href="#" onclick="setBloc(23, 't', 3, false);"><img src="view/img/texture/23.png" style="width: 32px; height: auto;"> Water</a></li>
+                                    <li id="liButton1t"><a href="#" onclick="setBloc(1, 't', 1);"><img src="view/img/texture/1.png" style="width: 32px; height: auto;"> Brick</a></li>
+                                    <li id="liButton2t"><a href="#" onclick="setBloc(2, 't', 2);"><img src="view/img/texture/2.png" style="width: 32px; height: auto;"> Grass</a></li>
+                                    <li id="liButton3t"><a href="#" onclick="setBloc(8, 't', 3);"><img src="view/img/texture/23.png" style="width: 32px; height: auto;"> Water</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="view/img/texture/3.png" style="width: 32px; height: auto;"> Corners</a>
                                 <ul class="dropdown-menu">
-                                    <li id="liButton4t"><a href="#" onclick="setBloc(3, 't', 4, true, [3, 4, 5, 6]);"><img src="view/img/texture/3.png" style="width: 32px; height: auto;"> Ground</a></li>
-                                    <li id="liButton5t"><a href="#" onclick="setBloc(15, 't', 5, true, [15, 16, 17, 18]);"><img src="view/img/texture/15.png" style="width: 32px; height: auto;"> Grass</a></li>
-                                    <li id="liButton6t"><a href="#" onclick="setBloc(24, 't', 6, true, [24, 25, 26, 27]);"><img src="view/img/texture/24.png" style="width: 32px; height: auto;"> Water</a></li>
+                                    <li class="dropdown-header">In</li>
+                                    <li id="liButton4t"><a href="#" onclick="setBloc(3, 't', 4);"><img src="view/img/texture/3.png" style="width: 32px; height: auto;"> Ground</a></li>
+                                    <li id="liButton5t"><a href="#" onclick="setBloc(6, 't', 5);"><img src="view/img/texture/15.png" style="width: 32px; height: auto;"> Grass</a></li>
+                                    <li id="liButton6t"><a href="#" onclick="setBloc(9, 't', 6);"><img src="view/img/texture/24.png" style="width: 32px; height: auto;"> Water</a></li>
+                                    <li class="dropdown-header">Out</li>
+                                    <li id="liButton7t"><a href="#" onclick="setBloc(5, 't', 7);"><img src="view/img/texture/11.png" style="width: 32px; height: auto;"> Ground</a></li>
+                                    <li id="liButton8t"><a href="#" onclick="setBloc(11, 't', 8);"><img src="view/img/texture/32.png" style="width: 32px; height: auto;"> Water</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="view/img/texture/7.png" style="width: 32px; height: auto;"> Sides</a>
                                 <ul class="dropdown-menu">
-                                    <li id="liButton7t"><a href="#" onclick="setBloc(7, 't', 7, true, [7, 8, 9, 10]);"><img src="view/img/texture/7.png" style="width: 32px; height: auto;"> Ground</a></li>
-                                    <li id="liButton8t"><a href="#" onclick="setBloc(19, 't', 8, true, [19, 20, 21, 22]);"><img src="view/img/texture/19.png" style="width: 32px; height: auto;"> Grass</a></li>
-                                    <li id="liButton9t"><a href="#" onclick="setBloc(28, 't', 9, true, [28, 29, 30, 31]);"><img src="view/img/texture/28.png" style="width: 32px; height: auto;"> Water</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="view/img/texture/11.png" style="width: 32px; height: auto;"> In corner</a>
-                                <ul class="dropdown-menu">
-                                    <li id="liButton10t"><a href="#" onclick="setBloc(11, 't', 10, true, [11, 12, 13, 14]);"><img src="view/img/texture/11.png" style="width: 32px; height: auto;"> Ground</a></li>
-                                    <li id="liButton11t"><a href="#" onclick="setBloc(32, 't', 11, true, [32, 33, 34, 35]);"><img src="view/img/texture/32.png" style="width: 32px; height: auto;"> Water</a></li>
+                                    <li id="liButton9t"><a href="#" onclick="setBloc(4, 't', 9);"><img src="view/img/texture/7.png" style="width: 32px; height: auto;"> Ground</a></li>
+                                    <li id="liButton10t"><a href="#" onclick="setBloc(7, 't', 10);"><img src="view/img/texture/19.png" style="width: 32px; height: auto;"> Grass</a></li>
+                                    <li id="liButton11t"><a href="#" onclick="setBloc(10, 't', 11);"><img src="view/img/texture/28.png" style="width: 32px; height: auto;"> Water</a></li>
                                 </ul>
                             </li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Spawn</li>
-                            <li id="liButton7t"><a href="#" onclick="setBloc(100, 't', 7);"><img src="view/img/texture/100.png" style="width: 32px; height: auto;"> Spawn block</a></li>
+                            <li id="liButton12t"><a href="#" onclick="setBloc(100, 't', 12);"><img src="view/img/texture/100.png" style="width: 32px; height: auto;"> Spawn block</a></li>
                         </ul>
                     </li>
                     <li class="dropup">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Items <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">Good</li>
-                            <li id="liButton1i"><a href="#" onclick="setBloc(1, 'i', false);"><img src="view/img/item/1.png"> Coin</a></li>
+                            <li id="liButton1i"><a href="#" onclick="setBloc(1, 'i', 1);"><img src="view/img/item/1.png"> Coin</a></li>
+                            <li id="liButton2i"><a href="#" onclick="setBloc(5, 'i', 2);"><img src="view/img/item/10.png"> Heart</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Bad</li>
-                            <li id="liButton2i"><a href="#" onclick="setBloc(100, 'i', false);"><img src="view/img/item/100.png"> Stinging plant (1 health)</a></li>
+                            <li id="liButton3i"><a href="#" onclick="setBloc(100, 'i', 3);"><img src="view/img/item/100.png"> Stinging plant (1 health)</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Tool</li>
-                            <li id="liButton0i"><a href="#" onclick="setBloc(0, 'i', false);"><span class="glyphicon glyphicon-remove"></span> Delete item</a></li>
+                            <li id="liButton0i"><a href="#" onclick="setBloc(0, 'i', 0);"><span class="glyphicon glyphicon-remove"></span> Delete item</a></li>
                         </ul>
                     </li>
                     <li><a href="#mobsModal" data-toggle="modal">Mobs</a></li>
@@ -329,6 +327,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="view/js/jquery.noty.packaged.min.js"></script>
 <script src="view/js/bootstrap.min.js"></script>
+<script src="view/js/blocs.js"></script>
+<script src="view/js/items.js"></script>
 <script src="view/js/mapEditor.js"></script>
 
 </body>

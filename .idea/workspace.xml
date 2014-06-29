@@ -26,25 +26,16 @@
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="99" selection-start="2253" selection-end="2253" vertical-scroll-proportion="18.576923" vertical-offset="1503" max-vertical-offset="2482">
+            <state line="60" column="99" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.0" vertical-offset="1503" max-vertical-offset="2482">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mapEditor.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mapEditor.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/js/mapEditor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="11" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="11815">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="game.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/view/js/game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="35" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.3646409" vertical-offset="533" max-vertical-offset="11475">
+            <state line="414" column="9" selection-start="10792" selection-end="10792" vertical-scroll-proportion="0.45688075" vertical-offset="6789" max-vertical-offset="11849">
               <folding />
             </state>
           </provider>
@@ -53,7 +44,7 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="39" selection-start="1767" selection-end="1767" vertical-scroll-proportion="0.0" vertical-offset="1478" max-vertical-offset="2023">
+            <state line="109" column="39" selection-start="1767" selection-end="1767" vertical-scroll-proportion="0.0" vertical-offset="1853" max-vertical-offset="2023">
               <folding />
             </state>
           </provider>
@@ -62,10 +53,8 @@
       <file leaf-file-name="mapEditor.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/mapEditor.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="28" selection-start="10202" selection-end="10202" vertical-scroll-proportion="-10.807693" vertical-offset="2303" max-vertical-offset="5780">
-              <folding>
-                <element signature="n#style#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state line="112" column="71" selection-start="7301" selection-end="7302" vertical-scroll-proportion="-14.076923" vertical-offset="1538" max-vertical-offset="5780">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -82,7 +71,16 @@
       <file leaf-file-name="Item.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/js/class/Item.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="40" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="833">
+            <state line="29" column="13" selection-start="684" selection-end="684" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="799">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Map.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/js/class/Map.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="153" column="44" selection-start="3651" selection-end="3651" vertical-scroll-proportion="0.0" vertical-offset="2383" max-vertical-offset="3094">
               <folding />
             </state>
           </provider>
@@ -91,7 +89,7 @@
       <file leaf-file-name="items.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/js/items.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="27" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="306">
+            <state line="7" column="22" selection-start="160" selection-end="160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
               <folding />
             </state>
           </provider>
@@ -100,7 +98,7 @@
       <file leaf-file-name="Bloc.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/js/class/Bloc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="55" selection-start="1915" selection-end="1915" vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="1717">
+            <state line="63" column="55" selection-start="1915" selection-end="1915" vertical-scroll-proportion="0.0" vertical-offset="1071" max-vertical-offset="1717">
               <folding />
             </state>
           </provider>
@@ -109,7 +107,7 @@
       <file leaf-file-name="blocs.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/js/blocs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="33" selection-start="1511" selection-end="1511" vertical-scroll-proportion="0.0" vertical-offset="456" max-vertical-offset="1309">
+            <state line="72" column="6" selection-start="1604" selection-end="1604" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="1921">
               <folding />
             </state>
           </provider>
@@ -143,7 +141,6 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/model/login.php" />
         <option value="$PROJECT_DIR$/controler/logout.php" />
-        <option value="$PROJECT_DIR$/view/js/class/Mob.js" />
         <option value="$PROJECT_DIR$/model/game.php" />
         <option value="$PROJECT_DIR$/view/js/register.js" />
         <option value="$PROJECT_DIR$/model/register.php" />
@@ -160,17 +157,18 @@
         <option value="$PROJECT_DIR$/WebGL/index.js" />
         <option value="$PROJECT_DIR$/view/dashboard.php" />
         <option value="$PROJECT_DIR$/server/index.php" />
-        <option value="$PROJECT_DIR$/view/js/items.js" />
-        <option value="$PROJECT_DIR$/view/js/class/Item.js" />
         <option value="$PROJECT_DIR$/view/js/class/Player.js" />
         <option value="$PROJECT_DIR$/view/css/style.css" />
-        <option value="$PROJECT_DIR$/view/mapEditor.php" />
-        <option value="$PROJECT_DIR$/view/js/blocs.js" />
         <option value="$PROJECT_DIR$/view/js/class/Bloc.js" />
-        <option value="$PROJECT_DIR$/view/js/class/Map.js" />
-        <option value="$PROJECT_DIR$/view/js/mapEditor.js" />
         <option value="$PROJECT_DIR$/view/game.php" />
         <option value="$PROJECT_DIR$/view/js/game.js" />
+        <option value="$PROJECT_DIR$/view/js/blocs.js" />
+        <option value="$PROJECT_DIR$/view/js/class/Mob.js" />
+        <option value="$PROJECT_DIR$/view/js/class/Map.js" />
+        <option value="$PROJECT_DIR$/view/js/class/Item.js" />
+        <option value="$PROJECT_DIR$/view/mapEditor.php" />
+        <option value="$PROJECT_DIR$/view/js/items.js" />
+        <option value="$PROJECT_DIR$/view/js/mapEditor.js" />
       </list>
     </option>
   </component>
@@ -516,14 +514,14 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32850778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32777777" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14536741" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33865815" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34984025" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -531,11 +529,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -644,11 +642,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/maps/map01.cm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="18" selection-start="8983" selection-end="8983" vertical-scroll-proportion="-16.32" vertical-offset="357" max-vertical-offset="935" />
-      </provider>
       <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="18" selection-start="8983" selection-end="8983" vertical-scroll-proportion="-16.32" vertical-offset="357" max-vertical-offset="935" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/login.php">
@@ -659,11 +657,6 @@
     <entry file="file://$PROJECT_DIR$/controler/logout.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="21" selection-start="65" selection-end="65" vertical-scroll-proportion="0.15917604" vertical-offset="0" max-vertical-offset="534" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/class/Mob.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="27" selection-start="855" selection-end="855" vertical-scroll-proportion="0.0" vertical-offset="1678" max-vertical-offset="3451" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/sql_connect.php">
@@ -754,9 +747,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/dashboard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="123" selection-start="3931" selection-end="3931" vertical-scroll-proportion="0.46628132" vertical-offset="1356" max-vertical-offset="2108">
-          <folding />
-        </state>
+        <state line="94" column="123" selection-start="3931" selection-end="3931" vertical-scroll-proportion="0.46628132" vertical-offset="1356" max-vertical-offset="2108" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/index.php">
@@ -766,14 +757,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="99" selection-start="2253" selection-end="2253" vertical-scroll-proportion="18.576923" vertical-offset="1503" max-vertical-offset="2482">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/class/Player.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="16" selection-start="5015" selection-end="5015" vertical-scroll-proportion="0.0" vertical-offset="364" max-vertical-offset="4539">
+        <state line="60" column="99" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.0" vertical-offset="1503" max-vertical-offset="2482">
           <folding />
         </state>
       </provider>
@@ -792,16 +776,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/items.js">
+    <entry file="file://$PROJECT_DIR$/view/js/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="27" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+        <state line="43" column="35" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.0" vertical-offset="533" max-vertical-offset="11475">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/class/Item.js">
+    <entry file="file://$PROJECT_DIR$/view/game.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="40" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="833">
+        <state line="220" column="10" selection-start="10676" selection-end="10676" vertical-scroll-proportion="0.0" vertical-offset="3418" max-vertical-offset="3961">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/js/class/Player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="113" selection-start="4559" selection-end="4559" vertical-scroll-proportion="0.33027524" vertical-offset="2404" max-vertical-offset="4539" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/js/class/Mob.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="147" selection-start="3619" selection-end="3619" vertical-scroll-proportion="0.0" vertical-offset="1729" max-vertical-offset="3485" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/js/blocs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="6" selection-start="1604" selection-end="1604" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="1921">
           <folding />
         </state>
       </provider>
@@ -813,46 +814,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/blocs.js">
+    <entry file="file://$PROJECT_DIR$/view/js/class/Map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="33" selection-start="1511" selection-end="1511" vertical-scroll-proportion="0.0" vertical-offset="456" max-vertical-offset="1309">
+        <state line="153" column="44" selection-start="3651" selection-end="3651" vertical-scroll-proportion="0.0" vertical-offset="2383" max-vertical-offset="3094">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/class/Map.js">
+    <entry file="file://$PROJECT_DIR$/view/js/class/Item.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="62" selection-start="4036" selection-end="4036" vertical-scroll-proportion="0.0" vertical-offset="2536" max-vertical-offset="3094">
+        <state line="29" column="13" selection-start="684" selection-end="684" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="799">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/js/items.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22" selection-start="160" selection-end="160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/mapEditor.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="28" selection-start="10202" selection-end="10202" vertical-scroll-proportion="-10.807693" vertical-offset="2303" max-vertical-offset="5780">
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="112" column="71" selection-start="7301" selection-end="7302" vertical-scroll-proportion="-14.076923" vertical-offset="1538" max-vertical-offset="5780">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/js/mapEditor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="11" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="11815">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/game.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="220" column="10" selection-start="10676" selection-end="10676" vertical-scroll-proportion="0.57253385" vertical-offset="3444" max-vertical-offset="3961">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="35" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.3646409" vertical-offset="533" max-vertical-offset="11475">
+        <state line="414" column="9" selection-start="10792" selection-end="10792" vertical-scroll-proportion="0.45688075" vertical-offset="6789" max-vertical-offset="11849">
           <folding />
         </state>
       </provider>

@@ -112,7 +112,7 @@ Mob.prototype.moveMob = function(map) {
 
     var nextCase = this.getNextPos(direction);
 
-    if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !this.isGoodBlock(map, direction))
+    if(nextCase.x < 0 || nextCase.y < 0 || nextCase.x >= map.getWidth() || nextCase.y >= map.getHeight() || !map.land[nextCase.y][nextCase.x].canGo)
     {
         this.direction = this.getInverseDirection(this.direction);
 
@@ -129,6 +129,7 @@ Mob.prototype.moveMob = function(map) {
     return true;
 };
 
+/*
 Mob.prototype.isGoodBlock = function(map, direction) {
     var nextBloc;
 
@@ -181,6 +182,7 @@ Mob.prototype.getBlock = function(map, block) {
         return false;
     }
 };
+*/
 
 Mob.prototype.getInverseDirection = function(direction) {
     switch (direction) {

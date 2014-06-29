@@ -4,9 +4,8 @@ var blocsWidth, blocsHeight;
 var currentBloc = {
     id : 0,
     type : 't',
-    canRotate : false,
-    rowTRotate : 0,
-    tRotate : []
+    imageId : [0, 0, 0, 0],
+    rotate : 0
 };
 
 var tabMapTexture = [];
@@ -34,7 +33,7 @@ var map = {
 
 var loadTabImages = 0;
 var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209];
-var tabItemImages = [1, 10, 100];
+var tabItemImages = [1, 9, 10, 100];
 var countLoadedImages = 0;
 var totalImages = tabTextureImages.length + tabItemImages.length;
 
@@ -111,7 +110,7 @@ function startMapEditor(widthMapBloc, heightMapBloc)
 
         for(var x = 0; x < blocsWidth; x++)
         {
-            widthTab.push([0, null, null]);
+            widthTab.push([0, 0, [null, null]]);
 
             context2d.drawImage(document.getElementById('0t'), x * 32, i * 32, 32, 32);
         }
@@ -197,7 +196,7 @@ function drawMap(tabMapTexture, tabMapItem)
 
         for(var j = 0, k = line.length; j < k; j++)
         {
-            context2d.drawImage(document.getElementById(line[j][0] + 't'), j * 32, y, 32, 32);
+            context2d.drawImage(document.getElementById(blocs[line[j][0]].imageId[line[j][1]] + 't'), j * 32, y, 32, 32);
         }
     }
 
@@ -292,7 +291,7 @@ document.getElementById('mapEditor').onmousemove = function(e) {
         }
         else
         {
-            context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+            context2d.drawImage(document.getElementById(currentBloc.imageId[currentBloc.rotate] + currentBloc.type), x * 32, y * 32, 32, 32);
         }
     }
 
@@ -313,10 +312,14 @@ document.getElementById('mapEditor').oncontextmenu = function(e) {
 
         //$('#dropdownOption').dropdown('toggle');
 
-        if(currentBloc.canRotate)
+        if(currentBloc.type == 't')
         {
-            currentBloc.rowTRotate = ((currentBloc.rowTRotate + 1) == currentBloc.tRotate.length) ? 0 : currentBloc.rowTRotate + 1;
-            currentBloc.id = currentBloc.tRotate[currentBloc.rowTRotate];
+            currentBloc.rotate++;
+
+            if(currentBloc.rotate > 3)
+            {
+                currentBloc.rotate = 0;
+            }
 
             drawMap(tabMapTexture, tabMapItem);
 
@@ -326,7 +329,7 @@ document.getElementById('mapEditor').oncontextmenu = function(e) {
             }
             else
             {
-                context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+                context2d.drawImage(document.getElementById(currentBloc.imageId[currentBloc.rotate] + currentBloc.type), x * 32, y * 32, 32, 32);
             }
         }
 
@@ -341,7 +344,7 @@ function drawBloc(xMouse, yMouse)
 
     if(x >= 0 && y >= 0 && (x + 1) <= blocsWidth && (y + 1) <= blocsHeight)
     {
-        if(currentBloc.id == 15 && currentBloc.type == 't')
+        if(currentBloc.id == 100 && currentBloc.type == 't')
         {
             var existSpawn = false;
 
@@ -349,7 +352,7 @@ function drawBloc(xMouse, yMouse)
             {
                 for(var j = 0; j < tabMapTexture[i].length; j++)
                 {
-                    if(tabMapTexture[i][j] == 15)
+                    if(tabMapTexture[i][j][0] == 100)
                     {
                         existSpawn = true;
                     }
@@ -364,9 +367,9 @@ function drawBloc(xMouse, yMouse)
                 document.getElementById('posXPlayer').value = x;
                 document.getElementById('posYPlayer').value = y;
 
-                tabMapTexture[y][x] = [15, null, null];
+                tabMapTexture[y][x] = [100, 0, [null, null]];
 
-                context2d.drawImage(document.getElementById('15t'), x * 32, y * 32, 32, 32);
+                context2d.drawImage(document.getElementById('100t'), x * 32, y * 32, 32, 32);
             }
             else
             {
@@ -377,15 +380,15 @@ function drawBloc(xMouse, yMouse)
         {
             if(currentBloc.type == 't')
             {
-                tabMapTexture[y][x] = [currentBloc.id, null, null];
+                tabMapTexture[y][x] = [currentBloc.id, currentBloc.rotate, [null, null]];
             }
             else if(currentBloc.type == 'i')
             {
                 if(currentBloc.id == 0)
                 {
-                    tabMapItem[y][x] = 0;
+                    tabMapItem[y][x] = [0, 0, [null, null]];
 
-                    context2d.drawImage(document.getElementById(tabMapTexture[y][x] + 't'), x * 32, y * 32, 32, 32);
+                    context2d.drawImage(document.getElementById(blocs[tabMapTexture[y][x][0]].imageId[tabMapTexture[y][x][1]] + 't'), x * 32, y * 32, 32, 32);
 
                     return false;
                 }
@@ -397,7 +400,7 @@ function drawBloc(xMouse, yMouse)
                 console.log('error');
             }
 
-            context2d.drawImage(document.getElementById(currentBloc.id + currentBloc.type), x * 32, y * 32, 32, 32);
+            context2d.drawImage(document.getElementById(currentBloc.imageId[currentBloc.rotate] + currentBloc.type), x * 32, y * 32, 32, 32);
 
             if(tabMapItem[y][x] > 0)
             {
@@ -407,13 +410,14 @@ function drawBloc(xMouse, yMouse)
     }
 }
 
-function setBloc(id, type, row, canRotate, tRotate)
+function setBloc(id, type, row)
 {
+    console.log((type == 't') ? blocs[id].imageId : items[id].imageId);
+
     currentBloc.id = id;
     currentBloc.type = type;
-    currentBloc.canRotate = canRotate;
-    currentBloc.rowTRotate = 0;
-    currentBloc.tRotate = tRotate;
+    currentBloc.imageId = ((type == 't') ? blocs[id].imageId : items[id].imageId);
+    currentBloc.rotate = 0;
 
     removeTextureDisabled();
     removeItemDisabled();
@@ -423,10 +427,8 @@ function setBloc(id, type, row, canRotate, tRotate)
 
 function removeTextureDisabled()
 {
-    for(var i = 0; i < 12; i++)
+    for(var i = 0; i < 13; i++)
     {
-        console.log(i);
-
         document.getElementById('liButton' + i + 't').classList.remove('active');
     }
 }
@@ -544,7 +546,7 @@ function existSpawn()
     {
         for(var x = 0; x < tabMapTexture[i].length; x++)
         {
-            if(tabMapTexture[i][x] == 15)
+            if(tabMapTexture[i][x] == 100)
             {
                 existSpawn = true;
             }

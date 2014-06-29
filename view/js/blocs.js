@@ -7,19 +7,19 @@ var blocs = {
     },
     1 : {
         imageId : [1, 1, 1, 1],
-        name : 'Brick',
+        name : 'Brick block',
         canGo : true,
         isAnimation : false
     },
     2 : {
         imageId : [2, 2, 2, 2],
-        name : 'Grass',
+        name : 'Grass block',
         canGo : false,
         isAnimation : false
     },
     3 : {
         imageId : [3, 4, 5, 6],
-        name : 'Grass corner',
+        name : 'Brick corner',
         canGo : true,
         isAnimation : false
     },
@@ -31,8 +31,44 @@ var blocs = {
     },
     5 : {
         imageId : [11, 12, 13, 14],
-        name : 'Brick corner',
+        name : 'Brick corner out',
         canGo : true,
+        isAnimation : false
+    },
+    6 : {
+        imageId : [15, 16, 17, 18],
+        name : 'Grass corner',
+        canGo : false,
+        isAnimation : false
+    },
+    7 : {
+        imageId : [19, 20, 21, 22],
+        name : 'Grass side',
+        canGo : false,
+        isAnimation : false
+    },
+    8 : {
+        imageId : [23, 23, 23, 23],
+        name : 'Water block',
+        canGo : false,
+        isAnimation : false
+    },
+    9 : {
+        imageId : [24, 25, 26, 27],
+        name : 'Water corner',
+        canGo : false,
+        isAnimation : false
+    },
+    10 : {
+        imageId : [28, 29, 30, 31],
+        name : 'Water side',
+        canGo : false,
+        isAnimation : false
+    },
+    11 : {
+        imageId : [32, 33, 34, 35],
+        name : 'Water corner out',
+        canGo : false,
         isAnimation : false
     },
     100 : {

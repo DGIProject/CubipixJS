@@ -151,7 +151,7 @@ Map.prototype.drawMap = function(context) {
         {
             if(lineItem[d] != 0)
             {
-                this.drawItem(lineItem[d].imageId, context, d * 32, c);
+                this.drawItem(lineItem[d].imageId[lineItem[d].rowImage], context, d * 32, c);
             }
         }
     }

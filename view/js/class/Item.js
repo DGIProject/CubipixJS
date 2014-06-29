@@ -4,7 +4,7 @@ function Item(id, itemId, x, y)
     this.itemId = itemId;
     this.imageId = items[itemId].imageId;
     this.name = items[itemId].name;
-    this.image = document.getElementById(items[itemId].imageId + 'i');
+    this.rowImage = 0;
 
     this.x = x;
     this.y = y;
@@ -13,7 +13,7 @@ function Item(id, itemId, x, y)
 
     if(this.isAnimation)
     {
-        this.images = items[itemId].images;
+        this.startAnimation();
     }
 }
 
@@ -21,15 +21,13 @@ Item.prototype.startAnimation = function() {
     if(this.isAnimation)
     {
         this.intervalAnimation = setInterval(function(classItem) {
-            var countImage = classItem.images.length;
-            var rowNextImage = classItem.images.indexOf(classItem.imageId) + 1;
+            var countImage = classItem.imageId.length;
+            classItem.rowImage++;
 
-            if(rowNextImage == countImage)
+            if(classItem.rowImage == countImage)
             {
-                rowNextImage = 0;
+                classItem.rowImage = 0;
             }
-
-            classItem.imageId = classItem.images[rowNextImage];
         }, 200, this);
     }
 };
