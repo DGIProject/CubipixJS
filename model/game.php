@@ -39,6 +39,30 @@ function getInfoMap($mUId)
     return $req->fetch();
 }
 
+function getUsername($id)
+{
+    global $bdd;
+
+    $req = $bdd->prepare('SELECT username FROM users WHERE id = ?');
+    $req->execute(array($id));
+
+    $infoUser = $req->fetch();
+    return $infoUser['username'];
+}
+
+function getDifficult($difficultId)
+{
+    switch($difficultId)
+    {
+        case 1:
+            return 'Medium';
+        case 2:
+            return 'Hard';
+        default:
+            return 'Easy';
+    }
+}
+
 function addScore($mapId, $win, $points, $health, $timeG)
 {
     global $bdd;

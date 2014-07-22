@@ -11,6 +11,14 @@ var serverUId = null;
 
 var ownerServer = false;
 
+var configControlsKey = [[90, 81, 68, 83], [38, 37, 39, 40], [84, 70, 72, 71], [73, 74, 76, 75]];
+
+var editKeyControlInfo = {
+    playerId : 0,
+    direction : 0,
+    isEditing : false
+};
+
 var loadTabImages = 0;
 var tabTextureImages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 100, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209];
 var tabItemImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100];
@@ -137,6 +145,7 @@ function addPlayer(online, usernameUIdN)
     if(playerId < 4)
     {
         var divPlayer = document.createElement('div');
+        divPlayer.id = 'playerStart' + playerId;
         divPlayer.setAttribute('class', 'panel panel-default');
         divPlayer.innerHTML = '<div class="panel-heading">' +
             '<h3 class="panel-title">Player ' + (playerId + 1) + '</h3>' +
@@ -149,29 +158,33 @@ function addPlayer(online, usernameUIdN)
         else
         {
             divPlayer.innerHTML += '<div class="panel-body">' +
-                '<h4>Controls</h4>' +
                 '<form class="form-horizontal">' +
-                '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-10"><select id="upControl" onchange="updateControls(' + playerId + ', 0, this.value);" class="form-control"><option value="90">Z</option><option value="38">Key up</option></select></div></div>' +
-                '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-10"><select id="leftControl" onchange="updateControls(' + playerId + ', 1, this.value);" class="form-control"><option value="81">Q</option><option value="37">Key left</option></select></div></div>' +
-                '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-10"><select id="rightControl" onchange="updateControls(' + playerId + ', 2, this.value);" class="form-control"><option value="68">D</option><option value="39">Key right</option></select></div></div>' +
-                '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-10"><select id="downControl" onchange="updateControls(' + playerId + ', 3, this.value);" class="form-control"><option value="83">S</option><option value="40">Key down</option></select></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">USERNAME</label><div class="col-sm-4"><input type="text" id="username' + playerId + '" onkeyup="updateUsername(' + playerId + ', this.value);" class="form-control" value="' + ((playerId == 0) ? '(You)' : ('Player ' + (playerId + 1))) + '" ' + ((playerId == 0) ? 'disabled=""' : '') + '></div></div>' +
+                '<h4>Controls</h4>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">UP</label><div class="col-sm-4"><div class="input-group"><input type="text" id="upControl' + playerId + '" class="form-control" disabled=""><span class="input-group-btn"><button type="button" id="buttonUpControl' + playerId + '" onclick="editKeyControl(' + playerId + ', 0);" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></button></span></div></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">LEFT</label><div class="col-sm-4"><div class="input-group"><input type="text" id="leftControl' + playerId + '" class="form-control" disabled=""><span class="input-group-btn"><button type="button" id="buttonLeftControl' + playerId + '" onclick="editKeyControl(' + playerId + ', 1);" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></button></span></div></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">RIGHT</label><div class="col-sm-4"><div class="input-group"><input type="text" id="rightControl' + playerId + '" class="form-control" disabled=""><span class="input-group-btn"><button type="button" id="buttonRightControl' + playerId + '" onclick="editKeyControl(' + playerId + ', 2);" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></button></span></div></div></div>' +
+                '<div class="form-group"><label class="col-sm-2 control-label">DOWN</label><div class="col-sm-4"><div class="input-group"><input type="text" id="downControl' + playerId + '" class="form-control" disabled=""><span class="input-group-btn"><button type="button" id="buttonDownControl' + playerId + '" onclick="editKeyControl(' + playerId + ', 3);" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></button></span></div></div></div>' +
                 '</form>' +
                 '</div>';
         }
 
         document.getElementById('playersStart').appendChild(divPlayer);
 
+        document.getElementById('mapTotalPlayers').innerHTML = (playerId + 1).toString();
+
         var spanPlayer = document.createElement('span');
-        spanPlayer.innerHTML = '<span class="marginInformations">Player : <span id="playerName' + playerId + '">player' + (playerId + 1) + '</span></span>' +
+        spanPlayer.id = 'playerGame' + playerId;
+        spanPlayer.innerHTML = '<span class="marginInformations"><span id="playerName' + playerId + '">Player ' + (playerId + 1) + '</span></span>' +
             '<span class="marginInformations">Coins : <span id="currentCoins' + playerId + '">0</span> / <span id="totalCoins' + playerId + '">0</span></span>' +
-            '<span class="marginInformations">Health : <progress id="currentHealth' + playerId + '" class="progressHealth" value="0" max="10"></progress></span>' +
-            '<span class="marginInformations">Time elapsed : <span id="currentTimeElapsed' + playerId + '">0</span>s</span>';
+            '<span class="marginInformations"><progress id="currentHealth' + playerId + '" class="progressHealth" value="0" max="10"></progress></span>' +
+            '<span class="marginInformations"><span id="currentTimeElapsed' + playerId + '">0</span>s</span>';
 
         document.getElementById('players').appendChild(spanPlayer);
 
         document.getElementById('totalCoins' + playerId).innerHTML = map.totalCoins;
 
-        var player = new Player(playerId, 'user2', 'player.png', map.playerSpawn.x, map.playerSpawn.y, map.playerSpawn.direction, online);
+        var player = new Player(playerId, ((playerId == 0) ? '(You)' : ('Player ' + playerId)), 'player.png', map.playerSpawn.x, map.playerSpawn.y, map.playerSpawn.direction, online);
 
         if(online)
         {
@@ -182,16 +195,21 @@ function addPlayer(online, usernameUIdN)
             if(playerId == 0)
             {
                 player.usernameUId = usernameUId;
-
-                player.keyControls.UP = 90;
-                player.keyControls.LEFT = 81;
-                player.keyControls.RIGHT = 68;
-                player.keyControls.DOWN = 83;
             }
             else
             {
                 player.usernameUId = getUId();
             }
+
+            player.keyControls.UP = configControlsKey[playerId][0];
+            player.keyControls.LEFT = configControlsKey[playerId][1];
+            player.keyControls.RIGHT = configControlsKey[playerId][2];
+            player.keyControls.DOWN = configControlsKey[playerId][3];
+
+            document.getElementById('upControl' + playerId).value = nameKey(configControlsKey[playerId][0]);
+            document.getElementById('leftControl' + playerId).value = nameKey(configControlsKey[playerId][1]);
+            document.getElementById('rightControl' + playerId).value = nameKey(configControlsKey[playerId][2]);
+            document.getElementById('downControl' + playerId).value = nameKey(configControlsKey[playerId][3]);
         }
 
         map.addPlayer(player);
@@ -201,28 +219,214 @@ function addPlayer(online, usernameUIdN)
     else
     {
         console.log('enoughPlayer');
+
+        var n = noty({text: 'There is enough players.', layout: 'topRight', type: 'info'});
     }
 }
 
-function updateControls(playerId, direction, value)
+function updateUsername(playerId, value)
 {
-    switch (direction) {
-        case 0 :
-            map.listPlayers[playerId].keyControls.UP = parseInt(value);
-            break;
-        case 1 :
-            map.listPlayers[playerId].keyControls.LEFT = parseInt(value);
-            break;
-        case 2 :
-            map.listPlayers[playerId].keyControls.RIGHT = parseInt(value);
-            break;
-        case 3 :
-            map.listPlayers[playerId].keyControls.DOWN = parseInt(value);
-            break;
-        default :
-            console.log('error');
+    map.listPlayers[playerId].username = value;
+
+    document.getElementById('playerName' + playerId).innerHTML = value;
+}
+
+function editKeyControl(playerId, direction)
+{
+    if(!editKeyControlInfo.isEditing)
+    {
+        editKeyControlInfo.playerId = playerId;
+        editKeyControlInfo.direction = direction;
+        editKeyControlInfo.isEditing = true;
+
+        var buttonId = 'button';
+
+        switch (direction) {
+            case 0 :
+                buttonId += 'UpControl';
+                break;
+            case 1 :
+                buttonId += 'LeftControl';
+                break;
+            case 2 :
+                buttonId += 'RightControl';
+                break;
+            default :
+                buttonId += 'DownControl';
+        }
+
+        buttonId += playerId;
+
+        setCancelControlKeyButton(buttonId, playerId, direction);
+    }
+    else
+    {
+        var n = noty({text: 'A key is already editing.', layout: 'topRight', type: 'warning'});
     }
 }
+
+function stopEditKeyControl(playerId, direction)
+{
+    editKeyControlInfo.isEditing = false;
+
+    var buttonId = 'button';
+
+    switch (direction) {
+        case 0 :
+            buttonId += 'UpControl';
+            break;
+        case 1 :
+            buttonId += 'LeftControl';
+            break;
+        case 2 :
+            buttonId += 'RightControl';
+            break;
+        default :
+            buttonId += 'DownControl';
+    }
+
+    buttonId += playerId;
+
+    setEditControlKeyButton(buttonId, playerId, direction);
+}
+
+function updateControls(keyCode)
+{
+    if(keyCode == 27)
+    {
+        stopEditKeyControl(editKeyControlInfo.playerId, editKeyControlInfo.direction);
+    }
+    else
+    {
+        if(isGoodKey(keyCode))
+        {
+            var playerId = editKeyControlInfo.playerId;
+            var direction = editKeyControlInfo.direction;
+
+            if(!alreadyTakenKey(keyCode))
+            {
+                switch (direction) {
+                    case 0 :
+                        map.listPlayers[playerId].keyControls.UP = parseInt(keyCode);
+
+                        document.getElementById('upControl' + playerId).value = nameKey(keyCode);
+                        break;
+                    case 1 :
+                        map.listPlayers[playerId].keyControls.LEFT = parseInt(keyCode);
+
+                        document.getElementById('leftControl' + playerId).value = nameKey(keyCode);
+                        break;
+                    case 2 :
+                        map.listPlayers[playerId].keyControls.RIGHT = parseInt(keyCode);
+
+                        document.getElementById('rightControl' + playerId).value = nameKey(keyCode);
+                        break;
+                    case 3 :
+                        map.listPlayers[playerId].keyControls.DOWN = parseInt(keyCode);
+
+                        document.getElementById('downControl' + playerId).value = nameKey(keyCode);
+                        break;
+                    default :
+                        console.log('error');
+
+                        var n = noty({text: 'Error, there is no direction.', layout: 'topRight', type: 'error'});
+                }
+
+                stopEditKeyControl(playerId, direction);
+            }
+            else
+            {
+                var n = noty({text: 'This key is already taken.', layout: 'topRight', type: 'warning'});
+            }
+        }
+        else
+        {
+            var n = noty({text: 'This key is not a good key.', layout: 'topRight', type: 'warning'});
+        }
+    }
+}
+
+function alreadyTakenKey(keyCode)
+{
+    var alreadyTaken = false;
+
+    for(var i = 0; i < map.listPlayers.length; i++)
+    {
+        switch(keyCode)
+        {
+            case map.listPlayers[i].keyControls.UP :
+                alreadyTaken = true;
+                break;
+            case map.listPlayers[i].keyControls.LEFT :
+                alreadyTaken = true;
+                break;
+            case map.listPlayers[i].keyControls.RIGHT :
+                alreadyTaken = true;
+                break;
+            case map.listPlayers[i].keyControls.DOWN :
+                alreadyTaken = true;
+                break;
+        }
+    }
+
+    return alreadyTaken;
+}
+
+function isGoodKey(keyCode)
+{
+    return (keyCode >= 65 && keyCode <= 90) || (keyCode >= 37 && keyCode <= 40);
+}
+
+function nameKey(keyCode)
+{
+    if(keyCode >= 37 && keyCode <= 40)
+    {
+        switch (keyCode) {
+            case 37 :
+                return 'Key left';
+            case 38 :
+                return 'Key up';
+            case 39 :
+                return 'Key right';
+            default :
+                return 'Key down';
+        }
+    }
+    else
+    {
+        return String.fromCharCode(keyCode);
+    }
+}
+
+function setEditControlKeyButton(buttonId, playerId, direction)
+{
+    document.getElementById(buttonId).innerHTML = '<span class="glyphicon glyphicon-edit"></span>';
+
+    document.getElementById(buttonId).setAttribute('onclick', 'editKeyControl(' + playerId + ', ' + direction + ');');
+
+    document.getElementById(buttonId).classList.remove('btn-danger');
+    document.getElementById(buttonId).classList.add('btn-default');
+}
+
+function setCancelControlKeyButton(buttonId, playerId, direction)
+{
+    document.getElementById(buttonId).innerHTML = '<span class="glyphicon glyphicon-remove"></span>';
+
+    document.getElementById(buttonId).setAttribute('onclick', 'stopEditKeyControl(' + playerId + ', ' + direction + ');');
+
+    document.getElementById(buttonId).classList.remove('btn-default');
+    document.getElementById(buttonId).classList.add('btn-danger');
+}
+
+document.getElementById('bodyGame').onkeydown = function(e)
+{
+    console.log('bodyGame');
+
+    if(editKeyControlInfo.isEditing)
+    {
+        updateControls(e.keyCode);
+    }
+};
 
 function setValues(uUId, sUId, ownerUId)
 {
@@ -352,7 +556,7 @@ function startGame()
 
         if(index >= 0)
         {
-            tabKeys.splice(index,1);
+            tabKeys.splice(index, 1);
         }
     };
 

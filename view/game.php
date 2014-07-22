@@ -22,7 +22,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body id="bodyGame">
 
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +71,14 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Map : <?php echo $map['name']; ?></h3>
                         </div>
-                        <div class="panel-body"><?php echo $map['description']; ?> </br>Ranking : <?php echo getRanking($map['id'], 0); ?>.</div>
+                        <div class="panel-body">
+                            <?php echo $map['description']; ?>
+                            <hr>
+                            <span>Difficult : <span id="mapDifficult"><?php echo getDifficult($map['difficult']); ?></span></span></br>
+                            <span>Editor : <span id="mapEditorUsername"><?php echo getUsername($map['usernameId']); ?></span></span></br>
+                            <span>Date create : <span id="mapDateCreate"><?php echo $map['date']; ?></span></span></br>
+                            <span>Total players : <span id="mapTotalPlayers">0</span></span>
+                        </div>
                     </div>
                     <div id="playersStart"></div>
                     <button type="button" id="buttonAddPlayer" onclick="addPlayer(false);" class="btn btn-default" disabled="">Add player</button>
@@ -196,6 +203,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="view/js/jquery.noty.packaged.min.js"></script>
 <script src="view/js/bootstrap.min.js"></script>
 <script src="view/js/soundmanager2.js"></script>
 <script src="view/js/blocs.js"></script>
